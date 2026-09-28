@@ -1,1 +1,1 @@
-https://minhduc2007htt-blip.github.io/khang/
+https://minhduc2007htt-blip.github.io/Khang/
