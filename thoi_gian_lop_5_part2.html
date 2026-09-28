@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Tập & Luyện Tập Đơn Vị Đo Thời Gian Lớp 5</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Font Lexend -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #f0fdfa;
+        }
+        .tab-btn.active {
+            background-color: #0d9488;
+            color: white;
+            box-shadow: 0 4px 10px -2px rgba(13, 148, 136, 0.4);
+        }
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+        .bounce-in {
+            animation: bounceIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.85); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .flow-card {
+            transition: all 0.25s ease;
+        }
+        .flow-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col selection:bg-teal-200">
+
+    <!-- Header Navigation -->
+    <header class="bg-teal-700 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white text-teal-700 p-2.5 rounded-2xl shadow-inner font-bold text-xl flex items-center justify-center w-11 h-11">
+                    <i class="fa-solid fa-clock text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg md:text-2xl font-extrabold tracking-tight leading-tight">Toán Lớp 5: Đo Thời Gian</h1>
+                    <p class="text-xs text-teal-100 hidden sm:block">Bảng quy đổi chuẩn giáo khoa & Luyện tập tương tác</p>
+                </div>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="flex bg-teal-800/60 p-1 rounded-xl mt-2 sm:mt-0 w-full sm:w-auto">
+                <button id="tab1-btn" onclick="switchTab(1)" class="tab-btn active flex-1 sm:flex-initial px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Bảng & Sơ Đồ</span>
+                </button>
+                <button id="tab2-btn" onclick="switchTab(2)" class="tab-btn flex-1 sm:flex-initial px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>Luyện Tập</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-5xl w-full mx-auto p-4 md:p-6 space-y-6">
+
+        <!-- SECTION 1: BẢNG VÀ SƠ ĐỒ ĐẠI LƯỢNG THỜI GIAN -->
+        <section id="section-theory" class="space-y-6">
+            
+            <!-- Standard Image Matching Boxes -->
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-teal-100 space-y-4">
+                <div class="flex items-center space-x-2 text-teal-800 border-b border-slate-100 pb-3">
+                    <i class="fa-solid fa-table text-xl"></i>
+                    <h2 class="text-lg md:text-xl font-extrabold">Bảng Các Đơn Vị Đo Thời Gian (SGK Toán Lớp 5)</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Box 1 -->
+                    <div class="bg-teal-50/70 rounded-2xl p-5 border border-teal-200 space-y-2.5 flow-card">
+                        <div class="font-bold text-teal-900 border-b border-teal-200 pb-1.5 flex justify-between items-center">
+                            <span>Đơn Vị Năm - Thế Kỷ</span>
+                            <i class="fa-solid fa-calendar-days text-teal-600"></i>
+                        </div>
+                        <ul class="space-y-2 text-sm font-semibold text-slate-700">
+                            <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-teal-100 shadow-sm">
+                                <span>1 thế kỷ</span>
+                                <span class="text-teal-700 font-mono font-bold">= 100 năm</span>
+                            </li>
+                            <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-teal-100 shadow-sm">
+                                <span>1 năm</span>
+                                <span class="text-teal-700 font-mono font-bold">= 12 tháng</span>
+                            </li>
+                            <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-teal-100 shadow-sm">
+                                <span>1 năm</span>
+                                <span class="text-teal-700 font-mono font-bold">= 365 ngày</span>
+                            </li>
+                            <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-teal-100 shadow-sm">
+                                <span>1 năm nhuận</span>
+                                <span class="text-teal-700 font-mono font-bold">= 366 ngày</span>
+                            </li>
+                        </ul>
+                        <p class="text-xs text-amber-700 font-bold bg-amber-50 p-2 rounded-xl border border-amber-200 text-center">
+                            <i class="fa-solid fa-circle-info mr-1"></i> Cứ 4 năm lại có 1 năm nhuận
+                        </p>
+                    </div>
+
+                    <!-- Box 2 -->
+                    <div class="bg-sky-50/70 rounded-2xl p-5 border border-sky-200 space-y-2.5 flow-card">
+                        <div class="font-bold text-sky-900 border-b border-sky-200 pb-1.5 flex justify-between items-center">
+                            <span>Đơn Vị Tuần - Ngày - Giờ - Phút - Giây</span>
+                            <i class="fa-solid fa-stopwatch text-sky-600"></i>
+                        </div>
+                        <ul class="space-y-2 text-sm font-semibold text-slate-700">
+                            <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-sky-100 shadow-sm">
+                                <span>1 tuần lễ</span>
+                                <span class="text-sky-700 font-mono font-bold">= 7 ngày</span>
+                            </li>
+                            <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-sky-100 shadow-sm">
+                                <span>1 ngày</span>
+                                <span class="text-sky-700 font-mono font-bold">= 24 giờ</span>
+                            </li>
+                            <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-sky-100 shadow-sm">
+                                <span>1 giờ</span>
+                                <span class="text-sky-700 font-mono font-bold">= 60 phút</span>
+                            </li>
+                            <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-sky-100 shadow-sm">
+                                <span>1 phút</span>
+                                <span class="text-sky-700 font-mono font-bold">= 60 giây</span>
+                            </li>
+                        </ul>
+                        <p class="text-xs text-sky-700 font-bold bg-sky-100 p-2 rounded-xl text-center">
+                            <i class="fa-solid fa-lightbulb mr-1"></i> Các mốc số nhân quen thuộc: 60, 24, 7, 12, 100
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FLOWCHART DIAGRAM FOR CONVERSIONS -->
+            <div class="bg-white rounded-3xl p-6 shadow-md border border-teal-100 space-y-6">
+                <div class="border-b border-slate-100 pb-4">
+                    <h2 class="text-lg md:text-xl font-extrabold text-slate-800 flex items-center">
+                        <i class="fa-solid fa-diagram-next text-teal-600 mr-2"></i>
+                        Sơ Đồ Quy Đổi Hai Chiều Dễ Nhớ
+                    </h2>
+                    <p class="text-xs md:text-sm text-slate-500 mt-0.5">Muốn đổi từ đại lượng LỚN $\rightarrow$ NHỎ thì <strong>NHÂN</strong>, từ NHỎ $\rightarrow$ LỚN thì <strong>CHIA</strong>.</p>
+                </div>
+
+                <!-- Interactive Flow Diagrams -->
+                <div class="space-y-6">
+                    
+                    <!-- Diagram 1: Giờ - Phút - Giây -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <h3 class="text-sm font-bold text-teal-800 mb-4 flex items-center">
+                            <span class="w-2.5 h-2.5 bg-teal-500 rounded-full mr-2"></span>
+                            Sơ đồ 1: Giờ $\leftrightarrow$ Phút $\leftrightarrow$ Giây
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-center">
+                            <!-- Unit 1 -->
+                            <div class="bg-teal-600 text-white rounded-xl p-3 font-extrabold text-lg shadow-sm">
+                                GIỜ
+                            </div>
+
+                            <!-- Conversion 1 -->
+                            <div class="flex flex-col justify-center space-y-1">
+                                <div class="bg-teal-100 text-teal-900 border border-teal-300 rounded-lg p-1.5 text-xs font-bold">
+                                    Đổi xuôi (Lớn → Nhỏ): <span class="bg-teal-700 text-white px-2 py-0.5 rounded font-mono">× 60</span>
+                                </div>
+                                <div class="bg-amber-100 text-amber-900 border border-amber-300 rounded-lg p-1.5 text-xs font-bold">
+                                    Đổi ngược (Nhỏ → Lớn): <span class="bg-amber-700 text-white px-2 py-0.5 rounded font-mono">: 60</span>
+                                </div>
+                            </div>
+
+                            <!-- Unit 2 -->
+                            <div class="bg-indigo-600 text-white rounded-xl p-3 font-extrabold text-lg shadow-sm">
+                                PHÚT
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-center mt-3">
+                            <!-- Unit 2 repeat -->
+                            <div class="bg-indigo-600 text-white rounded-xl p-3 font-extrabold text-lg shadow-sm">
+                                PHÚT
+                            </div>
+
+                            <!-- Conversion 2 -->
+                            <div class="flex flex-col justify-center space-y-1">
+                                <div class="bg-teal-100 text-teal-900 border border-teal-300 rounded-lg p-1.5 text-xs font-bold">
+                                    Đổi xuôi (Lớn → Nhỏ): <span class="bg-teal-700 text-white px-2 py-0.5 rounded font-mono">× 60</span>
+                                </div>
+                                <div class="bg-amber-100 text-amber-900 border border-amber-300 rounded-lg p-1.5 text-xs font-bold">
+                                    Đổi ngược (Nhỏ → Lớn): <span class="bg-amber-700 text-white px-2 py-0.5 rounded font-mono">: 60</span>
+                                </div>
+                            </div>
+
+                            <!-- Unit 3 -->
+                            <div class="bg-purple-600 text-white rounded-xl p-3 font-extrabold text-lg shadow-sm">
+                                GIÂY
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Diagram 2: Ngày - Giờ / Năm - Tháng -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Ngày -> Giờ -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                            <h4 class="text-xs font-bold text-sky-800 uppercase tracking-wide">Ngày $\leftrightarrow$ Giờ</h4>
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="bg-sky-600 text-white px-3 py-2 rounded-xl font-bold text-sm">NGÀY</span>
+                                <div class="flex-1 text-center space-y-1">
+                                    <div class="bg-teal-100 text-teal-800 text-xs font-bold py-1 rounded-md">Xuôi: × 24</div>
+                                    <div class="bg-amber-100 text-amber-800 text-xs font-bold py-1 rounded-md">Ngược: : 24</div>
+                                </div>
+                                <span class="bg-blue-600 text-white px-3 py-2 rounded-xl font-bold text-sm">GIỜ</span>
+                            </div>
+                        </div>
+
+                        <!-- Năm -> Tháng -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                            <h4 class="text-xs font-bold text-emerald-800 uppercase tracking-wide">Năm $\leftrightarrow$ Tháng</h4>
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="bg-emerald-600 text-white px-3 py-2 rounded-xl font-bold text-sm">NĂM</span>
+                                <div class="flex-1 text-center space-y-1">
+                                    <div class="bg-teal-100 text-teal-800 text-xs font-bold py-1 rounded-md">Xuôi: × 12</div>
+                                    <div class="bg-amber-100 text-amber-800 text-xs font-bold py-1 rounded-md">Ngược: : 12</div>
+                                </div>
+                                <span class="bg-teal-700 text-white px-3 py-2 rounded-xl font-bold text-sm">THÁNG</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Examples Box -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div class="bg-emerald-50 rounded-2xl p-4 border border-emerald-200 space-y-2">
+                        <h4 class="font-bold text-emerald-900 text-sm flex items-center">
+                            <i class="fa-solid fa-circle-arrow-right text-emerald-600 mr-2"></i>
+                            Ví dụ Đổi Xuôi (Lớn → Nhỏ: Nhân)
+                        </h4>
+                        <ul class="space-y-1.5 text-xs text-emerald-900 font-medium">
+                            <li>• 2,5 giờ = 2,5 × 60 = <strong>150 phút</strong></li>
+                            <li>• 3 năm = 3 × 12 = <strong>36 tháng</strong></li>
+                            <li>• 0,5 ngày = 0,5 × 24 = <strong>12 giờ</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-amber-50 rounded-2xl p-4 border border-amber-200 space-y-2">
+                        <h4 class="font-bold text-amber-900 text-sm flex items-center">
+                            <i class="fa-solid fa-circle-arrow-left text-amber-600 mr-2"></i>
+                            Ví dụ Đổi Ngược (Nhỏ → Lớn: Chia)
+                        </h4>
+                        <ul class="space-y-1.5 text-xs text-amber-900 font-medium">
+                            <li>• 45 phút = 45 : 60 = <strong>0,75 giờ</strong></li>
+                            <li>• 18 tháng = 18 : 12 = <strong>1,5 năm</strong></li>
+                            <li>• 36 giờ = 36 : 24 = <strong>1,5 ngày</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CTA Banner -->
+            <div class="bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-3xl p-6 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <h3 class="font-extrabold text-lg">Bạn đã hiểu vững quy tắc chưa?</h3>
+                    <p class="text-xs text-teal-100 mt-1">Cùng thực hành các câu hỏi đổi đơn vị ngẫu nhiên ngay nào!</p>
+                </div>
+                <button onclick="switchTab(2)" class="px-6 py-3 bg-white text-teal-800 hover:bg-teal-50 font-extrabold rounded-2xl shadow transition-all whitespace-nowrap active:scale-95">
+                    Bắt đầu Luyện Tập <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+
+        </section>
+
+        <!-- SECTION 2: CÂU HỎI LUYỆN TẬP TƯƠNG TÁC -->
+        <section id="section-practice" class="hidden space-y-6">
+            
+            <!-- Dashboard Stats -->
+            <div class="grid grid-cols-3 gap-3">
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center space-x-3">
+                    <div class="p-3 bg-sky-100 text-sky-600 rounded-xl text-lg hidden sm:block">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-medium">Đã làm</div>
+                        <div id="stat-total" class="text-xl md:text-2xl font-black text-slate-800">0</div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center space-x-3">
+                    <div class="p-3 bg-emerald-100 text-emerald-600 rounded-xl text-lg hidden sm:block">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-medium">Trả lời đúng</div>
+                        <div id="stat-correct" class="text-xl md:text-2xl font-black text-emerald-600">0</div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center space-x-3">
+                    <div class="p-3 bg-orange-100 text-orange-600 rounded-xl text-lg hidden sm:block">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-medium">Chuỗi đúng</div>
+                        <div id="stat-streak" class="text-xl md:text-2xl font-black text-orange-500">0 🔥</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Interactive Card -->
+            <div id="quiz-card" class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border border-teal-100 relative overflow-hidden transition-all duration-300">
+                
+                <!-- Quiz Header Bar -->
+                <div class="flex justify-between items-center mb-6">
+                    <span id="question-type-tag" class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                        <i class="fa-solid fa-shuffle"></i> Đổi đơn vị ngẫu nhiên
+                    </span>
+
+                    <!-- Hearts (Attempts Left) -->
+                    <div class="flex items-center space-x-1.5" id="hearts-container">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- Question Title & Prompt -->
+                <div class="text-center my-6">
+                    <div class="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-400 mb-2">Điền số thích hợp vào chỗ chấm</div>
+                    <div id="question-prompt" class="text-2xl md:text-4xl font-extrabold text-slate-800 tracking-tight my-4">
+                        Đang khởi tạo câu hỏi...
+                    </div>
+                </div>
+
+                <!-- Input Box & Actions -->
+                <div class="max-w-md mx-auto space-y-4">
+                    <div class="relative">
+                        <input type="text" id="user-input" placeholder="Nhập kết quả (vd: 0,75 hoặc 1,5)..." autocomplete="off"
+                               class="w-full text-center text-xl md:text-2xl font-bold py-3.5 px-4 rounded-2xl border-2 border-slate-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none transition-all">
+                    </div>
+
+                    <!-- Dynamic Feedback Message Box -->
+                    <div id="feedback-box" class="hidden rounded-2xl p-4 text-center text-sm md:text-base font-medium bounce-in">
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                        <button id="btn-submit" onclick="checkAnswer()" class="sm:col-span-2 py-3.5 px-6 bg-teal-600 hover:bg-teal-700 active:scale-95 text-white font-bold rounded-2xl shadow-lg shadow-teal-600/30 transition-all flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Kiểm Tra</span>
+                        </button>
+
+                        <button id="btn-skip" onclick="skipQuestion()" class="py-3.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold rounded-2xl transition-all flex items-center justify-center space-x-1.5">
+                            <i class="fa-solid fa-forward text-xs"></i>
+                            <span>Bỏ qua</span>
+                        </button>
+                    </div>
+
+                    <button id="btn-next" onclick="nextQuestion()" class="hidden w-full py-3.5 px-6 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold rounded-2xl shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center space-x-2">
+                        <span>Câu tiếp theo</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Refresh / Reset Game Button -->
+            <div class="flex justify-between items-center text-xs text-slate-500 px-2">
+                <span>* Có thể nhập dấu phẩy (,) hoặc dấu chấm (.) cho số thập phân.</span>
+                <button onclick="resetStats()" class="text-slate-500 hover:text-rose-600 font-semibold underline flex items-center gap-1">
+                    <i class="fa-solid fa-rotate-right"></i> Làm mới / Chơi lại
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JavaScript Quiz & App Logic -->
+    <script>
+        // State variables
+        let currentTab = 1;
+        let attemptsLeft = 3;
+        let currentQ = null;
+
+        let stats = {
+            total: 0,
+            correct: 0,
+            streak: 0
+        };
+
+        // Navigation tab handler
+        function switchTab(tabNum) {
+            currentTab = tabNum;
+            const btn1 = document.getElementById('tab1-btn');
+            const btn2 = document.getElementById('tab2-btn');
+            const sec1 = document.getElementById('section-theory');
+            const sec2 = document.getElementById('section-practice');
+
+            if (tabNum === 1) {
+                btn1.classList.add('active');
+                btn2.classList.remove('active');
+                sec1.classList.remove('hidden');
+                sec2.classList.add('hidden');
+            } else {
+                btn2.classList.add('active');
+                btn1.classList.remove('active');
+                sec2.classList.remove('hidden');
+                sec1.classList.add('hidden');
+
+                if (!currentQ) {
+                    generateQuestion();
+                }
+            }
+        }
+
+        // Random array picker helper
+        function getRandomChoice(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        // Question generator with 75% emphasis on division (small -> large unit) with neat clean decimals (max 3 decimals)
+        function generateQuestion() {
+            attemptsLeft = 3;
+            renderHearts();
+
+            const inputEl = document.getElementById('user-input');
+            const feedbackEl = document.getElementById('feedback-box');
+            const btnSubmit = document.getElementById('btn-submit');
+            const btnSkip = document.getElementById('btn-skip');
+            const btnNext = document.getElementById('btn-next');
+
+            inputEl.value = '';
+            inputEl.disabled = false;
+            inputEl.focus();
+
+            feedbackEl.className = 'hidden rounded-2xl p-4 text-center text-sm md:text-base font-medium bounce-in';
+            feedbackEl.innerHTML = '';
+
+            btnSubmit.classList.remove('hidden');
+            btnSkip.classList.remove('hidden');
+            btnNext.classList.add('hidden');
+
+            // Pool of question definitions
+            const backwardDivQuestions = [
+                // 1. Phút -> Giờ (:60)
+                {
+                    tag: 'Đổi ngược: Phút → Giờ (: 60)',
+                    gen: () => {
+                        const item = getRandomChoice([
+                            { val: 15, ans: 0.25 },
+                            { val: 30, ans: 0.5 },
+                            { val: 45, ans: 0.75 },
+                            { val: 90, ans: 1.5 },
+                            { val: 120, ans: 2 },
+                            { val: 135, ans: 2.25 },
+                            { val: 150, ans: 2.5 },
+                            { val: 180, ans: 3 },
+                            { val: 210, ans: 3.5 },
+                            { val: 240, ans: 4 },
+                            { val: 12, ans: 0.2 },
+                            { val: 24, ans: 0.4 },
+                            { val: 36, ans: 0.6 },
+                            { val: 48, ans: 0.8 }
+                        ]);
+                        return {
+                            prompt: `${item.val} phút = ... giờ`,
+                            numericAnswer: item.ans,
+                            explanation: `Đổi từ <strong>phút</strong> sang <strong>giờ</strong> (nhỏ sang lớn) ta lấy số phút chia cho 60:<br><span class="font-bold text-teal-800">${item.val} : 60 = ${item.ans.toString().replace('.', ',')} giờ</span>`
+                        };
+                    }
+                },
+                // 2. Giây -> Phút (:60)
+                {
+                    tag: 'Đổi ngược: Giây → Phút (: 60)',
+                    gen: () => {
+                        const item = getRandomChoice([
+                            { val: 15, ans: 0.25 },
+                            { val: 30, ans: 0.5 },
+                            { val: 45, ans: 0.75 },
+                            { val: 90, ans: 1.5 },
+                            { val: 120, ans: 2 },
+                            { val: 150, ans: 2.5 },
+                            { val: 180, ans: 3 },
+                            { val: 6, ans: 0.1 },
+                            { val: 18, ans: 0.3 }
+                        ]);
+                        return {
+                            prompt: `${item.val} giây = ... phút`,
+                            numericAnswer: item.ans,
+                            explanation: `Đổi từ <strong>giây</strong> sang <strong>phút</strong> ta lấy số giây chia cho 60:<br><span class="font-bold text-teal-800">${item.val} : 60 = ${item.ans.toString().replace('.', ',')} phút</span>`
+                        };
+                    }
+                },
+                // 3. Giờ -> Ngày (:24)
+                {
+                    tag: 'Đổi ngược: Giờ → Ngày (: 24)',
+                    gen: () => {
+                        const item = getRandomChoice([
+                            { val: 6, ans: 0.25 },
+                            { val: 12, ans: 0.5 },
+                            { val: 18, ans: 0.75 },
+                            { val: 36, ans: 1.5 },
+                            { val: 48, ans: 2 },
+                            { val: 60, ans: 2.5 },
+                            { val: 72, ans: 3 },
+                            { val: 3, ans: 0.125 }
+                        ]);
+                        return {
+                            prompt: `${item.val} giờ = ... ngày`,
+                            numericAnswer: item.ans,
+                            explanation: `Đổi từ <strong>giờ</strong> sang <strong>ngày</strong> ta lấy số giờ chia cho 24:<br><span class="font-bold text-teal-800">${item.val} : 24 = ${item.ans.toString().replace('.', ',')} ngày</span>`
+                        };
+                    }
+                },
+                // 4. Tháng -> Năm (:12)
+                {
+                    tag: 'Đổi ngược: Tháng → Năm (: 12)',
+                    gen: () => {
+                        const item = getRandomChoice([
+                            { val: 3, ans: 0.25 },
+                            { val: 6, ans: 0.5 },
+                            { val: 9, ans: 0.75 },
+                            { val: 15, ans: 1.25 },
+                            { val: 18, ans: 1.5 },
+                            { val: 24, ans: 2 },
+                            { val: 30, ans: 2.5 },
+                            { val: 36, ans: 3 }
+                        ]);
+                        return {
+                            prompt: `${item.val} tháng = ... năm`,
+                            numericAnswer: item.ans,
+                            explanation: `Đổi từ <strong>tháng</strong> sang <strong>năm</strong> ta lấy số tháng chia cho 12:<br><span class="font-bold text-teal-800">${item.val} : 12 = ${item.ans.toString().replace('.', ',')} năm</span>`
+                        };
+                    }
+                },
+                // 5. Năm -> Thế kỷ (:100)
+                {
+                    tag: 'Đổi ngược: Năm → Thế kỷ (: 100)',
+                    gen: () => {
+                        const item = getRandomChoice([
+                            { val: 25, ans: 0.25 },
+                            { val: 50, ans: 0.5 },
+                            { val: 75, ans: 0.75 },
+                            { val: 150, ans: 1.5 },
+                            { val: 200, ans: 2 },
+                            { val: 250, ans: 2.5 },
+                            { val: 400, ans: 4 }
+                        ]);
+                        return {
+                            prompt: `${item.val} năm = ... thế kỷ`,
+                            numericAnswer: item.ans,
+                            explanation: `Đổi từ <strong>năm</strong> sang <strong>thế kỷ</strong> ta lấy số năm chia cho 100:<br><span class="font-bold text-teal-800">${item.val} : 100 = ${item.ans.toString().replace('.', ',')} thế kỷ</span>`
+                        };
+                    }
+                }
+            ];
+
+            const forwardMulQuestions = [
+                // 1. Giờ -> Phút (x60)
+                {
+                    tag: 'Đổi xuôi: Giờ → Phút (× 60)',
+                    gen: () => {
+                        const item = getRandomChoice([
+                            { val: 0.5, ans: 30 },
+                            { val: 0.25, ans: 15 },
+                            { val: 0.75, ans: 45 },
+                            { val: 1.5, ans: 90 },
+                            { val: 2.5, ans: 150 },
+                            { val: 3.2, ans: 192 },
+                            { val: 2, ans: 120 }
+                        ]);
+                        const displayVal = item.val.toString().replace('.', ',');
+                        return {
+                            prompt: `${displayVal} giờ = ... phút`,
+                            numericAnswer: item.ans,
+                            explanation: `Đổi từ <strong>giờ</strong> sang <strong>phút</strong> (lớn sang nhỏ) ta lấy số giờ nhân với 60:<br><span class="font-bold text-teal-800">${displayVal} × 60 = ${item.ans} phút</span>`
+                        };
+                    }
+                },
+                // 2. Ngày -> Giờ (x24)
+                {
+                    tag: 'Đổi xuôi: Ngày → Giờ (× 24)',
+                    gen: () => {
+                        const item = getRandomChoice([
+                            { val: 0.5, ans: 12 },
+                            { val: 0.25, ans: 6 },
+                            { val: 0.75, ans: 18 },
+                            { val: 1.5, ans: 36 },
+                            { val: 2.5, ans: 60 }
+                        ]);
+                        const displayVal = item.val.toString().replace('.', ',');
+                        return {
+                            prompt: `${displayVal} ngày = ... giờ`,
+                            numericAnswer: item.ans,
+                            explanation: `Đổi từ <strong>ngày</strong> sang <strong>giờ</strong> ta lấy số ngày nhân với 24:<br><span class="font-bold text-teal-800">${displayVal} × 24 = ${item.ans} giờ</span>`
+                        };
+                    }
+                },
+                // 3. Năm -> Tháng (x12)
+                {
+                    tag: 'Đổi xuôi: Năm → Tháng (× 12)',
+                    gen: () => {
+                        const item = getRandomChoice([
+                            { val: 0.5, ans: 6 },
+                            { val: 0.25, ans: 3 },
+                            { val: 0.75, ans: 9 },
+                            { val: 1.5, ans: 18 },
+                            { val: 2.5, ans: 30 },
+                            { val: 3, ans: 36 }
+                        ]);
+                        const displayVal = item.val.toString().replace('.', ',');
+                        return {
+                            prompt: `${displayVal} năm = ... tháng`,
+                            numericAnswer: item.ans,
+                            explanation: `Đổi từ <strong>năm</strong> sang <strong>tháng</strong> ta lấy số năm nhân với 12:<br><span class="font-bold text-teal-800">${displayVal} × 12 = ${item.ans} tháng</span>`
+                        };
+                    }
+                }
+            ];
+
+            // 75% chance for division (smaller -> larger unit)
+            const isBackward = Math.random() < 0.75;
+            const selectedCategory = isBackward ? getRandomChoice(backwardDivQuestions) : getRandomChoice(forwardMulQuestions);
+
+            const qData = selectedCategory.gen();
+            currentQ = {
+                prompt: qData.prompt,
+                numericAnswer: qData.numericAnswer,
+                explanation: qData.explanation,
+                tag: selectedCategory.tag
+            };
+
+            document.getElementById('question-type-tag').innerHTML = `<i class="fa-solid fa-tags"></i> ${currentQ.tag}`;
+            document.getElementById('question-prompt').innerHTML = currentQ.prompt;
+        }
+
+        // Render hearts for attempts left
+        function renderHearts() {
+            const container = document.getElementById('hearts-container');
+            container.innerHTML = '';
+            for (let i = 1; i <= 3; i++) {
+                const heart = document.createElement('i');
+                if (i <= attemptsLeft) {
+                    heart.className = 'fa-solid fa-heart text-red-500 text-lg transition-transform hover:scale-110';
+                } else {
+                    heart.className = 'fa-regular fa-heart text-slate-300 text-lg';
+                }
+                container.appendChild(heart);
+            }
+        }
+
+        // Check user answer
+        function checkAnswer() {
+            if (!currentQ || attemptsLeft <= 0) return;
+
+            const inputEl = document.getElementById('user-input');
+            let rawStr = inputEl.value.trim().replace(',', '.');
+
+            if (rawStr === '') {
+                showToast('Vui lòng nhập kết quả trước khi nhấn kiểm tra!');
+                return;
+            }
+
+            const userNum = parseFloat(rawStr);
+            if (isNaN(userNum)) {
+                showToast('Vui lòng nhập một số hợp lệ!');
+                return;
+            }
+
+            const feedbackEl = document.getElementById('feedback-box');
+            const isCorrect = Math.abs(userNum - currentQ.numericAnswer) < 0.0001;
+
+            if (isCorrect) {
+                // Correct Answer
+                attemptsLeft = 0;
+                stats.total++;
+                stats.correct++;
+                stats.streak++;
+                updateStatsUI();
+
+                feedbackEl.className = 'rounded-2xl p-4 text-center text-sm md:text-base font-medium bounce-in bg-emerald-100 text-emerald-800 border border-emerald-200';
+                feedbackEl.innerHTML = `
+                    <div class="font-bold text-lg text-emerald-700 mb-1">
+                        <i class="fa-solid fa-circle-check"></i> Chính xác! Giỏi lắm!
+                    </div>
+                    <div>${currentQ.explanation}</div>
+                `;
+                feedbackEl.classList.remove('hidden');
+
+                // Confetti trigger
+                confetti({
+                    particleCount: 70,
+                    spread: 60,
+                    origin: { y: 0.7 }
+                });
+
+                finishQuestionState();
+
+            } else {
+                // Incorrect Answer
+                attemptsLeft--;
+                renderHearts();
+
+                const card = document.getElementById('quiz-card');
+                card.classList.add('shake');
+                setTimeout(() => card.classList.remove('shake'), 500);
+
+                if (attemptsLeft > 0) {
+                    feedbackEl.className = 'rounded-2xl p-3 text-center text-sm font-medium bounce-in bg-amber-100 text-amber-800 border border-amber-200';
+                    feedbackEl.innerHTML = `
+                        <i class="fa-solid fa-triangle-exclamation"></i> Chưa chính xác! Bạn còn <strong>${attemptsLeft}</strong> lượt thử. Hãy kiểm tra phép nhân/chia nhé!
+                    `;
+                    feedbackEl.classList.remove('hidden');
+                    inputEl.focus();
+                    inputEl.select();
+                } else {
+                    // Out of attempts
+                    stats.total++;
+                    stats.streak = 0;
+                    updateStatsUI();
+
+                    const formattedAns = currentQ.numericAnswer.toString().replace('.', ',');
+
+                    feedbackEl.className = 'rounded-2xl p-4 text-center text-sm md:text-base font-medium bounce-in bg-rose-100 text-rose-800 border border-rose-200';
+                    feedbackEl.innerHTML = `
+                        <div class="font-bold text-lg text-rose-700 mb-1">
+                            <i class="fa-solid fa-circle-xmark"></i> Đã hết lượt thử!
+                        </div>
+                        <div class="mb-2">Đáp án đúng là: <strong class="text-rose-900 text-xl underline font-mono">${formattedAns}</strong></div>
+                        <div class="text-xs md:text-sm text-slate-700 bg-white/80 p-3 rounded-xl text-left border border-rose-200">
+                            <strong>Lời giải chi tiết:</strong><br>${currentQ.explanation}
+                        </div>
+                    `;
+                    feedbackEl.classList.remove('hidden');
+
+                    finishQuestionState();
+                }
+            }
+        }
+
+        function finishQuestionState() {
+            document.getElementById('user-input').disabled = true;
+            document.getElementById('btn-submit').classList.add('hidden');
+            document.getElementById('btn-skip').classList.add('hidden');
+            document.getElementById('btn-next').classList.remove('hidden');
+            document.getElementById('btn-next').focus();
+        }
+
+        function nextQuestion() {
+            generateQuestion();
+        }
+
+        function skipQuestion() {
+            stats.total++;
+            stats.streak = 0;
+            updateStatsUI();
+            generateQuestion();
+        }
+
+        function updateStatsUI() {
+            document.getElementById('stat-total').innerText = stats.total;
+            document.getElementById('stat-correct').innerText = stats.correct;
+            document.getElementById('stat-streak').innerText = `${stats.streak} 🔥`;
+        }
+
+        function resetStats() {
+            stats.total = 0;
+            stats.correct = 0;
+            stats.streak = 0;
+            updateStatsUI();
+            generateQuestion();
+            showToast('Đã làm mới lại toàn bộ thống kê!');
+        }
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-5 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold shadow-xl z-50 bounce-in';
+            toast.innerText = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
+
+        // Enter key listener
+        document.getElementById('user-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                if (attemptsLeft > 0) {
+                    checkAnswer();
+                } else {
+                    nextQuestion();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
