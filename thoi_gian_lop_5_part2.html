@@ -4,72 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ôn Tập & Luyện Tập Đơn Vị Đo Thời Gian Lớp 5</title>
+    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
+    <!-- FontAwesome Icons CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Font Lexend -->
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Font: Be Vietnam Pro & Lexend (Full Vietnamese Character Set Support) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Canvas Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
+        /* Explicit font configuration ensuring 100% Vietnamese character legibility without encoding glitches */
         body {
-            font-family: 'Lexend', sans-serif;
+            font-family: 'Be Vietnam Pro', 'Lexend', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             background-color: #f0fdfa;
+            color: #1e293b;
         }
+
+        .heading-font {
+            font-family: 'Lexend', 'Be Vietnam Pro', sans-serif;
+        }
+
         .tab-btn.active {
             background-color: #0d9488;
-            color: white;
-            box-shadow: 0 4px 10px -2px rgba(13, 148, 136, 0.4);
+            color: #ffffff;
+            box-shadow: 0 4px 12px -2px rgba(13, 148, 136, 0.4);
         }
+
         .shake {
             animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
         }
+
         @keyframes shake {
             10%, 90% { transform: translate3d(-1px, 0, 0); }
             20%, 80% { transform: translate3d(2px, 0, 0); }
             30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
             40%, 60% { transform: translate3d(4px, 0, 0); }
         }
+
         .bounce-in {
-            animation: bounceIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            animation: bounceIn 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
+
         @keyframes bounceIn {
-            0% { transform: scale(0.85); opacity: 0; }
+            0% { transform: scale(0.88); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
-        .flow-card {
+
+        .card-hover {
             transition: all 0.25s ease;
         }
-        .flow-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+        .card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
         }
     </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col selection:bg-teal-200">
+<body class="min-h-screen flex flex-col selection:bg-teal-200">
 
-    <!-- Header Navigation -->
     <header class="bg-teal-700 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
             <div class="flex items-center space-x-3">
-                <div class="bg-white text-teal-700 p-2.5 rounded-2xl shadow-inner font-bold text-xl flex items-center justify-center w-11 h-11">
-                    <i class="fa-solid fa-clock text-2xl"></i>
+                <div class="bg-white text-teal-700 p-2 rounded-2xl shadow-inner font-bold text-xl flex items-center justify-center w-10 h-10 md:w-12 md:h-12">
+                    <i class="fa-solid fa-clock text-xl md:text-2xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-lg md:text-2xl font-extrabold tracking-tight leading-tight">Toán Lớp 5: Đo Thời Gian</h1>
-                    <p class="text-xs text-teal-100 hidden sm:block">Bảng quy đổi chuẩn giáo khoa & Luyện tập tương tác</p>
+                    <h1 class="heading-font text-base md:text-xl font-extrabold tracking-tight leading-tight">
+                        Bảng Đơn Vị Đo Thời Gian & Bài Tập Quy Đổi (Toán Lớp 5)
+                    </h1>
+                    <p class="text-xs text-teal-100 hidden sm:block">Chương trình Toán Tiểu Học - Tương tác chuẩn Bộ Giáo Dục</p>
                 </div>
             </div>
 
-            <!-- Tab Switcher -->
+            <!-- Navigation Tabs -->
             <div class="flex bg-teal-800/60 p-1 rounded-xl mt-2 sm:mt-0 w-full sm:w-auto">
-                <button id="tab1-btn" onclick="switchTab(1)" class="tab-btn active flex-1 sm:flex-initial px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
+                <button id="tab1-btn" onclick="switchTab(1)" class="tab-btn active flex-1 sm:flex-initial px-4 py-2 rounded-lg font-bold text-xs md:text-sm transition-all duration-200 flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-book-open"></i>
                     <span>Bảng & Sơ Đồ</span>
                 </button>
-                <button id="tab2-btn" onclick="switchTab(2)" class="tab-btn flex-1 sm:flex-initial px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
+                <button id="tab2-btn" onclick="switchTab(2)" class="tab-btn flex-1 sm:flex-initial px-4 py-2 rounded-lg font-bold text-xs md:text-sm transition-all duration-200 flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-pen-to-square"></i>
                     <span>Luyện Tập</span>
                 </button>
@@ -77,219 +93,195 @@
         </div>
     </header>
 
-    <!-- Main Content Container -->
     <main class="flex-grow max-w-5xl w-full mx-auto p-4 md:p-6 space-y-6">
 
-        <!-- SECTION 1: BẢNG VÀ SƠ ĐỒ ĐẠI LƯỢNG THỜI GIAN -->
+        <!-- SECTION 1: THEME & FLOWCHART THEORY -->
         <section id="section-theory" class="space-y-6">
             
-            <!-- Standard Image Matching Boxes -->
-            <div class="bg-white rounded-3xl p-6 shadow-sm border border-teal-100 space-y-4">
+            <!-- Reference Image Replicating Box -->
+            <div class="bg-white rounded-3xl p-5 md:p-6 shadow-sm border border-teal-100 space-y-4">
                 <div class="flex items-center space-x-2 text-teal-800 border-b border-slate-100 pb-3">
                     <i class="fa-solid fa-table text-xl"></i>
-                    <h2 class="text-lg md:text-xl font-extrabold">Bảng Các Đơn Vị Đo Thời Gian (SGK Toán Lớp 5)</h2>
+                    <h2 class="heading-font text-base md:text-lg font-bold">Bảng Các Đơn Vị Đo Thời Gian Qua Lại</h2>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Box 1 -->
-                    <div class="bg-teal-50/70 rounded-2xl p-5 border border-teal-200 space-y-2.5 flow-card">
-                        <div class="font-bold text-teal-900 border-b border-teal-200 pb-1.5 flex justify-between items-center">
-                            <span>Đơn Vị Năm - Thế Kỷ</span>
+                    <div class="bg-teal-50/80 rounded-2xl p-5 border border-teal-200 space-y-3 card-hover">
+                        <div class="font-bold text-teal-900 border-b border-teal-200 pb-2 flex justify-between items-center">
+                            <span class="heading-font text-base">Đơn Vị Năm - Thế Kỷ</span>
                             <i class="fa-solid fa-calendar-days text-teal-600"></i>
                         </div>
                         <ul class="space-y-2 text-sm font-semibold text-slate-700">
                             <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-teal-100 shadow-sm">
                                 <span>1 thế kỷ</span>
-                                <span class="text-teal-700 font-mono font-bold">= 100 năm</span>
+                                <span class="text-teal-700 font-mono font-bold text-base">= 100 năm</span>
                             </li>
                             <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-teal-100 shadow-sm">
                                 <span>1 năm</span>
-                                <span class="text-teal-700 font-mono font-bold">= 12 tháng</span>
+                                <span class="text-teal-700 font-mono font-bold text-base">= 12 tháng</span>
                             </li>
                             <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-teal-100 shadow-sm">
                                 <span>1 năm</span>
-                                <span class="text-teal-700 font-mono font-bold">= 365 ngày</span>
+                                <span class="text-teal-700 font-mono font-bold text-base">= 365 ngày</span>
                             </li>
                             <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-teal-100 shadow-sm">
                                 <span>1 năm nhuận</span>
-                                <span class="text-teal-700 font-mono font-bold">= 366 ngày</span>
+                                <span class="text-teal-700 font-mono font-bold text-base">= 366 ngày</span>
                             </li>
                         </ul>
-                        <p class="text-xs text-amber-700 font-bold bg-amber-50 p-2 rounded-xl border border-amber-200 text-center">
-                            <i class="fa-solid fa-circle-info mr-1"></i> Cứ 4 năm lại có 1 năm nhuận
-                        </p>
+                        <div class="text-xs text-amber-800 font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-200 text-center flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-circle-info text-amber-600"></i>
+                            <span>Cứ 4 năm lại có 1 năm nhuận</span>
+                        </div>
                     </div>
 
                     <!-- Box 2 -->
-                    <div class="bg-sky-50/70 rounded-2xl p-5 border border-sky-200 space-y-2.5 flow-card">
-                        <div class="font-bold text-sky-900 border-b border-sky-200 pb-1.5 flex justify-between items-center">
-                            <span>Đơn Vị Tuần - Ngày - Giờ - Phút - Giây</span>
+                    <div class="bg-sky-50/80 rounded-2xl p-5 border border-sky-200 space-y-3 card-hover">
+                        <div class="font-bold text-sky-900 border-b border-sky-200 pb-2 flex justify-between items-center">
+                            <span class="heading-font text-base">Đơn Vị Tuần - Ngày - Giờ - Phút - Giây</span>
                             <i class="fa-solid fa-stopwatch text-sky-600"></i>
                         </div>
                         <ul class="space-y-2 text-sm font-semibold text-slate-700">
                             <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-sky-100 shadow-sm">
                                 <span>1 tuần lễ</span>
-                                <span class="text-sky-700 font-mono font-bold">= 7 ngày</span>
+                                <span class="text-sky-700 font-mono font-bold text-base">= 7 ngày</span>
                             </li>
                             <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-sky-100 shadow-sm">
                                 <span>1 ngày</span>
-                                <span class="text-sky-700 font-mono font-bold">= 24 giờ</span>
+                                <span class="text-sky-700 font-mono font-bold text-base">= 24 giờ</span>
                             </li>
                             <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-sky-100 shadow-sm">
                                 <span>1 giờ</span>
-                                <span class="text-sky-700 font-mono font-bold">= 60 phút</span>
+                                <span class="text-sky-700 font-mono font-bold text-base">= 60 phút</span>
                             </li>
                             <li class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-sky-100 shadow-sm">
                                 <span>1 phút</span>
-                                <span class="text-sky-700 font-mono font-bold">= 60 giây</span>
+                                <span class="text-sky-700 font-mono font-bold text-base">= 60 giây</span>
                             </li>
                         </ul>
-                        <p class="text-xs text-sky-700 font-bold bg-sky-100 p-2 rounded-xl text-center">
-                            <i class="fa-solid fa-lightbulb mr-1"></i> Các mốc số nhân quen thuộc: 60, 24, 7, 12, 100
+                        <div class="text-xs text-sky-800 font-bold bg-sky-100 p-2.5 rounded-xl text-center flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-lightbulb text-sky-600"></i>
+                            <span>Hệ số nhân/chia cần nhớ: 60, 24, 7, 12, 100</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Flowchart Cards -->
+            <div class="bg-white rounded-3xl p-5 md:p-6 shadow-md border border-teal-100 space-y-6">
+                <div class="border-b border-slate-100 pb-3">
+                    <h2 class="heading-font text-lg md:text-xl font-bold text-slate-800 flex items-center">
+                        <i class="fa-solid fa-diagram-next text-teal-600 mr-2"></i>
+                        Sơ Đồ Luồng Quy Đổi Trực Quan
+                    </h2>
+                    <p class="text-xs md:text-sm text-slate-500 mt-1">
+                        Ghi nhớ quy tắc cốt lõi: <strong>Đổi Xuôi (Lớn → Nhỏ) thì NHÂN</strong>, <strong>Đổi Ngược (Nhỏ → Lớn) thì CHIA</strong>.
+                    </p>
+                </div>
+
+                <!-- Diagrams Container -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    
+                    <!-- Sơ đồ Phút - Giờ & Giây -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                        <div class="font-bold text-teal-800 text-sm flex items-center">
+                            <span class="w-2.5 h-2.5 bg-teal-500 rounded-full mr-2"></span>
+                            Giờ ↔ Phút ↔ Giây (Hệ số 60)
+                        </div>
+                        
+                        <div class="space-y-2 text-xs">
+                            <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                                <span class="font-bold text-teal-700 text-sm">GIỜ</span>
+                                <div class="text-center px-2">
+                                    <span class="bg-teal-100 text-teal-800 px-2 py-0.5 rounded font-bold">Xuôi: × 60</span><br>
+                                    <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">Ngược: : 60</span>
+                                </div>
+                                <span class="font-bold text-indigo-700 text-sm">PHÚT</span>
+                            </div>
+
+                            <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                                <span class="font-bold text-indigo-700 text-sm">PHÚT</span>
+                                <div class="text-center px-2">
+                                    <span class="bg-teal-100 text-teal-800 px-2 py-0.5 rounded font-bold">Xuôi: × 60</span><br>
+                                    <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">Ngược: : 60</span>
+                                </div>
+                                <span class="font-bold text-purple-700 text-sm">GIÂY</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sơ đồ Ngày - Giờ & Năm - Tháng -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                        <div class="font-bold text-sky-800 text-sm flex items-center">
+                            <span class="w-2.5 h-2.5 bg-sky-500 rounded-full mr-2"></span>
+                            Ngày ↔ Giờ & Năm ↔ Tháng
+                        </div>
+                        
+                        <div class="space-y-2 text-xs">
+                            <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                                <span class="font-bold text-sky-700 text-sm">NGÀY</span>
+                                <div class="text-center px-2">
+                                    <span class="bg-teal-100 text-teal-800 px-2 py-0.5 rounded font-bold">Xuôi: × 24</span><br>
+                                    <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">Ngược: : 24</span>
+                                </div>
+                                <span class="font-bold text-blue-700 text-sm">GIỜ</span>
+                            </div>
+
+                            <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                                <span class="font-bold text-emerald-700 text-sm">NĂM</span>
+                                <div class="text-center px-2">
+                                    <span class="bg-teal-100 text-teal-800 px-2 py-0.5 rounded font-bold">Xuôi: × 12</span><br>
+                                    <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">Ngược: : 12</span>
+                                </div>
+                                <span class="font-bold text-teal-700 text-sm">THÁNG</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Step Examples -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div class="bg-emerald-50 rounded-2xl p-4 border border-emerald-200 space-y-1.5">
+                        <h4 class="font-bold text-emerald-900 text-xs md:text-sm flex items-center">
+                            <i class="fa-solid fa-arrow-right-long text-emerald-600 mr-2"></i>
+                            Mẫu Đổi Xuôi (Nhanh & Dễ):
+                        </h4>
+                        <p class="text-xs text-emerald-800">
+                            • 1,5 giờ = 1,5 × 60 = <strong>90 phút</strong><br>
+                            • 2,5 ngày = 2,5 × 24 = <strong>60 giờ</strong>
+                        </p>
+                    </div>
+
+                    <div class="bg-amber-50 rounded-2xl p-4 border border-amber-200 space-y-1.5">
+                        <h4 class="font-bold text-amber-900 text-xs md:text-sm flex items-center">
+                            <i class="fa-solid fa-arrow-left-long text-amber-600 mr-2"></i>
+                            Mẫu Đổi Ngược (Chia Nhỏ Sang Lớn):
+                        </h4>
+                        <p class="text-xs text-amber-800">
+                            • 45 phút = 45 : 60 = <strong>0,75 giờ</strong><br>
+                            • 18 tháng = 18 : 12 = <strong>1,5 năm</strong>
                         </p>
                     </div>
                 </div>
-            </div>
-
-            <!-- FLOWCHART DIAGRAM FOR CONVERSIONS -->
-            <div class="bg-white rounded-3xl p-6 shadow-md border border-teal-100 space-y-6">
-                <div class="border-b border-slate-100 pb-4">
-                    <h2 class="text-lg md:text-xl font-extrabold text-slate-800 flex items-center">
-                        <i class="fa-solid fa-diagram-next text-teal-600 mr-2"></i>
-                        Sơ Đồ Quy Đổi Hai Chiều Dễ Nhớ
-                    </h2>
-                    <p class="text-xs md:text-sm text-slate-500 mt-0.5">Muốn đổi từ đại lượng LỚN $\rightarrow$ NHỎ thì <strong>NHÂN</strong>, từ NHỎ $\rightarrow$ LỚN thì <strong>CHIA</strong>.</p>
-                </div>
-
-                <!-- Interactive Flow Diagrams -->
-                <div class="space-y-6">
-                    
-                    <!-- Diagram 1: Giờ - Phút - Giây -->
-                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
-                        <h3 class="text-sm font-bold text-teal-800 mb-4 flex items-center">
-                            <span class="w-2.5 h-2.5 bg-teal-500 rounded-full mr-2"></span>
-                            Sơ đồ 1: Giờ $\leftrightarrow$ Phút $\leftrightarrow$ Giây
-                        </h3>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-center">
-                            <!-- Unit 1 -->
-                            <div class="bg-teal-600 text-white rounded-xl p-3 font-extrabold text-lg shadow-sm">
-                                GIỜ
-                            </div>
-
-                            <!-- Conversion 1 -->
-                            <div class="flex flex-col justify-center space-y-1">
-                                <div class="bg-teal-100 text-teal-900 border border-teal-300 rounded-lg p-1.5 text-xs font-bold">
-                                    Đổi xuôi (Lớn → Nhỏ): <span class="bg-teal-700 text-white px-2 py-0.5 rounded font-mono">× 60</span>
-                                </div>
-                                <div class="bg-amber-100 text-amber-900 border border-amber-300 rounded-lg p-1.5 text-xs font-bold">
-                                    Đổi ngược (Nhỏ → Lớn): <span class="bg-amber-700 text-white px-2 py-0.5 rounded font-mono">: 60</span>
-                                </div>
-                            </div>
-
-                            <!-- Unit 2 -->
-                            <div class="bg-indigo-600 text-white rounded-xl p-3 font-extrabold text-lg shadow-sm">
-                                PHÚT
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-center mt-3">
-                            <!-- Unit 2 repeat -->
-                            <div class="bg-indigo-600 text-white rounded-xl p-3 font-extrabold text-lg shadow-sm">
-                                PHÚT
-                            </div>
-
-                            <!-- Conversion 2 -->
-                            <div class="flex flex-col justify-center space-y-1">
-                                <div class="bg-teal-100 text-teal-900 border border-teal-300 rounded-lg p-1.5 text-xs font-bold">
-                                    Đổi xuôi (Lớn → Nhỏ): <span class="bg-teal-700 text-white px-2 py-0.5 rounded font-mono">× 60</span>
-                                </div>
-                                <div class="bg-amber-100 text-amber-900 border border-amber-300 rounded-lg p-1.5 text-xs font-bold">
-                                    Đổi ngược (Nhỏ → Lớn): <span class="bg-amber-700 text-white px-2 py-0.5 rounded font-mono">: 60</span>
-                                </div>
-                            </div>
-
-                            <!-- Unit 3 -->
-                            <div class="bg-purple-600 text-white rounded-xl p-3 font-extrabold text-lg shadow-sm">
-                                GIÂY
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Diagram 2: Ngày - Giờ / Năm - Tháng -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Ngày -> Giờ -->
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
-                            <h4 class="text-xs font-bold text-sky-800 uppercase tracking-wide">Ngày $\leftrightarrow$ Giờ</h4>
-                            <div class="flex items-center justify-between gap-2">
-                                <span class="bg-sky-600 text-white px-3 py-2 rounded-xl font-bold text-sm">NGÀY</span>
-                                <div class="flex-1 text-center space-y-1">
-                                    <div class="bg-teal-100 text-teal-800 text-xs font-bold py-1 rounded-md">Xuôi: × 24</div>
-                                    <div class="bg-amber-100 text-amber-800 text-xs font-bold py-1 rounded-md">Ngược: : 24</div>
-                                </div>
-                                <span class="bg-blue-600 text-white px-3 py-2 rounded-xl font-bold text-sm">GIỜ</span>
-                            </div>
-                        </div>
-
-                        <!-- Năm -> Tháng -->
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
-                            <h4 class="text-xs font-bold text-emerald-800 uppercase tracking-wide">Năm $\leftrightarrow$ Tháng</h4>
-                            <div class="flex items-center justify-between gap-2">
-                                <span class="bg-emerald-600 text-white px-3 py-2 rounded-xl font-bold text-sm">NĂM</span>
-                                <div class="flex-1 text-center space-y-1">
-                                    <div class="bg-teal-100 text-teal-800 text-xs font-bold py-1 rounded-md">Xuôi: × 12</div>
-                                    <div class="bg-amber-100 text-amber-800 text-xs font-bold py-1 rounded-md">Ngược: : 12</div>
-                                </div>
-                                <span class="bg-teal-700 text-white px-3 py-2 rounded-xl font-bold text-sm">THÁNG</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Examples Box -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                    <div class="bg-emerald-50 rounded-2xl p-4 border border-emerald-200 space-y-2">
-                        <h4 class="font-bold text-emerald-900 text-sm flex items-center">
-                            <i class="fa-solid fa-circle-arrow-right text-emerald-600 mr-2"></i>
-                            Ví dụ Đổi Xuôi (Lớn → Nhỏ: Nhân)
-                        </h4>
-                        <ul class="space-y-1.5 text-xs text-emerald-900 font-medium">
-                            <li>• 2,5 giờ = 2,5 × 60 = <strong>150 phút</strong></li>
-                            <li>• 3 năm = 3 × 12 = <strong>36 tháng</strong></li>
-                            <li>• 0,5 ngày = 0,5 × 24 = <strong>12 giờ</strong></li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-amber-50 rounded-2xl p-4 border border-amber-200 space-y-2">
-                        <h4 class="font-bold text-amber-900 text-sm flex items-center">
-                            <i class="fa-solid fa-circle-arrow-left text-amber-600 mr-2"></i>
-                            Ví dụ Đổi Ngược (Nhỏ → Lớn: Chia)
-                        </h4>
-                        <ul class="space-y-1.5 text-xs text-amber-900 font-medium">
-                            <li>• 45 phút = 45 : 60 = <strong>0,75 giờ</strong></li>
-                            <li>• 18 tháng = 18 : 12 = <strong>1,5 năm</strong></li>
-                            <li>• 36 giờ = 36 : 24 = <strong>1,5 ngày</strong></li>
-                        </ul>
-                    </div>
-                </div>
 
             </div>
 
-            <!-- CTA Banner -->
+            <!-- Start Practice CTA Button -->
             <div class="bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-3xl p-6 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                    <h3 class="font-extrabold text-lg">Bạn đã hiểu vững quy tắc chưa?</h3>
-                    <p class="text-xs text-teal-100 mt-1">Cùng thực hành các câu hỏi đổi đơn vị ngẫu nhiên ngay nào!</p>
+                    <h3 class="heading-font font-bold text-base md:text-lg">Sẵn sàng thử tài chưa?</h3>
+                    <p class="text-xs md:text-sm text-teal-100 mt-0.5">Luyện tập ngay các câu hỏi quy đổi ngẫu nhiên có phản hồi chi tiết!</p>
                 </div>
-                <button onclick="switchTab(2)" class="px-6 py-3 bg-white text-teal-800 hover:bg-teal-50 font-extrabold rounded-2xl shadow transition-all whitespace-nowrap active:scale-95">
-                    Bắt đầu Luyện Tập <i class="fa-solid fa-arrow-right ml-1"></i>
+                <button onclick="switchTab(2)" class="px-6 py-3 bg-white text-teal-800 hover:bg-teal-50 font-bold rounded-2xl shadow transition-all whitespace-nowrap active:scale-95 text-sm">
+                    Thực Hành Ngay <i class="fa-solid fa-arrow-right ml-1"></i>
                 </button>
             </div>
 
         </section>
 
-        <!-- SECTION 2: CÂU HỎI LUYỆN TẬP TƯƠNG TÁC -->
+        <!-- SECTION 2: INTERACTIVE PRACTICE QUIZ -->
         <section id="section-practice" class="hidden space-y-6">
             
             <!-- Dashboard Stats -->
@@ -300,7 +292,7 @@
                     </div>
                     <div>
                         <div class="text-xs text-slate-400 font-medium">Đã làm</div>
-                        <div id="stat-total" class="text-xl md:text-2xl font-black text-slate-800">0</div>
+                        <div id="stat-total" class="heading-font text-lg md:text-2xl font-black text-slate-800">0</div>
                     </div>
                 </div>
 
@@ -309,8 +301,8 @@
                         <i class="fa-solid fa-circle-check"></i>
                     </div>
                     <div>
-                        <div class="text-xs text-slate-400 font-medium">Trả lời đúng</div>
-                        <div id="stat-correct" class="text-xl md:text-2xl font-black text-emerald-600">0</div>
+                        <div class="text-xs text-slate-400 font-medium">Tỷ lệ đúng</div>
+                        <div id="stat-accuracy" class="heading-font text-lg md:text-2xl font-black text-emerald-600">0%</div>
                     </div>
                 </div>
 
@@ -320,38 +312,38 @@
                     </div>
                     <div>
                         <div class="text-xs text-slate-400 font-medium">Chuỗi đúng</div>
-                        <div id="stat-streak" class="text-xl md:text-2xl font-black text-orange-500">0 🔥</div>
+                        <div id="stat-streak" class="heading-font text-lg md:text-2xl font-black text-orange-500">0 🔥</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Quiz Interactive Card -->
+            <!-- Quiz Main Interactive Card -->
             <div id="quiz-card" class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border border-teal-100 relative overflow-hidden transition-all duration-300">
                 
                 <!-- Quiz Header Bar -->
-                <div class="flex justify-between items-center mb-6">
+                <div class="flex justify-between items-center mb-4">
                     <span id="question-type-tag" class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5">
-                        <i class="fa-solid fa-shuffle"></i> Đổi đơn vị ngẫu nhiên
+                        <i class="fa-solid fa-shuffle"></i> Đang tải dạng bài...
                     </span>
 
-                    <!-- Hearts (Attempts Left) -->
+                    <!-- Hearts (Attempts Remaining) -->
                     <div class="flex items-center space-x-1.5" id="hearts-container">
                         <!-- Rendered by JS -->
                     </div>
                 </div>
 
-                <!-- Question Title & Prompt -->
+                <!-- Question Prompt -->
                 <div class="text-center my-6">
                     <div class="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-400 mb-2">Điền số thích hợp vào chỗ chấm</div>
-                    <div id="question-prompt" class="text-2xl md:text-4xl font-extrabold text-slate-800 tracking-tight my-4">
-                        Đang khởi tạo câu hỏi...
+                    <div id="question-prompt" class="heading-font text-2xl md:text-4xl font-extrabold text-slate-800 tracking-tight my-4">
+                        Đang tạo câu hỏi...
                     </div>
                 </div>
 
                 <!-- Input Box & Actions -->
                 <div class="max-w-md mx-auto space-y-4">
                     <div class="relative">
-                        <input type="text" id="user-input" placeholder="Nhập kết quả (vd: 0,75 hoặc 1,5)..." autocomplete="off"
+                        <input type="text" id="user-input" placeholder="Nhập số (vd: 0,5 hoặc 0.75)..." autocomplete="off"
                                class="w-full text-center text-xl md:text-2xl font-bold py-3.5 px-4 rounded-2xl border-2 border-slate-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-100 outline-none transition-all">
                     </div>
 
@@ -380,11 +372,11 @@
 
             </div>
 
-            <!-- Refresh / Reset Game Button -->
+            <!-- Footer Toolbar -->
             <div class="flex justify-between items-center text-xs text-slate-500 px-2">
-                <span>* Có thể nhập dấu phẩy (,) hoặc dấu chấm (.) cho số thập phân.</span>
+                <span>* Chấp nhận cả dấu phẩy (,) và dấu chấm (.) khi nhập số thập phân.</span>
                 <button onclick="resetStats()" class="text-slate-500 hover:text-rose-600 font-semibold underline flex items-center gap-1">
-                    <i class="fa-solid fa-rotate-right"></i> Làm mới / Chơi lại
+                    <i class="fa-solid fa-rotate-right"></i> Làm mới toàn bộ
                 </button>
             </div>
 
@@ -392,7 +384,6 @@
 
     </main>
 
-    <!-- JavaScript Quiz & App Logic -->
     <script>
         // State variables
         let currentTab = 1;
@@ -430,12 +421,12 @@
             }
         }
 
-        // Random array picker helper
+        // Random array item picker
         function getRandomChoice(arr) {
             return arr[Math.floor(Math.random() * arr.length)];
         }
 
-        // Question generator with 75% emphasis on division (small -> large unit) with neat clean decimals (max 3 decimals)
+        // Generate clean random questions (emphasis on division/small->large conversions, <= 3 decimals)
         function generateQuestion() {
             attemptsLeft = 3;
             renderHearts();
@@ -457,7 +448,7 @@
             btnSkip.classList.remove('hidden');
             btnNext.classList.add('hidden');
 
-            // Pool of question definitions
+            // Category definitions with strict division focus (75% probability)
             const backwardDivQuestions = [
                 // 1. Phút -> Giờ (:60)
                 {
@@ -482,7 +473,7 @@
                         return {
                             prompt: `${item.val} phút = ... giờ`,
                             numericAnswer: item.ans,
-                            explanation: `Đổi từ <strong>phút</strong> sang <strong>giờ</strong> (nhỏ sang lớn) ta lấy số phút chia cho 60:<br><span class="font-bold text-teal-800">${item.val} : 60 = ${item.ans.toString().replace('.', ',')} giờ</span>`
+                            explanation: `Đổi từ <strong>phút</strong> sang <strong>giờ</strong> (từ đơn vị bé sang lớn) ta lấy số phút chia cho 60:<br><span class="font-bold text-teal-800 font-mono">${item.val} : 60 = ${item.ans.toString().replace('.', ',')} giờ</span>`
                         };
                     }
                 },
@@ -504,7 +495,7 @@
                         return {
                             prompt: `${item.val} giây = ... phút`,
                             numericAnswer: item.ans,
-                            explanation: `Đổi từ <strong>giây</strong> sang <strong>phút</strong> ta lấy số giây chia cho 60:<br><span class="font-bold text-teal-800">${item.val} : 60 = ${item.ans.toString().replace('.', ',')} phút</span>`
+                            explanation: `Đổi từ <strong>giây</strong> sang <strong>phút</strong> ta lấy số giây chia cho 60:<br><span class="font-bold text-teal-800 font-mono">${item.val} : 60 = ${item.ans.toString().replace('.', ',')} phút</span>`
                         };
                     }
                 },
@@ -525,7 +516,7 @@
                         return {
                             prompt: `${item.val} giờ = ... ngày`,
                             numericAnswer: item.ans,
-                            explanation: `Đổi từ <strong>giờ</strong> sang <strong>ngày</strong> ta lấy số giờ chia cho 24:<br><span class="font-bold text-teal-800">${item.val} : 24 = ${item.ans.toString().replace('.', ',')} ngày</span>`
+                            explanation: `Đổi từ <strong>giờ</strong> sang <strong>ngày</strong> ta lấy số giờ chia cho 24:<br><span class="font-bold text-teal-800 font-mono">${item.val} : 24 = ${item.ans.toString().replace('.', ',')} ngày</span>`
                         };
                     }
                 },
@@ -546,7 +537,7 @@
                         return {
                             prompt: `${item.val} tháng = ... năm`,
                             numericAnswer: item.ans,
-                            explanation: `Đổi từ <strong>tháng</strong> sang <strong>năm</strong> ta lấy số tháng chia cho 12:<br><span class="font-bold text-teal-800">${item.val} : 12 = ${item.ans.toString().replace('.', ',')} năm</span>`
+                            explanation: `Đổi từ <strong>tháng</strong> sang <strong>năm</strong> ta lấy số tháng chia cho 12:<br><span class="font-bold text-teal-800 font-mono">${item.val} : 12 = ${item.ans.toString().replace('.', ',')} năm</span>`
                         };
                     }
                 },
@@ -566,7 +557,7 @@
                         return {
                             prompt: `${item.val} năm = ... thế kỷ`,
                             numericAnswer: item.ans,
-                            explanation: `Đổi từ <strong>năm</strong> sang <strong>thế kỷ</strong> ta lấy số năm chia cho 100:<br><span class="font-bold text-teal-800">${item.val} : 100 = ${item.ans.toString().replace('.', ',')} thế kỷ</span>`
+                            explanation: `Đổi từ <strong>năm</strong> sang <strong>thế kỷ</strong> ta lấy số năm chia cho 100:<br><span class="font-bold text-teal-800 font-mono">${item.val} : 100 = ${item.ans.toString().replace('.', ',')} thế kỷ</span>`
                         };
                     }
                 }
@@ -590,7 +581,7 @@
                         return {
                             prompt: `${displayVal} giờ = ... phút`,
                             numericAnswer: item.ans,
-                            explanation: `Đổi từ <strong>giờ</strong> sang <strong>phút</strong> (lớn sang nhỏ) ta lấy số giờ nhân với 60:<br><span class="font-bold text-teal-800">${displayVal} × 60 = ${item.ans} phút</span>`
+                            explanation: `Đổi từ <strong>giờ</strong> sang <strong>phút</strong> (từ đơn vị lớn sang bé) ta lấy số giờ nhân với 60:<br><span class="font-bold text-teal-800 font-mono">${displayVal} × 60 = ${item.ans} phút</span>`
                         };
                     }
                 },
@@ -609,7 +600,7 @@
                         return {
                             prompt: `${displayVal} ngày = ... giờ`,
                             numericAnswer: item.ans,
-                            explanation: `Đổi từ <strong>ngày</strong> sang <strong>giờ</strong> ta lấy số ngày nhân với 24:<br><span class="font-bold text-teal-800">${displayVal} × 24 = ${item.ans} giờ</span>`
+                            explanation: `Đổi từ <strong>ngày</strong> sang <strong>giờ</strong> ta lấy số ngày nhân với 24:<br><span class="font-bold text-teal-800 font-mono">${displayVal} × 24 = ${item.ans} giờ</span>`
                         };
                     }
                 },
@@ -629,13 +620,13 @@
                         return {
                             prompt: `${displayVal} năm = ... tháng`,
                             numericAnswer: item.ans,
-                            explanation: `Đổi từ <strong>năm</strong> sang <strong>tháng</strong> ta lấy số năm nhân với 12:<br><span class="font-bold text-teal-800">${displayVal} × 12 = ${item.ans} tháng</span>`
+                            explanation: `Đổi từ <strong>năm</strong> sang <strong>tháng</strong> ta lấy số năm nhân với 12:<br><span class="font-bold text-teal-800 font-mono">${displayVal} × 12 = ${item.ans} tháng</span>`
                         };
                     }
                 }
             ];
 
-            // 75% chance for division (smaller -> larger unit)
+            // 75% bias towards division questions
             const isBackward = Math.random() < 0.75;
             const selectedCategory = isBackward ? getRandomChoice(backwardDivQuestions) : getRandomChoice(forwardMulQuestions);
 
@@ -651,16 +642,16 @@
             document.getElementById('question-prompt').innerHTML = currentQ.prompt;
         }
 
-        // Render hearts for attempts left
+        // Render remaining attempt hearts
         function renderHearts() {
             const container = document.getElementById('hearts-container');
             container.innerHTML = '';
             for (let i = 1; i <= 3; i++) {
                 const heart = document.createElement('i');
                 if (i <= attemptsLeft) {
-                    heart.className = 'fa-solid fa-heart text-red-500 text-lg transition-transform hover:scale-110';
+                    heart.className = 'fa-solid fa-heart text-red-500 text-base md:text-lg transition-transform hover:scale-110';
                 } else {
-                    heart.className = 'fa-regular fa-heart text-slate-300 text-lg';
+                    heart.className = 'fa-regular fa-heart text-slate-300 text-base md:text-lg';
                 }
                 container.appendChild(heart);
             }
@@ -698,7 +689,7 @@
                 feedbackEl.className = 'rounded-2xl p-4 text-center text-sm md:text-base font-medium bounce-in bg-emerald-100 text-emerald-800 border border-emerald-200';
                 feedbackEl.innerHTML = `
                     <div class="font-bold text-lg text-emerald-700 mb-1">
-                        <i class="fa-solid fa-circle-check"></i> Chính xác! Giỏi lắm!
+                        <i class="fa-solid fa-circle-check"></i> Chính xác! Tuyệt vời lắm!
                     </div>
                     <div>${currentQ.explanation}</div>
                 `;
@@ -706,7 +697,7 @@
 
                 // Confetti trigger
                 confetti({
-                    particleCount: 70,
+                    particleCount: 60,
                     spread: 60,
                     origin: { y: 0.7 }
                 });
@@ -725,7 +716,7 @@
                 if (attemptsLeft > 0) {
                     feedbackEl.className = 'rounded-2xl p-3 text-center text-sm font-medium bounce-in bg-amber-100 text-amber-800 border border-amber-200';
                     feedbackEl.innerHTML = `
-                        <i class="fa-solid fa-triangle-exclamation"></i> Chưa chính xác! Bạn còn <strong>${attemptsLeft}</strong> lượt thử. Hãy kiểm tra phép nhân/chia nhé!
+                        <i class="fa-solid fa-triangle-exclamation"></i> Chưa đúng rồi! Bạn còn <strong>${attemptsLeft}</strong> lần thử nữa. Hãy thử lại nào!
                     `;
                     feedbackEl.classList.remove('hidden');
                     inputEl.focus();
@@ -776,7 +767,8 @@
 
         function updateStatsUI() {
             document.getElementById('stat-total').innerText = stats.total;
-            document.getElementById('stat-correct').innerText = stats.correct;
+            const accuracy = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
+            document.getElementById('stat-accuracy').innerText = `${accuracy}%`;
             document.getElementById('stat-streak').innerText = `${stats.streak} 🔥`;
         }
 
@@ -786,7 +778,7 @@
             stats.streak = 0;
             updateStatsUI();
             generateQuestion();
-            showToast('Đã làm mới lại toàn bộ thống kê!');
+            showToast('Đã làm mới dữ liệu luyện tập!');
         }
 
         function showToast(msg) {

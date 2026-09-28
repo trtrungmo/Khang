@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Tập & Luyện Tập Đơn Vị Thể Tích Lớp 5</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Font Inter / Lexend -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #f0fdf4;
+        }
+        .tab-btn.active {
+            background-color: #16a34a;
+            color: white;
+            box-shadow: 0 4px 10px -2px rgba(22, 163, 74, 0.4);
+        }
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+        .bounce-in {
+            animation: bounceIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .flow-card {
+            transition: all 0.25s ease;
+        }
+        .flow-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col selection:bg-emerald-200">
+
+    <!-- Header Navigation -->
+    <header class="bg-emerald-600 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white text-emerald-600 p-2.5 rounded-2xl shadow-inner font-bold text-xl flex items-center justify-center w-11 h-11">
+                    <i class="fa-solid fa-cube text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg md:text-2xl font-extrabold tracking-tight leading-tight">Toán Lớp 5: Thể Tích</h1>
+                    <p class="text-xs text-emerald-100 hidden sm:block">Sơ đồ quy đổi trực quan & Luyện tập ngắn gọn</p>
+                </div>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="flex bg-emerald-700/60 p-1 rounded-xl mt-2 sm:mt-0 w-full sm:w-auto">
+                <button id="tab1-btn" onclick="switchTab(1)" class="tab-btn active flex-1 sm:flex-initial px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-diagram-project"></i>
+                    <span>Sơ Đồ Lý Thuyết</span>
+                </button>
+                <button id="tab2-btn" onclick="switchTab(2)" class="tab-btn flex-1 sm:flex-initial px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>Luyện Tập</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-5xl w-full mx-auto p-4 md:p-6 space-y-6">
+
+        <!-- SECTION 1: LÝ THUYẾT & SƠ ĐỒ QUY ĐỔI -->
+        <section id="section-theory" class="space-y-6">
+            
+            <!-- Intro Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- m3 card -->
+                <div class="bg-white rounded-3xl p-5 shadow-sm border border-emerald-100 border-t-4 border-t-emerald-500 flow-card">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-2xl font-black text-emerald-600">m³</span>
+                        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full">Đơn vị lớn</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-base">Mét khối</h3>
+                    <p class="text-xs text-amber-600 font-semibold mt-1 bg-amber-50 px-2 py-1 rounded-md inline-block">
+                        <i class="fa-solid fa-comments mr-1"></i>Dân dã: <strong>"Khối"</strong> (Ví dụ: 1 khối nước)
+                    </p>
+                    <div class="mt-3 text-xs text-slate-600 pt-2 border-t border-slate-100">
+                        1 m³ = 1.000 dm³ = 1.000.000 cm³
+                    </div>
+                </div>
+
+                <!-- dm3 card -->
+                <div class="bg-white rounded-3xl p-5 shadow-sm border border-emerald-100 border-t-4 border-t-blue-500 flow-card">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-2xl font-black text-blue-600">dm³</span>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-full">Đơn vị trung bình</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-base">Đề-xi-mét khối</h3>
+                    <p class="text-xs text-blue-600 font-semibold mt-1 bg-blue-50 px-2 py-1 rounded-md inline-block">
+                        <i class="fa-solid fa-bottle-water mr-1"></i>Dân dã: <strong>"Lít"</strong> (1 dm³ = 1 Lít)
+                    </p>
+                    <div class="mt-3 text-xs text-slate-600 pt-2 border-t border-slate-100">
+                        1 dm³ = 1.000 cm³ = 0,001 m³
+                    </div>
+                </div>
+
+                <!-- cm3 card -->
+                <div class="bg-white rounded-3xl p-5 shadow-sm border border-emerald-100 border-t-4 border-t-indigo-500 flow-card">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-2xl font-black text-indigo-600">cm³</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-2.5 py-1 rounded-full">Đơn vị nhỏ</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-base">Xen-ti-mét khối</h3>
+                    <p class="text-xs text-indigo-600 font-semibold mt-1 bg-indigo-50 px-2 py-1 rounded-md inline-block">
+                        <i class="fa-solid fa-syringe mr-1"></i>Dân dã: <strong>"cc"</strong> hoặc <strong>"ml"</strong>
+                    </p>
+                    <div class="mt-3 text-xs text-slate-600 pt-2 border-t border-slate-100">
+                        1 cm³ = 1 ml = 0,001 dm³
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISUAL FLOWCHART DIAGRAM -->
+            <div class="bg-white rounded-3xl p-6 shadow-md border border-emerald-100 space-y-6">
+                <div class="border-b border-slate-100 pb-4 flex justify-between items-center flex-wrap gap-2">
+                    <div>
+                        <h2 class="text-lg md:text-xl font-extrabold text-slate-800 flex items-center">
+                            <i class="fa-solid fa-arrow-right-arrow-left text-emerald-600 mr-2"></i>
+                            Sơ Đồ Quy Đổi Đơn Vị Thể Tích
+                        </h2>
+                        <p class="text-xs md:text-sm text-slate-500 mt-0.5">Ghi nhớ quy tắc nhân / chia với 1.000 khi dịch chuyển giữa các đơn vị kế tiếp</p>
+                    </div>
+                </div>
+
+                <!-- Interactive Flow Chart Visual -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-8">
+                    
+                    <!-- Diagram Flow -->
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4 relative">
+                        
+                        <!-- Unit 1: m3 -->
+                        <div class="w-full md:w-1/3 bg-emerald-600 text-white rounded-2xl p-4 text-center shadow-md relative z-10">
+                            <div class="text-xs font-semibold text-emerald-200 uppercase">Mét khối</div>
+                            <div class="text-3xl font-black my-1">m³</div>
+                            <div class="text-xs bg-emerald-700/80 rounded-lg py-1 px-2 inline-block text-emerald-100">1 khối = 1.000 lít</div>
+                        </div>
+
+                        <!-- Arrow 1: Between m3 and dm3 -->
+                        <div class="w-full md:w-1/3 flex flex-col items-center space-y-2">
+                            <!-- Top Arrow (Forward: x1000) -->
+                            <div class="w-full bg-emerald-100 border border-emerald-300 rounded-xl p-2 text-center text-xs font-bold text-emerald-800 shadow-sm flex items-center justify-center space-x-1">
+                                <span>Đổi xuôi (Lớn → Nhỏ):</span>
+                                <span class="bg-emerald-600 text-white px-2 py-0.5 rounded-md font-mono text-xs">× 1.000</span>
+                                <i class="fa-solid fa-arrow-right text-emerald-600 ml-1 hidden md:inline"></i>
+                                <i class="fa-solid fa-arrow-down text-emerald-600 ml-1 md:hidden"></i>
+                            </div>
+
+                            <!-- Bottom Arrow (Backward: :1000) -->
+                            <div class="w-full bg-amber-100 border border-amber-300 rounded-xl p-2 text-center text-xs font-bold text-amber-900 shadow-sm flex items-center justify-center space-x-1">
+                                <i class="fa-solid fa-arrow-left text-amber-600 mr-1 hidden md:inline"></i>
+                                <i class="fa-solid fa-arrow-up text-amber-600 mr-1 md:hidden"></i>
+                                <span>Đổi ngược (Nhỏ → Lớn):</span>
+                                <span class="bg-amber-600 text-white px-2 py-0.5 rounded-md font-mono text-xs">: 1.000</span>
+                            </div>
+                        </div>
+
+                        <!-- Unit 2: dm3 -->
+                        <div class="w-full md:w-1/3 bg-blue-600 text-white rounded-2xl p-4 text-center shadow-md relative z-10">
+                            <div class="text-xs font-semibold text-blue-200 uppercase">Đề-xi-mét khối</div>
+                            <div class="text-3xl font-black my-1">dm³</div>
+                            <div class="text-xs bg-blue-700/80 rounded-lg py-1 px-2 inline-block text-blue-100">1 dm³ = 1 Lít</div>
+                        </div>
+
+                        <!-- Arrow 2: Between dm3 and cm3 -->
+                        <div class="w-full md:w-1/3 flex flex-col items-center space-y-2">
+                            <!-- Top Arrow (Forward: x1000) -->
+                            <div class="w-full bg-emerald-100 border border-emerald-300 rounded-xl p-2 text-center text-xs font-bold text-emerald-800 shadow-sm flex items-center justify-center space-x-1">
+                                <span>Đổi xuôi (Lớn → Nhỏ):</span>
+                                <span class="bg-emerald-600 text-white px-2 py-0.5 rounded-md font-mono text-xs">× 1.000</span>
+                                <i class="fa-solid fa-arrow-right text-emerald-600 ml-1 hidden md:inline"></i>
+                                <i class="fa-solid fa-arrow-down text-emerald-600 ml-1 md:hidden"></i>
+                            </div>
+
+                            <!-- Bottom Arrow (Backward: :1000) -->
+                            <div class="w-full bg-amber-100 border border-amber-300 rounded-xl p-2 text-center text-xs font-bold text-amber-900 shadow-sm flex items-center justify-center space-x-1">
+                                <i class="fa-solid fa-arrow-left text-amber-600 mr-1 hidden md:inline"></i>
+                                <i class="fa-solid fa-arrow-up text-amber-600 mr-1 md:hidden"></i>
+                                <span>Đổi ngược (Nhỏ → Lớn):</span>
+                                <span class="bg-amber-600 text-white px-2 py-0.5 rounded-md font-mono text-xs">: 1.000</span>
+                            </div>
+                        </div>
+
+                        <!-- Unit 3: cm3 -->
+                        <div class="w-full md:w-1/3 bg-indigo-600 text-white rounded-2xl p-4 text-center shadow-md relative z-10">
+                            <div class="text-xs font-semibold text-indigo-200 uppercase">Xen-ti-mét khối</div>
+                            <div class="text-3xl font-black my-1">cm³</div>
+                            <div class="text-xs bg-indigo-700/80 rounded-lg py-1 px-2 inline-block text-indigo-100">1 cm³ = 1 ml (cc)</div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Examples Table -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <!-- Example 1: Forward -->
+                    <div class="bg-emerald-50 rounded-2xl p-4 border border-emerald-200">
+                        <h4 class="font-bold text-emerald-900 text-sm mb-2 flex items-center">
+                            <i class="fa-solid fa-circle-arrow-right text-emerald-600 mr-2"></i>
+                            Ví dụ Đổi Xuôi (Nhân với 1.000)
+                        </h4>
+                        <ul class="space-y-1.5 text-xs text-emerald-800 font-medium">
+                            <li>• 3,5 m³ = 3,5 × 1.000 = <strong>3.500 dm³</strong> (lít)</li>
+                            <li>• 2 dm³ = 2 × 1.000 = <strong>2.000 cm³</strong></li>
+                            <li>• 0,75 m³ = 0,75 × 1.000.000 = <strong>750.000 cm³</strong></li>
+                        </ul>
+                    </div>
+
+                    <!-- Example 2: Backward -->
+                    <div class="bg-amber-50 rounded-2xl p-4 border border-amber-200">
+                        <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center">
+                            <i class="fa-solid fa-circle-arrow-left text-amber-600 mr-2"></i>
+                            Ví dụ Đổi Ngược (Chia cho 1.000)
+                        </h4>
+                        <ul class="space-y-1.5 text-xs text-amber-900 font-medium">
+                            <li>• 500 cm³ = 500 : 1.000 = <strong>0,5 dm³</strong></li>
+                            <li>• 2.500 dm³ = 2.500 : 1.000 = <strong>2,5 m³</strong></li>
+                            <li>• 750 lít (dm³) = 750 : 1.000 = <strong>0,75 m³</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CTA Banner -->
+            <div class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-3xl p-6 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <h3 class="font-extrabold text-lg">Đã sẵn sàng thử sức chưa?</h3>
+                    <p class="text-xs text-emerald-100 mt-1">Luyện tập ngay các bài toán đổi đơn vị thể tích (tối đa 2 số thập phân).</p>
+                </div>
+                <button onclick="switchTab(2)" class="px-6 py-3 bg-white text-emerald-700 hover:bg-emerald-50 font-extrabold rounded-2xl shadow transition-all whitespace-nowrap active:scale-95">
+                    Bắt đầu Luyện Tập <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+
+        </section>
+
+        <!-- SECTION 2: CÂU HỎI LUYỆN TẬP TƯƠNG TÁC -->
+        <section id="section-practice" class="hidden space-y-6">
+            
+            <!-- Dashboard Stats -->
+            <div class="grid grid-cols-3 gap-3">
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center space-x-3">
+                    <div class="p-3 bg-blue-100 text-blue-600 rounded-xl text-lg hidden sm:block">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-medium">Đã làm</div>
+                        <div id="stat-total" class="text-xl md:text-2xl font-black text-slate-800">0</div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center space-x-3">
+                    <div class="p-3 bg-emerald-100 text-emerald-600 rounded-xl text-lg hidden sm:block">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-medium">Trả lời đúng</div>
+                        <div id="stat-correct" class="text-xl md:text-2xl font-black text-emerald-600">0</div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center space-x-3">
+                    <div class="p-3 bg-orange-100 text-orange-600 rounded-xl text-lg hidden sm:block">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-medium">Chuỗi đúng</div>
+                        <div id="stat-streak" class="text-xl md:text-2xl font-black text-orange-500">0 🔥</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Quiz Interactive Card -->
+            <div id="quiz-card" class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border border-emerald-100 relative overflow-hidden transition-all duration-300">
+                
+                <!-- Quiz Header Bar -->
+                <div class="flex justify-between items-center mb-6">
+                    <span id="question-type-tag" class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                        <i class="fa-solid fa-shuffle"></i> Đổi đơn vị ngẫu nhiên
+                    </span>
+
+                    <!-- Hearts (Attempts Left) -->
+                    <div class="flex items-center space-x-1.5" id="hearts-container">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- Question Title & Prompt -->
+                <div class="text-center my-6">
+                    <div class="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-400 mb-2">Điền số thích hợp vào chỗ chấm</div>
+                    <div id="question-prompt" class="text-2xl md:text-4xl font-extrabold text-slate-800 tracking-tight my-4">
+                        Đang khởi tạo câu hỏi...
+                    </div>
+                </div>
+
+                <!-- Input Box & Actions -->
+                <div class="max-w-md mx-auto space-y-4">
+                    <div class="relative">
+                        <input type="text" id="user-input" placeholder="Nhập kết quả (vd: 0,5 hoặc 2,25)..." autocomplete="off"
+                               class="w-full text-center text-xl md:text-2xl font-bold py-3.5 px-4 rounded-2xl border-2 border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none transition-all">
+                    </div>
+
+                    <!-- Dynamic Feedback Message Box -->
+                    <div id="feedback-box" class="hidden rounded-2xl p-4 text-center text-sm md:text-base font-medium bounce-in">
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                        <button id="btn-submit" onclick="checkAnswer()" class="sm:col-span-2 py-3.5 px-6 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold rounded-2xl shadow-lg shadow-emerald-600/30 transition-all flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Kiểm Tra</span>
+                        </button>
+
+                        <button id="btn-skip" onclick="skipQuestion()" class="py-3.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold rounded-2xl transition-all flex items-center justify-center space-x-1.5">
+                            <i class="fa-solid fa-forward text-xs"></i>
+                            <span>Bỏ qua</span>
+                        </button>
+                    </div>
+
+                    <button id="btn-next" onclick="nextQuestion()" class="hidden w-full py-3.5 px-6 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold rounded-2xl shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center space-x-2">
+                        <span>Câu tiếp theo</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Refresh / Reset Game Button -->
+            <div class="flex justify-between items-center text-xs text-slate-500 px-2">
+                <span>* Đáp án tối đa chỉ 2 số thập phân (ví dụ: 0,25 hoặc 1,5).</span>
+                <button onclick="resetStats()" class="text-slate-500 hover:text-rose-600 font-semibold underline flex items-center gap-1">
+                    <i class="fa-solid fa-rotate-right"></i> Làm mới / Chơi lại từ đầu
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JavaScript Quiz Logic -->
+    <script>
+        // Game & App State
+        let currentTab = 1;
+        let attemptsLeft = 3;
+        let currentQ = null;
+
+        let stats = {
+            total: 0,
+            correct: 0,
+            streak: 0
+        };
+
+        // Tab Navigation
+        function switchTab(tabNum) {
+            currentTab = tabNum;
+            const btn1 = document.getElementById('tab1-btn');
+            const btn2 = document.getElementById('tab2-btn');
+            const sec1 = document.getElementById('section-theory');
+            const sec2 = document.getElementById('section-practice');
+
+            if (tabNum === 1) {
+                btn1.classList.add('active');
+                btn2.classList.remove('active');
+                sec1.classList.remove('hidden');
+                sec2.classList.add('hidden');
+            } else {
+                btn2.classList.add('active');
+                btn1.classList.remove('active');
+                sec2.classList.remove('hidden');
+                sec1.classList.add('hidden');
+
+                if (!currentQ) {
+                    generateQuestion();
+                }
+            }
+        }
+
+        // Random generator helpers
+        function getRandomChoice(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        // Pool of clean division/conversion questions with max 2 decimal places
+        // Tỷ lệ câu hỏi phép chia (nhỏ -> lớn) chiếm khoảng 70%
+        function generateQuestion() {
+            attemptsLeft = 3;
+            renderHearts();
+
+            const inputEl = document.getElementById('user-input');
+            const feedbackEl = document.getElementById('feedback-box');
+            const btnSubmit = document.getElementById('btn-submit');
+            const btnSkip = document.getElementById('btn-skip');
+            const btnNext = document.getElementById('btn-next');
+
+            inputEl.value = '';
+            inputEl.disabled = false;
+            inputEl.focus();
+
+            feedbackEl.className = 'hidden rounded-2xl p-4 text-center text-sm md:text-base font-medium bounce-in';
+            feedbackEl.innerHTML = '';
+
+            btnSubmit.classList.remove('hidden');
+            btnSkip.classList.remove('hidden');
+            btnNext.classList.add('hidden');
+
+            // Generate question parameters ensuring EXACT clean decimals (max 2 decimals)
+            const questionTypes = [
+                // BACKWARD CONVERSIONS (PHÉP CHIA: Nhỏ -> Lớn) - Prioritized
+                {
+                    tag: 'Đổi ngược: cm³ → dm³ (:1000)',
+                    type: 'div_cm3_dm3',
+                    gen: () => {
+                        // values like 500, 250, 750, 40, 50, 100, 1250, 3400
+                        const baseVal = getRandomChoice([100, 200, 250, 300, 400, 500, 600, 750, 800, 900, 1200, 1500, 2250, 3500, 4750, 50]);
+                        const ans = baseVal / 1000; // e.g., 0.25, 0.5, 0.75, 1.25, 0.05 -> clean 2 decimals
+                        return {
+                            prompt: `${baseVal.toLocaleString('vi-VN')} cm³ = ... dm³`,
+                            numericAnswer: ans,
+                            explanation: `Đổi từ <strong>cm³</strong> sang <strong>dm³</strong> (nhỏ sang lớn) ta thực hiện phép chia cho 1.000:<br><span class="font-bold text-emerald-700">${baseVal.toLocaleString('vi-VN')} : 1.000 = ${ans.toString().replace('.', ',')} dm³</span>`
+                        };
+                    }
+                },
+                {
+                    tag: 'Đổi ngược: dm³ (lít) → m³ (:1000)',
+                    type: 'div_dm3_m3',
+                    gen: () => {
+                        const baseVal = getRandomChoice([200, 250, 500, 750, 1000, 1250, 1500, 2200, 2500, 3400, 4500, 7500, 80]);
+                        const ans = baseVal / 1000;
+                        const useLit = Math.random() < 0.5;
+                        const unitName = useLit ? 'lít' : 'dm³';
+                        return {
+                            prompt: `${baseVal.toLocaleString('vi-VN')} ${unitName} = ... m³`,
+                            numericAnswer: ans,
+                            explanation: `Vì ${useLit ? '1 m³ = 1.000 lít' : '1 m³ = 1.000 dm³'}, đổi từ <strong>${unitName}</strong> sang <strong>m³</strong> ta lấy số đó chia cho 1.000:<br><span class="font-bold text-emerald-700">${baseVal.toLocaleString('vi-VN')} : 1.000 = ${ans.toString().replace('.', ',')} m³</span>`
+                        };
+                    }
+                },
+                {
+                    tag: 'Đổi ngược đặc biệt: cm³ → lít (:1000)',
+                    type: 'div_cm3_lit',
+                    gen: () => {
+                        const baseVal = getRandomChoice([250, 500, 750, 1500, 2000, 3500]);
+                        const ans = baseVal / 1000;
+                        return {
+                            prompt: `${baseVal.toLocaleString('vi-VN')} cm³ = ... lít`,
+                            numericAnswer: ans,
+                            explanation: `Vì 1 lít = 1 dm³ = 1.000 cm³. Đổi từ <strong>cm³</strong> sang <strong>lít</strong> ta lấy:<br><span class="font-bold text-emerald-700">${baseVal.toLocaleString('vi-VN')} : 1.000 = ${ans.toString().replace('.', ',')} lít</span>`
+                        };
+                    }
+                },
+
+                // FORWARD CONVERSIONS (PHÉP NHÂN: Lớn -> Nhỏ)
+                {
+                    tag: 'Đổi xuôi: m³ → dm³ (x1000)',
+                    type: 'mul_m3_dm3',
+                    gen: () => {
+                        const baseVal = getRandomChoice([1.5, 2.25, 0.5, 0.75, 3.4, 0.2, 4.5, 2]);
+                        const ans = Math.round(baseVal * 1000);
+                        const displayVal = baseVal.toString().replace('.', ',');
+                        return {
+                            prompt: `${displayVal} m³ = ... dm³`,
+                            numericAnswer: ans,
+                            explanation: `Đổi từ <strong>m³</strong> sang <strong>dm³</strong> (lớn sang nhỏ) ta lấy số đó nhân với 1.000:<br><span class="font-bold text-emerald-700">${displayVal} × 1.000 = ${ans.toLocaleString('vi-VN')} dm³</span>`
+                        };
+                    }
+                },
+                {
+                    tag: 'Đổi xuôi: dm³ → cm³ (x1000)',
+                    type: 'mul_dm3_cm3',
+                    gen: () => {
+                        const baseVal = getRandomChoice([0.5, 1.2, 2.5, 0.25, 0.75, 3.1, 4.8]);
+                        const ans = Math.round(baseVal * 1000);
+                        const displayVal = baseVal.toString().replace('.', ',');
+                        return {
+                            prompt: `${displayVal} dm³ = ... cm³`,
+                            numericAnswer: ans,
+                            explanation: `Đổi từ <strong>dm³</strong> sang <strong>cm³</strong> (lớn sang nhỏ) ta lấy số đó nhân với 1.000:<br><span class="font-bold text-emerald-700">${displayVal} × 1.000 = ${ans.toLocaleString('vi-VN')} cm³</span>`
+                        };
+                    }
+                }
+            ];
+
+            // Weight backward division questions more heavily (70% chance)
+            const isBackward = Math.random() < 0.7;
+            let selectedCategory;
+            if (isBackward) {
+                selectedCategory = getRandomChoice(questionTypes.slice(0, 3));
+            } else {
+                selectedCategory = getRandomChoice(questionTypes.slice(3));
+            }
+
+            const qData = selectedCategory.gen();
+            currentQ = {
+                prompt: qData.prompt,
+                numericAnswer: qData.numericAnswer,
+                explanation: qData.explanation,
+                tag: selectedCategory.tag
+            };
+
+            document.getElementById('question-type-tag').innerHTML = `<i class="fa-solid fa-tags"></i> ${currentQ.tag}`;
+            document.getElementById('question-prompt').innerHTML = currentQ.prompt;
+        }
+
+        // Render hearts/attempts UI
+        function renderHearts() {
+            const container = document.getElementById('hearts-container');
+            container.innerHTML = '';
+            for (let i = 1; i <= 3; i++) {
+                const heart = document.createElement('i');
+                if (i <= attemptsLeft) {
+                    heart.className = 'fa-solid fa-heart text-red-500 text-lg transition-transform hover:scale-110';
+                } else {
+                    heart.className = 'fa-regular fa-heart text-slate-300 text-lg';
+                }
+                container.appendChild(heart);
+            }
+        }
+
+        // Check user input
+        function checkAnswer() {
+            if (!currentQ || attemptsLeft <= 0) return;
+
+            const inputEl = document.getElementById('user-input');
+            let rawStr = inputEl.value.trim().replace(',', '.');
+
+            if (rawStr === '') {
+                showToast('Vui lòng nhập kết quả trước khi bấm kiểm tra!');
+                return;
+            }
+
+            const userNum = parseFloat(rawStr);
+            if (isNaN(userNum)) {
+                showToast('Vui lòng chỉ nhập số hợp lệ!');
+                return;
+            }
+
+            const feedbackEl = document.getElementById('feedback-box');
+            // Compare float with small tolerance
+            const isCorrect = Math.abs(userNum - currentQ.numericAnswer) < 0.001;
+
+            if (isCorrect) {
+                // Correct Answer
+                attemptsLeft = 0;
+                stats.total++;
+                stats.correct++;
+                stats.streak++;
+                updateStatsUI();
+
+                feedbackEl.className = 'rounded-2xl p-4 text-center text-sm md:text-base font-medium bounce-in bg-emerald-100 text-emerald-800 border border-emerald-200';
+                feedbackEl.innerHTML = `
+                    <div class="font-bold text-lg text-emerald-700 mb-1">
+                        <i class="fa-solid fa-circle-check"></i> Chính xác! Giỏi lắm!
+                    </div>
+                    <div>${currentQ.explanation}</div>
+                `;
+                feedbackEl.classList.remove('hidden');
+
+                // Confetti
+                confetti({
+                    particleCount: 70,
+                    spread: 60,
+                    origin: { y: 0.7 }
+                });
+
+                finishQuestionState();
+
+            } else {
+                // Incorrect Answer
+                attemptsLeft--;
+                renderHearts();
+
+                const card = document.getElementById('quiz-card');
+                card.classList.add('shake');
+                setTimeout(() => card.classList.remove('shake'), 500);
+
+                if (attemptsLeft > 0) {
+                    feedbackEl.className = 'rounded-2xl p-3 text-center text-sm font-medium bounce-in bg-amber-100 text-amber-800 border border-amber-200';
+                    feedbackEl.innerHTML = `
+                        <i class="fa-solid fa-triangle-exclamation"></i> Chưa chính xác! Bạn còn <strong>${attemptsLeft}</strong> lượt thử. Kiểm tra lại phép nhân/chia nhé!
+                    `;
+                    feedbackEl.classList.remove('hidden');
+                    inputEl.focus();
+                    inputEl.select();
+                } else {
+                    // Out of attempts (Failed on 3rd attempt)
+                    stats.total++;
+                    stats.streak = 0;
+                    updateStatsUI();
+
+                    const formattedAns = currentQ.numericAnswer.toString().replace('.', ',');
+
+                    feedbackEl.className = 'rounded-2xl p-4 text-center text-sm md:text-base font-medium bounce-in bg-rose-100 text-rose-800 border border-rose-200';
+                    feedbackEl.innerHTML = `
+                        <div class="font-bold text-lg text-rose-700 mb-1">
+                            <i class="fa-solid fa-circle-xmark"></i> Đã hết lượt thử!
+                        </div>
+                        <div class="mb-2">Đáp án đúng là: <strong class="text-rose-900 text-xl underline font-mono">${formattedAns}</strong></div>
+                        <div class="text-xs md:text-sm text-slate-700 bg-white/80 p-3 rounded-xl text-left border border-rose-200">
+                            <strong>Lời giải chi tiết:</strong><br>${currentQ.explanation}
+                        </div>
+                    `;
+                    feedbackEl.classList.remove('hidden');
+
+                    finishQuestionState();
+                }
+            }
+        }
+
+        function finishQuestionState() {
+            document.getElementById('user-input').disabled = true;
+            document.getElementById('btn-submit').classList.add('hidden');
+            document.getElementById('btn-skip').classList.add('hidden');
+            document.getElementById('btn-next').classList.remove('hidden');
+            document.getElementById('btn-next').focus();
+        }
+
+        function nextQuestion() {
+            generateQuestion();
+        }
+
+        function skipQuestion() {
+            stats.total++;
+            stats.streak = 0;
+            updateStatsUI();
+            generateQuestion();
+        }
+
+        function updateStatsUI() {
+            document.getElementById('stat-total').innerText = stats.total;
+            document.getElementById('stat-correct').innerText = stats.correct;
+            document.getElementById('stat-streak').innerText = `${stats.streak} 🔥`;
+        }
+
+        function resetStats() {
+            stats.total = 0;
+            stats.correct = 0;
+            stats.streak = 0;
+            updateStatsUI();
+            generateQuestion();
+            showToast('Đã làm mới lại toàn bộ thống kê!');
+        }
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-5 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold shadow-xl z-50 bounce-in';
+            toast.innerText = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
+
+        // Enter key listener
+        document.getElementById('user-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                if (attemptsLeft > 0) {
+                    checkAnswer();
+                } else {
+                    nextQuestion();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
