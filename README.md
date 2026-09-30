@@ -1,1 +1,1 @@
-https://trtrungmo.github.io/khang/
+https://trtrungmo.github.io/Khang/
