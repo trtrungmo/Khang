@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Luyện Tập Tìm X - 30 Streaks Challenge</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Font Awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+        .animate-shake {
+            animation: shake 0.4s ease-in-out;
+        }
+        .heart-lost {
+            filter: grayscale(100%);
+            opacity: 0.3;
+            transform: scale(0.85);
+            transition: all 0.3s ease;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center p-3 sm:p-6 text-slate-800 min-h-screen">
+
+    <!-- Container chính -->
+    <div class="w-full max-w-xl">
+        <!-- Header & Tiến trình -->
+        <div class="glass-card rounded-3xl p-5 mb-5 border border-white">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-2">
+                    <span class="bg-indigo-100 text-indigo-700 font-extrabold text-xs px-3 py-1.5 rounded-full uppercase tracking-wider">
+                        Thử thách Tìm X
+                    </span>
+                    <span class="text-xs text-slate-500 font-semibold">Mục tiêu: 30 câu</span>
+                </div>
+                <!-- Số mạng (3 trái tim) -->
+                <div class="flex items-center space-x-1.5 bg-rose-50 px-3 py-1.5 rounded-2xl border border-rose-100">
+                    <span class="text-xs font-bold text-rose-500 mr-1">Số mạng:</span>
+                    <i id="heart-1" class="fa-solid fa-heart text-rose-500 text-lg transition-all duration-300"></i>
+                    <i id="heart-2" class="fa-solid fa-heart text-rose-500 text-lg transition-all duration-300"></i>
+                    <i id="heart-3" class="fa-solid fa-heart text-rose-500 text-lg transition-all duration-300"></i>
+                </div>
+            </div>
+
+            <!-- Streak Counter & Progress -->
+            <div class="space-y-1.5">
+                <div class="flex justify-between items-end">
+                    <span class="text-xs font-bold text-slate-500 uppercase">Chuỗi đúng (Streak)</span>
+                    <div class="flex items-baseline space-x-1">
+                        <span id="streak-count" class="text-3xl font-extrabold text-indigo-600">0</span>
+                        <span class="text-slate-400 font-bold text-sm">/ 30</span>
+                    </div>
+                </div>
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-100 rounded-full h-3.5 overflow-hidden p-0.5 border border-slate-200/60">
+                    <div id="progress-bar" class="bg-gradient-to-r from-indigo-500 to-blue-500 h-full rounded-full transition-all duration-500 shadow-sm" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thẻ câu hỏi -->
+        <div id="quiz-card" class="glass-card rounded-3xl p-6 border border-white relative overflow-hidden transition-all duration-300">
+            <!-- Badge vai trò hướng dẫn -->
+            <div class="mb-4">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Biểu thức toán học</span>
+                <!-- Phương trình -->
+                <div class="mt-2 text-center py-4 px-3 bg-gradient-to-r from-slate-50 via-indigo-50/50 to-slate-50 rounded-2xl border border-indigo-100/80">
+                    <span id="equation-display" class="text-3xl sm:text-4xl font-black text-slate-800 tracking-wide font-mono">
+                        X + 5 = 12
+                    </span>
+                </div>
+            </div>
+
+            <!-- Thẻ gợi ý bước giải -->
+            <div class="mb-5 bg-amber-50/80 rounded-xl p-3 border border-amber-200/60 flex items-start space-x-2.5">
+                <i class="fa-solid fa-lightbulb text-amber-500 mt-0.5 text-sm"></i>
+                <div class="text-xs text-amber-900 leading-relaxed">
+                    <span class="font-bold">Gợi ý phân tích:</span>
+                    <span id="equation-hint" class="text-amber-800">Thu gọn biểu thức để xác định chính xác vai trò trực tiếp của X.</span>
+                </div>
+            </div>
+
+            <!-- Form Nhập câu trả lời -->
+            <form id="quiz-form" onsubmit="handleCheck(event)" class="space-y-4">
+                <!-- Phần 1: Chọn Vai Trò Của X -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wider">
+                        1. Trong bước tính trực tiếp, <span class="text-indigo-600 font-extrabold">X</span> đóng vai trò là gì?
+                    </label>
+                    <div class="relative">
+                        <select id="role-select" class="w-full bg-white border-2 border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 rounded-2xl px-4 py-3 font-semibold text-slate-700 text-sm outline-none transition-all appearance-none">
+                            <option value="" disabled selected>-- Chọn vai trò của X --</option>
+                            <option value="Số hạng chưa biết">Số hạng chưa biết</option>
+                            <option value="Số bị trừ">Số bị trừ</option>
+                            <option value="Số trừ">Số trừ</option>
+                            <option value="Thừa số chưa biết">Thừa số chưa biết</option>
+                            <option value="Số bị chia">Số bị chia</option>
+                            <option value="Số chia">Số chia</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                            <i class="fa-solid fa-chevron-down text-sm"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phần 2: Nhập Giá Trị X -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wider">
+                        2. Giá trị của <span class="text-indigo-600 font-extrabold">X</span> bằng bao nhiêu?
+                    </label>
+                    <div class="relative">
+                        <input type="number" id="val-input" placeholder="Nhập kết quả số..." autocomplete="off"
+                            class="w-full bg-white border-2 border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 rounded-2xl px-4 py-3 font-extrabold text-slate-800 text-base outline-none transition-all placeholder:font-normal placeholder:text-slate-400" />
+                    </div>
+                </div>
+
+                <!-- Báo Lỗi / Thông báo -->
+                <div id="feedback-msg" class="hidden p-3.5 rounded-2xl text-xs font-bold transition-all flex items-start space-x-2">
+                    <i id="feedback-icon" class="fa-solid text-sm mt-0.5"></i>
+                    <span id="feedback-text" class="leading-relaxed"></span>
+                </div>
+
+                <!-- Nút bấm Gửi -->
+                <button type="submit" id="btn-submit"
+                    class="w-full bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-bold py-3.5 px-6 rounded-2xl shadow-lg shadow-indigo-200 active:scale-[0.99] transition-all flex items-center justify-center space-x-2 text-sm">
+                    <span>Kiểm Tra Kết Quả</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Ô nhập mã quy đổi / Skip Code -->
+        <div class="glass-card rounded-2xl p-4 mt-4 border border-white">
+            <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">
+                <i class="fa-solid fa-ticket text-amber-500 mr-1"></i> Nhập Mã Bỏ Qua (+1 Streak)
+            </label>
+            <form onsubmit="handleCodeSubmit(event)" class="flex gap-2">
+                <input type="text" id="code-input" placeholder="Nhập mã quy đổi tại đây..." autocomplete="off"
+                    class="flex-1 bg-white border border-slate-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-100 rounded-xl px-3.5 py-2 font-mono font-bold text-xs text-slate-700 outline-none uppercase" />
+                <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-md shadow-amber-200 active:scale-95 transition-all">
+                    Đổi Mã
+                </button>
+            </form>
+            <p id="code-feedback" class="text-[11px] font-semibold mt-1.5 hidden"></p>
+        </div>
+
+        <!-- Footer thông tin -->
+        <p class="text-center text-xs text-slate-400 mt-4 font-medium">
+            Trả lời đúng liên tục 30 câu để mở khóa phần thưởng code!
+        </p>
+    </div>
+
+    <!-- MODAL CHIẾN THẮNG (30 STREAKS) -->
+    <div id="win-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full text-center shadow-2xl border border-indigo-100 transform transition-all scale-95 opacity-0">
+            <div class="w-20 h-20 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner text-3xl">
+                <i class="fa-solid fa-trophy animate-bounce"></i>
+            </div>
+            
+            <h2 class="text-2xl font-black text-slate-800 mb-1">XUẤT SẮC! HOÀN THÀNH 30 STREAKS!</h2>
+            <p class="text-xs text-slate-500 mb-6 font-medium">Bạn đã vượt qua chuỗi 30 câu hỏi Tìm X liên tục cực kỳ chính xác!</p>
+
+            <!-- Khung Mã Bảo Mật -->
+            <div class="bg-gradient-to-br from-indigo-50 to-blue-50 border-2 border-dashed border-indigo-300 rounded-2xl p-4 mb-6">
+                <span class="block text-xs font-bold text-indigo-400 uppercase tracking-widest mb-1">Mã phần thưởng của bạn</span>
+                <div class="flex items-center justify-center space-x-3">
+                    <span id="reward-code" class="text-2xl font-black tracking-wider text-indigo-700 font-mono">K.CCollected</span>
+                    <button onclick="copyCode()" title="Sao chép" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs p-2.5 rounded-xl shadow transition-all active:scale-95">
+                        <i id="copy-icon" class="fa-regular fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button onclick="resetGame()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3.5 px-6 rounded-2xl text-sm transition-all shadow-lg active:scale-95">
+                Chơi Chặng Mới
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const TARGET_STREAK = 30;
+        let streak = 0;
+        let attemptsLeft = 3; // 3 mạng
+        let currentQuestion = null;
+
+        // Các dạng vai trò chuẩn Tiểu Học
+        const ROLES = {
+            ADDEND: "Số hạng chưa biết",
+            MINUEND: "Số bị trừ",
+            SUBTRAHEND: "Số trừ",
+            FACTOR: "Thừa số chưa biết",
+            DIVIDEND: "Số bị chia",
+            DIVISOR: "Số chia"
+        };
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Sinh câu hỏi ngẫu nhiên đa dạng với vai trò X bản chất trực tiếp
+        function generateQuestion() {
+            const types = ['SIMPLE_ADD', 'SIMPLE_SUB', 'SIMPLE_MUL', 'SIMPLE_DIV', 'COMPOUND_1', 'COMPOUND_2', 'COMPOUND_3', 'COMPOUND_4'];
+            const type = types[getRandomInt(0, types.length - 1)];
+
+            let eqStr = "";
+            let hintStr = "";
+            let role = "";
+            let xVal = 0;
+
+            switch (type) {
+                case 'SIMPLE_ADD': {
+                    const a = getRandomInt(5, 50);
+                    xVal = getRandomInt(5, 50);
+                    const b = xVal + a;
+                    const isXFirst = Math.random() > 0.5;
+                    eqStr = isXFirst ? `X + ${a} = ${b}` : `${a} + X = ${b}`;
+                    role = ROLES.ADDEND;
+                    hintStr = `Trực tiếp: X là số hạng trong phép cộng. Tính X bằng cách lấy Tổng (${b}) trừ đi Số hạng đã biết (${a}).`;
+                    break;
+                }
+
+                case 'SIMPLE_SUB': {
+                    const isXFirst = Math.random() > 0.5;
+                    if (isXFirst) {
+                        const a = getRandomInt(5, 40);
+                        const b = getRandomInt(5, 40);
+                        xVal = a + b;
+                        eqStr = `X - ${a} = ${b}`;
+                        role = ROLES.MINUEND;
+                        hintStr = `Trực tiếp: X đứng trước dấu trừ nên X là Số bị trừ. Tính X bằng cách lấy Hiệu (${b}) cộng với Số trừ (${a}).`;
+                    } else {
+                        xVal = getRandomInt(5, 30);
+                        const b = getRandomInt(5, 30);
+                        const a = xVal + b;
+                        eqStr = `${a} - X = ${b}`;
+                        role = ROLES.SUBTRAHEND;
+                        hintStr = `Trực tiếp: X đứng sau dấu trừ nên X là Số trừ. Tính X bằng cách lấy Số bị trừ (${a}) trừ đi Hiệu (${b}).`;
+                    }
+                    break;
+                }
+
+                case 'SIMPLE_MUL': {
+                    const a = getRandomInt(2, 9);
+                    xVal = getRandomInt(2, 10);
+                    const b = xVal * a;
+                    const isXFirst = Math.random() > 0.5;
+                    eqStr = isXFirst ? `X × ${a} = ${b}` : `${a} × X = ${b}`;
+                    role = ROLES.FACTOR;
+                    hintStr = `Trực tiếp: X là thừa số trong phép nhân. Tính X bằng cách lấy Tích (${b}) chia cho Thừa số đã biết (${a}).`;
+                    break;
+                }
+
+                case 'SIMPLE_DIV': {
+                    const isXFirst = Math.random() > 0.5;
+                    if (isXFirst) {
+                        const a = getRandomInt(2, 9);
+                        const b = getRandomInt(2, 10);
+                        xVal = a * b;
+                        eqStr = `X : ${a} = ${b}`;
+                        role = ROLES.DIVIDEND;
+                        hintStr = `Trực tiếp: X đứng trước dấu chia nên X là Số bị chia. Tính X bằng Thương (${b}) nhân với Số chia (${a}).`;
+                    } else {
+                        xVal = getRandomInt(2, 9);
+                        const b = getRandomInt(2, 10);
+                        const a = xVal * b;
+                        eqStr = `${a} : X = ${b}`;
+                        role = ROLES.DIVISOR;
+                        hintStr = `Trực tiếp: X đứng sau dấu chia nên X là Số chia. Tính X bằng Số bị chia (${a}) chia cho Thương (${b}).`;
+                    }
+                    break;
+                }
+
+                case 'COMPOUND_1': {
+                    const a = getRandomInt(2, 5);
+                    xVal = getRandomInt(2, 10);
+                    const b = getRandomInt(5, 20);
+                    const c = (xVal * a) + b;
+                    eqStr = `X × ${a} + ${b} = ${c}`;
+                    role = ROLES.FACTOR;
+                    hintStr = `Biến đổi: (X × ${a}) + ${b} = ${c} ➔ X × ${a} = ${c - b}. Ở bước tính cuối để tìm X, X đóng vai trò là Thừa số chưa biết.`;
+                    break;
+                }
+
+                case 'COMPOUND_2': {
+                    const a = getRandomInt(2, 5);
+                    const b = getRandomInt(2, 15);
+                    const c = getRandomInt(2, 15);
+                    xVal = (b + c) * a;
+                    eqStr = `X : ${a} - ${b} = ${c}`;
+                    role = ROLES.DIVIDEND;
+                    hintStr = `Biến đổi: (X : ${a}) - ${b} = ${c} ➔ X : ${a} = ${c + b}. Ở bước tính cuối để tìm X, X đóng vai trò là Số bị chia.`;
+                    break;
+                }
+
+                case 'COMPOUND_3': {
+                    xVal = getRandomInt(2, 8);
+                    const b = getRandomInt(2, 5);
+                    const c = getRandomInt(2, 15);
+                    const a = (xVal * b) + c;
+                    eqStr = `${a} - X × ${b} = ${c}`;
+                    role = ROLES.FACTOR;
+                    hintStr = `Biến đổi: ${a} - (X × ${b}) = ${c} ➔ X × ${b} = ${a - c}. Ở bước tính cuối để tìm X, X đóng vai trò là Thừa số chưa biết.`;
+                    break;
+                }
+
+                case 'COMPOUND_4': {
+                    const a = getRandomInt(2, 15);
+                    const b = getRandomInt(2, 5);
+                    xVal = getRandomInt(2, 15);
+                    const c = (xVal + a) * b;
+                    eqStr = `(X + ${a}) × ${b} = ${c}`;
+                    role = ROLES.ADDEND;
+                    hintStr = `Biến đổi: X + ${a} = ${c} : ${b} = ${c / b}. Lúc này X đóng vai trò trực tiếp là Số hạng chưa biết.`;
+                    break;
+                }
+            }
+
+            return {
+                equation: eqStr,
+                hint: hintStr,
+                correctRole: role,
+                correctValue: xVal
+            };
+        }
+
+        // Tải câu hỏi mới lên giao diện
+        function loadNewQuestion() {
+            attemptsLeft = 3;
+            updateHeartsUI();
+            
+            currentQuestion = generateQuestion();
+            document.getElementById('equation-display').textContent = currentQuestion.equation;
+            document.getElementById('equation-hint').textContent = currentQuestion.hint;
+            
+            // Reset form
+            document.getElementById('role-select').selectedIndex = 0;
+            document.getElementById('val-input').value = '';
+            
+            // Hide feedback
+            const fb = document.getElementById('feedback-msg');
+            fb.classList.add('hidden');
+        }
+
+        // Cập nhật trái tim (Mạng)
+        function updateHeartsUI() {
+            for (let i = 1; i <= 3; i++) {
+                const heart = document.getElementById(`heart-${i}`);
+                if (i <= attemptsLeft) {
+                    heart.className = "fa-solid fa-heart text-rose-500 text-lg transition-all duration-300";
+                } else {
+                    heart.className = "fa-solid fa-heart heart-lost text-lg";
+                }
+            }
+        }
+
+        // Cập nhật thanh tiến trình & Streak
+        function updateProgressUI() {
+            document.getElementById('streak-count').textContent = streak;
+            const pct = Math.min(100, (streak / TARGET_STREAK) * 100);
+            document.getElementById('progress-bar').style.width = `${pct}%`;
+        }
+
+        // Hiển thị thông báo
+        function showFeedback(type, text) {
+            const fb = document.getElementById('feedback-msg');
+            const icon = document.getElementById('feedback-icon');
+            const txt = document.getElementById('feedback-text');
+
+            fb.classList.remove('hidden', 'bg-rose-50', 'text-rose-700', 'border-rose-200', 'bg-amber-50', 'text-amber-800', 'border-amber-200', 'bg-emerald-50', 'text-emerald-700', 'border-emerald-200', 'border');
+
+            if (type === 'error') {
+                fb.classList.add('bg-rose-50', 'text-rose-700', 'border', 'border-rose-200');
+                icon.className = 'fa-solid fa-circle-xmark text-rose-500 text-sm mt-0.5';
+            } else if (type === 'warning') {
+                fb.classList.add('bg-amber-50', 'text-amber-800', 'border', 'border-amber-200');
+                icon.className = 'fa-solid fa-triangle-exclamation text-amber-500 text-sm mt-0.5';
+            } else if (type === 'success') {
+                fb.classList.add('bg-emerald-50', 'text-emerald-700', 'border', 'border-emerald-200');
+                icon.className = 'fa-solid fa-circle-check text-emerald-500 text-sm mt-0.5';
+            }
+
+            txt.innerHTML = text;
+        }
+
+        // Xử lý kiểm tra kết quả
+        function handleCheck(e) {
+            e.preventDefault();
+
+            const userRole = document.getElementById('role-select').value;
+            const userValStr = document.getElementById('val-input').value.trim();
+
+            if (!userRole || userValStr === '') {
+                showFeedback('warning', 'Vui lòng chọn đầy đủ <b>Vai trò của X</b> và nhập <b>Kết quả số</b>!');
+                return;
+            }
+
+            const userVal = parseInt(userValStr, 10);
+            const isRoleCorrect = (userRole === currentQuestion.correctRole);
+            const isValCorrect = (userVal === currentQuestion.correctValue);
+
+            const card = document.getElementById('quiz-card');
+
+            if (isRoleCorrect && isValCorrect) {
+                // CHÍNH XÁC
+                streak++;
+                updateProgressUI();
+
+                if (streak >= TARGET_STREAK) {
+                    showWinModal();
+                } else {
+                    showFeedback('success', `<b>Chính xác!</b> Cả vai trò và giá trị X đều đúng. (+1 Streak)`);
+                    setTimeout(() => {
+                        loadNewQuestion();
+                    }, 1200);
+                }
+            } else {
+                // SAI
+                attemptsLeft--;
+                updateHeartsUI();
+
+                // Hiệu ứng rung
+                card.classList.add('animate-shake');
+                setTimeout(() => card.classList.remove('animate-shake'), 400);
+
+                if (attemptsLeft > 0) {
+                    // Còn lượt
+                    let detailMsg = [];
+                    if (!isRoleCorrect) detailMsg.push("Vai trò của X chưa đúng");
+                    if (!isValCorrect) detailMsg.push("Kết quả X chưa đúng");
+
+                    showFeedback('warning', `<b>Chưa chính xác!</b> (${detailMsg.join(' & ')}). Bạn còn <b>${attemptsLeft} lần thử</b> nữa.`);
+                } else {
+                    // HẾT MẠNG -> RESET STREAK
+                    streak = 0;
+                    updateProgressUI();
+
+                    showFeedback('error', `<b>Đã hết lượt thử!</b> Streak bị đếm lại từ 0.<br>Đáp án đúng: Vai trò là <b>${currentQuestion.correctRole}</b> và <b>X = ${currentQuestion.correctValue}</b>.`);
+
+                    // Tự động qua câu mới
+                    setTimeout(() => {
+                        loadNewQuestion();
+                    }, 3200);
+                }
+            }
+        }
+
+        // Xử lý nhập mã boqua24
+        function handleCodeSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('code-input');
+            const feedback = document.getElementById('code-feedback');
+            const codeVal = input.value.trim().toLowerCase();
+
+            if (codeVal === 'boqua24') {
+                streak++;
+                updateProgressUI();
+                
+                feedback.className = "text-[11px] font-semibold mt-1.5 text-emerald-600 block";
+                feedback.textContent = "✔ Nhập mã thành công! Bạn đã được cộng +1 Streak.";
+                input.value = "";
+
+                if (streak >= TARGET_STREAK) {
+                    showWinModal();
+                } else {
+                    setTimeout(() => {
+                        feedback.className = "text-[11px] font-semibold mt-1.5 hidden";
+                        loadNewQuestion();
+                    }, 1000);
+                }
+            } else {
+                feedback.className = "text-[11px] font-semibold mt-1.5 text-rose-500 block";
+                feedback.textContent = "✖ Mã không hợp lệ!";
+            }
+        }
+
+        // Kích hoạt Modal chiến thắng
+        function showWinModal() {
+            const modal = document.getElementById('win-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.firstElementChild.classList.remove('scale-95', 'opacity-0');
+                modal.firstElementChild.classList.add('scale-100', 'opacity-100');
+            }, 10);
+
+            // Bắn pháo hoa
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        // Copy mã thưởng
+        function copyCode() {
+            const code = document.getElementById('reward-code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const icon = document.getElementById('copy-icon');
+                icon.className = "fa-solid fa-check text-emerald-500";
+                setTimeout(() => {
+                    icon.className = "fa-regular fa-copy";
+                }, 2000);
+            });
+        }
+
+        // Chơi lại từ đầu
+        function resetGame() {
+            streak = 0;
+            updateProgressUI();
+            
+            const modal = document.getElementById('win-modal');
+            modal.classList.add('hidden');
+            modal.firstElementChild.classList.add('scale-95', 'opacity-0');
+            
+            loadNewQuestion();
+        }
+
+        // Khởi chạy khi load trang
+        window.onload = function() {
+            updateProgressUI();
+            loadNewQuestion();
+        };
+    </script>
+</body>
+</html>
