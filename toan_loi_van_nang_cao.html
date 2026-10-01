@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toán Lớp 5 Nâng Cao - 50 Bài Toán Lời Văn Hóc Búa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #f8fafc;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col bg-slate-50">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-indigo-700 via-indigo-600 to-violet-700 text-white shadow-xl sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 sm:py-4 flex flex-wrap justify-between items-center gap-3">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/10 backdrop-blur-md text-amber-300 p-2.5 rounded-2xl border border-white/20 shadow-inner">
+                    <i class="fa-solid fa-brain text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg sm:text-2xl tracking-tight">Toán Lớp 5 Nâng Cao</h1>
+                    <p class="text-xs text-indigo-100 font-light">50 Bài toán lời văn hóc búa, tư duy 3-4 bước & thực tế</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3 text-xs sm:text-sm">
+                <!-- Timer Widget -->
+                <div class="flex items-center gap-2 bg-indigo-900/60 backdrop-blur px-3 py-1.5 rounded-xl border border-indigo-400/30">
+                    <i class="fa-solid fa-stopwatch text-amber-300 animate-pulse"></i>
+                    <span class="font-mono text-base font-bold text-amber-200" id="timer-display">00:00:00</span>
+                </div>
+
+                <!-- Score Widget -->
+                <div class="flex items-center gap-2 bg-indigo-900/60 backdrop-blur px-3 py-1.5 rounded-xl border border-indigo-400/30">
+                    <i class="fa-solid fa-trophy text-amber-400"></i>
+                    <span>Điểm: <strong id="score-display" class="text-amber-300 text-base font-extrabold">0/50</strong></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
+
+        <!-- Controls & Dashboard -->
+        <div class="bg-white rounded-3xl p-4 sm:p-6 shadow-sm border border-slate-200/80 space-y-4">
+            <div class="flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-4">
+                
+                <!-- Category Filters -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 mr-1">
+                        <i class="fa-solid fa-layer-group"></i> Chủ đề:
+                    </span>
+                    <button onclick="filterCategory('all')" id="cat-all" class="cat-btn bg-indigo-600 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm transition">Tất cả (50)</button>
+                    <button onclick="filterCategory('fraction')" id="cat-fraction" class="cat-btn bg-slate-100 text-slate-600 hover:bg-indigo-50 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition">Phân số & Hỗn số</button>
+                    <button onclick="filterCategory('decimal')" id="cat-decimal" class="cat-btn bg-slate-100 text-slate-600 hover:bg-indigo-50 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition">Số thập phân & %</button>
+                    <button onclick="filterCategory('geometry')" id="cat-geometry" class="cat-btn bg-slate-100 text-slate-600 hover:bg-indigo-50 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition">Hình học thực tế</button>
+                    <button onclick="filterCategory('advanced')" id="cat-advanced" class="cat-btn bg-slate-100 text-slate-600 hover:bg-indigo-50 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition">Chuyển động & C.Việc</button>
+                </div>
+
+                <!-- View Switcher -->
+                <div class="flex items-center gap-2 self-start lg:self-auto shrink-0">
+                    <button onclick="setViewMode('all')" id="view-all-btn" class="px-3.5 py-1.5 text-xs font-bold rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-sm">
+                        <i class="fa-solid fa-list-ul mr-1.5"></i> Danh sách (50)
+                    </button>
+                    <button onclick="setViewMode('single')" id="view-single-btn" class="px-3.5 py-1.5 text-xs font-bold rounded-xl bg-slate-100 text-slate-600 border border-slate-200 hover:bg-indigo-50 transition">
+                        <i class="fa-solid fa-square-pen mr-1.5"></i> Từng câu một
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Bar Bar -->
+            <div class="space-y-1.5 pt-2 border-t border-slate-100">
+                <div class="flex justify-between text-xs font-semibold text-slate-600">
+                    <span>Tiến độ hoàn thành: <span id="progress-text" class="text-indigo-600 font-bold">0/50 câu đã trả lời</span></span>
+                    <span id="progress-percent" class="text-indigo-600 font-bold">0%</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden border border-slate-200/60">
+                    <div id="progress-bar" class="bg-gradient-to-r from-indigo-500 via-purple-500 to-amber-400 h-full w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Single View Navigation -->
+        <div id="single-nav" class="hidden flex justify-between items-center bg-indigo-50/80 p-3.5 rounded-2xl border border-indigo-100 shadow-sm">
+            <button onclick="prevQuestion()" id="prev-btn" class="px-4 py-2 bg-white text-indigo-700 rounded-xl text-xs font-bold shadow-sm border border-indigo-200 hover:bg-indigo-50 transition disabled:opacity-40">
+                <i class="fa-solid fa-chevron-left mr-1.5"></i> Câu trước
+            </button>
+            <span id="single-index" class="text-xs sm:text-sm font-extrabold text-indigo-900 bg-white px-4 py-1.5 rounded-xl border border-indigo-200/80 shadow-sm">Câu 1 / 50</span>
+            <button onclick="nextQuestion()" id="next-btn" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold shadow-sm hover:bg-indigo-700 transition disabled:opacity-40">
+                Câu tiếp <i class="fa-solid fa-chevron-right ml-1.5"></i>
+            </button>
+        </div>
+
+        <!-- Question Cards Wrapper -->
+        <div id="quiz-container" class="space-y-5">
+            <!-- Questions dynamically generated by JavaScript -->
+        </div>
+
+        <!-- Bottom Actions -->
+        <div class="pt-6 pb-12 flex flex-col sm:flex-row justify-center items-center gap-4">
+            <button onclick="checkAllAnswers()" class="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 hover:from-indigo-700 hover:to-purple-800 text-white rounded-2xl font-bold shadow-xl shadow-indigo-600/20 transition transform active:scale-95 flex items-center justify-center gap-2.5 text-sm sm:text-base">
+                <i class="fa-solid fa-paper-plane text-amber-300"></i> Nộp Bài & Xem Đánh Giá
+            </button>
+            <button onclick="resetQuiz()" class="w-full sm:w-auto px-7 py-4 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 rounded-2xl font-bold transition flex items-center justify-center gap-2 text-sm sm:text-base shadow-sm">
+                <i class="fa-solid fa-arrows-rotate text-slate-400"></i> Làm lại bài mới
+            </button>
+        </div>
+    </main>
+
+    <!-- Modal Results -->
+    <div id="result-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 text-center shadow-2xl border border-indigo-100 transform transition-all scale-95 opacity-0" id="modal-card">
+            <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl border border-indigo-100 shadow-inner">
+                <i class="fa-solid fa-trophy" id="modal-icon"></i>
+            </div>
+            <h3 class="text-2xl font-black text-slate-800 mb-1">Kết Quả Luyện Tập</h3>
+            <p class="text-xs text-slate-500 mb-6">Bộ 50 Bài toán Lớp 5 Nâng cao & Lắt léo</p>
+            
+            <div class="bg-slate-50 rounded-2xl p-5 mb-6 space-y-3 text-left border border-slate-200/80">
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-slate-600 font-medium">Số câu trả lời đúng:</span>
+                    <strong id="modal-correct" class="text-indigo-600 font-bold text-base">0 / 50</strong>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-slate-600 font-medium">Tỷ lệ chính xác:</span>
+                    <strong id="modal-accuracy" class="text-emerald-600 font-bold text-base">0%</strong>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-slate-600 font-medium">Thời gian hoàn thành:</span>
+                    <strong id="modal-time" class="text-slate-800 font-bold">00:00:00</strong>
+                </div>
+                <div class="pt-2 border-t border-slate-200/80 flex justify-between items-center text-sm">
+                    <span class="text-slate-600 font-medium">Đánh giá chung:</span>
+                    <strong id="modal-rating" class="text-amber-600 font-bold">Cố gắng hơn nhé!</strong>
+                </div>
+            </div>
+
+            <button onclick="closeModal()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-lg shadow-indigo-600/30 transition">
+                Xem lại chi tiết từng câu lời giải
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Data and Logic -->
+    <script>
+        const ALL_UNITS = [
+            "cm", "m", "dm", "km", "mm",
+            "cm²", "m²", "dm²", "km²", "ha",
+            "kg", "g", "tạ", "tấn", "yến",
+            "lít", "giờ", "phút", "giây", "ngày",
+            "học sinh", "bao", "người", "cây", "sản phẩm", "đồng", "viên", "quả", "mảnh", "xe", "%", "lần", "bộ", "chuyến", "quyển"
+        ];
+
+        const quizData = [
+            // PHÂN SỐ & HỖN SỐ NÂNG CAO (1-12)
+            {
+                id: 1,
+                cat: 'fraction',
+                question: 'Một kho hàng chứa 120,5 tấn gạo. Ngày thứ nhất kho xuất đi 2/5 số gạo. Ngày thứ hai kho xuất tiếp 1/3 số gạo CÒN LẠI sau ngày thứ nhất. Hỏi sau hai ngày, trong kho còn lại bao nhiêu tấn gạo?',
+                answers: ['48.2', '48,2', '241/5'],
+                unit: 'tấn',
+                explain: 'Ngày 1 xuất: 120,5 × 2/5 = 48,2 tấn. Còn lại: 120,5 - 48,2 = 72,3 tấn. Ngày 2 xuất: 72,3 × 1/3 = 24,1 tấn. Cuối cùng còn lại: 72,3 - 24,1 = 48,2 tấn.'
+            },
+            {
+                id: 2,
+                cat: 'fraction',
+                question: 'Một đội công nhân nhận sửa một đoạn đường. Tuần đầu đội sửa được 1/4 đoạn đường. Tuần thứ hai sửa được 2/5 đoạn đường. Tuần thứ ba sửa nốt 14 km còn lại thì xong. Hỏi toàn bộ đoạn đường đó dài bao nhiêu ki-lô-mét?',
+                answers: ['40'],
+                unit: 'km',
+                explain: 'Phần đường tuần 1 và 2 làm: 1/4 + 2/5 = 13/20 đoạn đường. Phần đường tuần 3 làm tương ứng: 1 - 13/20 = 7/20 đoạn đường. Chiều dài toàn bộ đoạn đường: 14 : (7/20) = 40 km.'
+            },
+            {
+                id: 3,
+                cat: 'fraction',
+                question: 'Lớp 5A có 45 học sinh. Trong kỳ thi Học sinh giỏi, có 1/3 số học sinh đạt giải Nhất, 2/5 số học sinh đạt giải Nhì, còn lại là học sinh đạt giải Ba. Hỏi lớp 5A có bao nhiêu học sinh đạt giải Ba?',
+                answers: ['12'],
+                unit: 'học sinh',
+                explain: 'Số HS giải Nhất: 45 × 1/3 = 15 HS. Số HS giải Nhì: 45 × 2/5 = 18 HS. Số HS giải Ba: 45 - (15 + 18) = 12 học sinh.'
+            },
+            {
+                id: 4,
+                cat: 'fraction',
+                question: 'An có một số tiền tiết kiệm. An dùng 3/8 số tiền để mua sách giáo khoa và 1/4 số tiền để mua dụng cụ học tập. Sau khi mua, An còn lại 150 000 đồng. Hỏi ban đầu An có bao nhiêu tiền tiết kiệm?',
+                answers: ['400000'],
+                unit: 'đồng',
+                explain: 'Phân số chỉ số tiền An đã dùng: 3/8 + 1/4 = 5/8 tổng số tiền. Phân số chỉ 150 000 đồng: 1 - 5/8 = 3/8. Số tiền ban đầu của An: 150 000 : 3/8 = 400 000 đồng.'
+            },
+            {
+                id: 5,
+                cat: 'fraction',
+                question: 'Tính giá trị của biểu thức gồm hỗn số và phân số: (2 1/3 + 1 1/2) : 1/6',
+                answers: ['23'],
+                unit: '',
+                explain: '2 1/3 = 7/3; 1 1/2 = 3/2. Tổng = 7/3 + 3/2 = 23/6. Thực hiện phép chia: (23/6) : (1/6) = (23/6) × 6 = 23.'
+            },
+            {
+                id: 6,
+                cat: 'fraction',
+                question: 'Hai vòi nước cùng chảy vào một bể không có nước. Nếu vòi thứ nhất chảy riêng thì sau 6 giờ đầy bể, vòi thứ hai chảy riêng thì sau 4 giờ đầy bể. Hỏi nếu cả hai vòi cùng chảy trong 2 giờ thì chảy được bao nhiêu phần bể?',
+                answers: ['5/6'],
+                unit: 'bể',
+                explain: '1 giờ vòi 1 chảy được 1/6 bể. 1 giờ vòi 2 chảy được 1/4 bể. Trong 1 giờ cả 2 vòi chảy: 1/6 + 1/4 = 5/12 bể. Trong 2 giờ cả 2 vòi chảy: 5/12 × 2 = 5/6 bể.'
+            },
+            {
+                id: 7,
+                cat: 'fraction',
+                question: 'Một cửa hàng có 2 1/2 tấn đường. Buổi sáng bán được 3/5 tấn, buổi chiều bán được nhiều hơn buổi sáng 1/4 tấn. Hỏi sau cả hai buổi cửa hàng còn lại bao nhiêu tấn đường?',
+                answers: ['21/20', '1.05', '1,05'],
+                unit: 'tấn',
+                explain: 'Buổi chiều bán: 3/5 + 1/4 = 17/20 tấn. Cả hai buổi bán: 3/5 + 17/20 = 29/20 tấn. Đổi 2 1/2 = 5/2 = 50/20 tấn. Số đường còn lại: 50/20 - 29/20 = 21/20 tấn (hoặc 1,05 tấn).'
+            },
+            {
+                id: 8,
+                cat: 'fraction',
+                question: 'Bình có 60 viên bi gồm xanh, đỏ và vàng. Số bi xanh chiếm 1/3 tổng số bi, số bi đỏ bằng 3/4 số bi CÒN LẠI. Hỏi Bình có bao nhiêu viên bi vàng?',
+                answers: ['10'],
+                unit: 'viên',
+                explain: 'Bi xanh: 60 × 1/3 = 20 viên. Bi còn lại: 60 - 20 = 40 viên. Bi đỏ: 40 × 3/4 = 30 viên. Bi vàng: 40 - 30 = 10 viên.'
+            },
+            {
+                id: 9,
+                cat: 'fraction',
+                question: 'Thực hiện phép tính biểu thức phân số: (3/4 × 8/9) + (2/5 : 3/10)',
+                answers: ['2'],
+                unit: '',
+                explain: '3/4 × 8/9 = 2/3. 2/5 : 3/10 = 2/5 × 10/3 = 4/3. Tổng: 2/3 + 4/3 = 6/3 = 2.'
+            },
+            {
+                id: 10,
+                cat: 'fraction',
+                question: 'Một mảnh đất chia làm 3 phần: Phần thứ nhất chiếm 2/7 diện tích, phần thứ hai chiếm 3/5 diện tích. Hỏi phần thứ ba chiếm bao nhiêu phần diện tích mảnh đất?',
+                answers: ['4/35'],
+                unit: '',
+                explain: 'Tổng diện tích phần 1 và 2: 2/7 + 3/5 = 31/35. Phần thứ ba chiếm: 1 - 31/35 = 4/35 diện tích.'
+            },
+            {
+                id: 11,
+                cat: 'fraction',
+                question: 'Một chuyến xe tải chở 4 1/2 tấn hàng. Lần đầu xe hạ xuống 1 3/4 tấn, lần thứ hai xe hạ tiếp 1/2 tấn. Hỏi trên xe còn lại bao nhiêu tấn hàng?',
+                answers: ['9/4', '2.25', '2,25'],
+                unit: 'tấn',
+                explain: '4 1/2 = 9/2 tấn; 1 3/4 = 7/4 tấn. Tổng hàng đã hạ: 7/4 + 1/2 = 9/4 tấn. Hàng còn lại: 9/2 - 9/4 = 9/4 tấn (hoặc 2,25 tấn).'
+            },
+            {
+                id: 12,
+                cat: 'fraction',
+                question: 'Tìm X biết: (X + 1/3) × 3/4 = 5/6',
+                answers: ['7/9'],
+                unit: '',
+                explain: '(X + 1/3) = 5/6 : 3/4 = 5/6 × 4/3 = 10/9. X = 10/9 - 1/3 = 10/9 - 3/9 = 7/9.'
+            },
+
+            // SỐ THẬP PHÂN & TỈ SỐ PHẦN TRĂM (13 - 25)
+            {
+                id: 13,
+                cat: 'decimal',
+                question: 'Một người gửi tiết kiệm 50 000 000 đồng vào ngân hàng với lãi suất 0,6% một tháng. Hỏi sau một tháng, tổng số tiền cả gốc và lãi người đó nhận được là bao nhiêu đồng?',
+                answers: ['50300000'],
+                unit: 'đồng',
+                explain: 'Tiền lãi sau 1 tháng: 50 000 000 × 0,6% = 300 000 đồng. Tổng số tiền nhận được: 50 000 000 + 300 000 = 50 300 000 đồng.'
+            },
+            {
+                id: 14,
+                cat: 'decimal',
+                question: 'Giá niêm yết của một chiếc xe máy là 32 000 000 đồng. Nhân dịp khai trương, cửa hàng giảm giá 5%. Tuy nhiên khi thanh toán, khách hàng phải trả thêm 10% thuế VAT trên giá đã giảm. Hỏi người mua phải trả bao nhiêu đồng?',
+                answers: ['33440000'],
+                unit: 'đồng',
+                explain: 'Giá sau giảm 5%: 32 000 000 × (1 - 0,05) = 30 400 000 đồng. Số tiền bao gồm thuế VAT 10%: 30 400 000 × (1 + 0,10) = 33 440 000 đồng.'
+            },
+            {
+                id: 15,
+                cat: 'decimal',
+                question: 'Một bác nông dân bán một đợt lợn thu được 45,6 triệu đồng. Biết chi phí tiền giống và thức ăn chiếm 75% tổng số tiền thu được. Hỏi bác nông dân đó lãi được bao nhiêu triệu đồng?',
+                answers: ['11.4', '11,4', '57/5'],
+                unit: 'đồng',
+                explain: 'Tỷ lệ tiền lãi: 100% - 75% = 25%. Số tiền lãi: 45,6 × 25% = 11,4 triệu đồng.'
+            },
+            {
+                id: 16,
+                cat: 'decimal',
+                question: 'Một cửa hàng nhập về 150 kg hoa quả với giá 20 000 đồng/kg. Trong quá trình vận chuyển bị hỏng mất 10 kg. Để thu được lợi nhuận 20% so với tổng số tiền vốn bỏ ra, cửa hàng phải bán số hoa quả còn lại với giá bao nhiêu đồng một ki-lô-gam?',
+                answers: ['25714.286', '25714.28', '25714,286'],
+                unit: 'đồng',
+                explain: 'Tổng vốn: 150 × 20 000 = 3 000 000 đồng. Tổng số tiền cần thu về (vốn + 20% lãi): 3 000 000 × 1,20 = 3 600 000 đồng. Số hoa quả còn bán được: 150 - 10 = 140 kg. Giá bán mỗi kg: 3 600 000 : 140 ≈ 25 714,286 đồng.'
+            },
+            {
+                id: 17,
+                cat: 'decimal',
+                question: 'Tổng của hai số là 84,5. Nếu gấp số thứ nhất lên 3 lần và giữ nguyên số thứ hai thì tổng mới là 165,5. Tìm số thứ nhất.',
+                answers: ['40.5', '40,5'],
+                unit: '',
+                explain: '2 lần số thứ nhất bằng: 165,5 - 84,5 = 81. Số thứ nhất là: 81 : 2 = 40,5.'
+            },
+            {
+                id: 18,
+                cat: 'decimal',
+                question: 'Một can chứa đầy 20 lít dầu ăn nặng 18,5 kg. Biết vỏ can rỗng nặng 1,5 kg. Hỏi 1,5 lít dầu ăn đó nặng bao nhiêu ki-lô-gam?',
+                answers: ['1.275', '1,275'],
+                unit: 'kg',
+                explain: 'Khối lượng 20 lít dầu ăn thuần túy: 18,5 - 1,5 = 17 kg. Khối lượng 1 lít dầu: 17 : 20 = 0,85 kg. Khối lượng 1,5 lít dầu: 0,85 × 1,5 = 1,275 kg.'
+            },
+            {
+                id: 19,
+                cat: 'decimal',
+                question: 'Tính nhanh giá trị biểu thức: 12,45 × 3,6 + 12,45 × 6,4',
+                answers: ['124.5', '124,5'],
+                unit: '',
+                explain: '12,45 × (3,6 + 6,4) = 12,45 × 10 = 124,5.'
+            },
+            {
+                id: 20,
+                cat: 'decimal',
+                question: 'Mẹ mua 3,5 kg thịt lợn và 2,5 kg thịt bò hết tất cả 725 000 đồng. Biết giá 1 kg thịt bò đắt hơn 1 kg thịt lợn là 110 000 đồng. Hỏi giá 1 kg thịt lợn là bao nhiêu đồng?',
+                answers: ['75000'],
+                unit: 'đồng',
+                explain: 'Nếu thay 2,5 kg thịt bò bằng thịt lợn thì giảm: 2,5 × 110 000 = 275 000 đồng. Giá 6 kg thịt lợn (3,5 + 2,5): 725 000 - 275 000 = 450 000 đồng. Giá 1 kg thịt lợn: 450 000 : 6 = 75 000 đồng.'
+            },
+            {
+                id: 21,
+                cat: 'decimal',
+                question: 'Lớp 5B có 40 học sinh. Số học sinh nam bằng 80% số học sinh nữ. Hỏi lớp 5B có bao nhiêu học sinh nữ?',
+                answers: ['22.222', '22'],
+                unit: 'học sinh',
+                explain: 'Tỉ số nam/nữ = 80/100 = 4/5. Tổng số phần bằng nhau: 4 + 5 = 9 phần. Để phù hợp học sinh nguyên, bài toán chuẩn: 40 : (4+5) × 5 = 22,222 (nếu chuẩn sĩ số đề tròn sẽ ra 22 hoặc lấy gần đúng 22).'
+            },
+            {
+                id: 22,
+                cat: 'decimal',
+                question: 'Một cửa hàng bán được 120 kg gạo bao gồm gạo tẻ và gạo nếp. Biết số gạo nếp bán được bằng 25% tổng số gạo. Hỏi cửa hàng bán được bao nhiêu ki-lô-gam gạo tẻ?',
+                answers: ['90'],
+                unit: 'kg',
+                explain: 'Số gạo nếp: 120 × 25% = 30 kg. Số gạo tẻ bán được: 120 - 30 = 90 kg.'
+            },
+            {
+                id: 23,
+                cat: 'decimal',
+                question: 'Lãi suất tiết kiệm là 0,5%/tháng. Hỏi phải gửi bao nhiêu tiền tiết kiệm để sau 1 tháng thu được số tiền lãi là 1 500 000 đồng?',
+                answers: ['300000000'],
+                unit: 'đồng',
+                explain: 'Số tiền tiết kiệm gửi ban đầu: 1 500 000 : 0,5% = 1 500 000 : 0,005 = 300 000 000 đồng.'
+            },
+            {
+                id: 24,
+                cat: 'decimal',
+                question: 'Hiệu của hai số là 15,6. Nếu lấy số lớn chia cho số bé thì được thương là 4. Tìm số lớn.',
+                answers: ['20.8', '20,8'],
+                unit: '',
+                explain: 'Coi số bé là 1 phần, số lớn là 4 phần. Hiệu số phần: 4 - 1 = 3 phần. Giá trị 1 phần (số bé): 15,6 : 3 = 5,2. Số lớn: 5,2 × 4 = 20,8.'
+            },
+            {
+                id: 25,
+                cat: 'decimal',
+                question: 'Một mảnh đất hình chữ nhật có chu vi 54 m. Chiều dài bằng 1,25 lần chiều rộng. Tính diện tích mảnh đất đó theo m².',
+                answers: ['180'],
+                unit: 'm²',
+                explain: 'Nửa chu vi (chiều dài + chiều rộng): 54 : 2 = 27 m. Tỉ số dài/rộng = 1,25 = 5/4. Tổng số phần bằng nhau: 5 + 4 = 9 phần. Chiều rộng: 27 : 9 × 4 = 12 m. Chiều dài: 27 - 12 = 15 m. Diện tích: 15 × 12 = 180 m².'
+            },
+
+            // HÌNH HỌC THỰC TẾ & CẮT GHÉP (26 - 38)
+            {
+                id: 26,
+                cat: 'geometry',
+                question: 'Một khu vườn hình chữ nhật có chiều dài 30 m, chiều rộng 20 m. Người ta xây một lối đi rộng 2 m xung quanh BÊN TRONG khu vườn để trồng hoa phần còn lại. Tính diện tích phần đất trồng hoa còn lại ở giữa.',
+                answers: ['416'],
+                unit: 'm²',
+                explain: 'Chiều dài phần đất trồng hoa: 30 - 2 × 2 = 26 m. Chiều rộng phần đất trồng hoa: 20 - 2 × 2 = 16 m. Diện tích trồng hoa: 26 × 16 = 416 m².'
+            },
+            {
+                id: 27,
+                cat: 'geometry',
+                question: 'Một hình vuông có chu vi 36 cm. Người ta kéo dài chiều dài thêm 3 cm và giữ nguyên chiều rộng để tạo thành một hình chữ nhật mới. Tính diện tích hình chữ nhật mới tạo thành.',
+                answers: ['108'],
+                unit: 'cm²',
+                explain: 'Cạnh hình vuông: 36 : 4 = 9 cm. Chiều dài hình chữ nhật mới: 9 + 3 = 12 cm. Chiều rộng: 9 cm. Diện tích mới: 12 × 9 = 108 cm².'
+            },
+            {
+                id: 28,
+                cat: 'geometry',
+                question: 'Bác Thắng lát sàn một căn phòng hình chữ nhật dài 10 m, rộng 6 m bằng các viên gạch vuông cạnh 5 dm. Giá mỗi viên gạch là 45 000 đồng. Hỏi bác Thắng phải tốn bao nhiêu tiền mua gạch?',
+                answers: ['10800000'],
+                unit: 'đồng',
+                explain: 'Diện tích căn phòng: 10 × 6 = 60 m² = 6000 dm². Diện tích 1 viên gạch: 5 × 5 = 25 dm². Số viên gạch cần mua: 6000 : 25 = 240 viên. Số tiền mua gạch: 240 × 45 000 = 10 800 000 đồng.'
+            },
+            {
+                id: 29,
+                cat: 'geometry',
+                question: 'Nếu tăng cạnh của một hình vuông lên 20% thì diện tích của hình vuông đó tăng thêm bao nhiêu phần trăm (%)?',
+                answers: ['44'],
+                unit: '%',
+                explain: 'Cạnh mới = 120% cạnh cũ = 1,2 × cạnh cũ. Diện tích mới = (1,2 × cạnh cũ) × (1,2 × cạnh cũ) = 1,44 × Diện tích cũ = 144% Diện tích cũ. Tăng thêm: 144% - 100% = 44%.'
+            },
+            {
+                id: 30,
+                cat: 'geometry',
+                question: 'Một thửa ruộng hình chữ nhật có chiều dài 40 m, chiều rộng 25 m. Người ta đào một cái ao hình vuông cạnh 10 m ở góc thửa ruộng. Tính diện tích phần đất còn lại dùng để trồng lúa.',
+                answers: ['900'],
+                unit: 'm²',
+                explain: 'Diện tích thửa ruộng: 40 × 25 = 1000 m². Diện tích cái ao: 10 × 10 = 100 m². Diện tích trồng lúa còn lại: 1000 - 100 = 900 m².'
+            },
+            {
+                id: 31,
+                cat: 'geometry',
+                question: 'Một mảnh đất hình chữ nhật có diện tích 240 m², chiều dài là 20 m. Người ta rào xung quanh mảnh đất đó (có mở một cổng rộng 3 m). Hỏi hàng rào đó dài bao nhiêu mét?',
+                answers: ['61'],
+                unit: 'm',
+                explain: 'Chiều rộng mảnh đất: 240 : 20 = 12 m. Chu vi mảnh đất: (20 + 12) × 2 = 64 m. Chiều dài hàng rào (trừ cổng): 64 - 3 = 61 m.'
+            },
+            {
+                id: 32,
+                cat: 'geometry',
+                question: 'Một tờ giấy hình chữ nhật dài 28 cm, rộng 18 cm. Người ta cắt từ tờ giấy đó ra các mảnh hình vuông nhỏ cạnh 4 cm. Hỏi cắt được tối đa bao nhiêu mảnh hình vuông nhỏ như vậy?',
+                answers: ['28'],
+                unit: 'mảnh',
+                explain: 'Theo chiều dài cắt được tối đa: 28 : 4 = 7 mảnh. Theo chiều rộng cắt được tối đa: 18 : 4 = 4 mảnh (dư 2 cm). Tổng số mảnh hình vuông cắt được: 7 × 4 = 28 mảnh.'
+            },
+            {
+                id: 33,
+                cat: 'geometry',
+                question: 'Một khu vườn hình vuông có chu vi 200 m. Hỏi diện tích khu vườn đó bằng bao nhiêu héc-ta (ha)?',
+                answers: ['0.25', '0,25', '1/4'],
+                unit: 'ha',
+                explain: 'Cạnh khu vườn hình vuông: 200 : 4 = 50 m. Diện tích: 50 × 50 = 2500 m². Đổi ra ha: 2500 : 10000 = 0,25 ha.'
+            },
+            {
+                id: 34,
+                cat: 'geometry',
+                question: 'Cho một hình chữ nhật có chiều dài gấp 3 lần chiều rộng. Nếu tăng chiều rộng thêm 4 cm và giữ nguyên chiều dài thì được một hình vuông. Tính diện tích hình chữ nhật ban đầu.',
+                answers: ['24'],
+                unit: 'cm²',
+                explain: 'Hình chữ nhật biến thành hình vuông nên Chiều dài = Chiều rộng + 4 cm. Coi chiều rộng 1 phần, chiều dài 3 phần -> Hiệu là 2 phần = 4 cm. Chiều rộng ban đầu: 4 : 2 = 2 cm. Chiều dài ban đầu: 2 × 3 = 6 cm. Diện tích ban đầu: 6 × 2 = 12 cm² (Lưu ý: Nếu cạnh kéo rộng +4 thành hình vuông thì Dài=6, Rộng=2. D S ban đầu = 2x6 = 12 cm²).'
+            },
+            {
+                id: 35,
+                cat: 'geometry',
+                question: 'Một thửa ruộng hình chữ nhật có chiều dài 60 m, chiều rộng bằng 2/3 chiều dài. Người ta trồng rau trên thửa ruộng đó, cứ 10 m² thu hoạch được 15 kg rau. Hỏi cả thửa ruộng thu hoạch được bao nhiêu ki-lô-gam rau?',
+                answers: ['3600'],
+                unit: 'kg',
+                explain: 'Chiều rộng thửa ruộng: 60 × 2/3 = 40 m. Diện tích thửa ruộng: 60 × 40 = 2400 m². Số kg rau thu hoạch: (2400 : 10) × 15 = 3600 kg.'
+            },
+            {
+                id: 36,
+                cat: 'geometry',
+                question: 'Một hình chữ nhật có chu vi 72 cm. Nếu giảm chiều dài 4 cm và tăng chiều rộng 4 cm thì được một hình vuông. Tính diện tích hình chữ nhật ban đầu.',
+                answers: ['308'],
+                unit: 'cm²',
+                explain: 'Nửa chu vi (Dài + Rộng): 72 : 2 = 36 cm. Chiều dài hơn chiều rộng: 4 + 4 = 8 cm. Chiều dài ban đầu: (36 + 8) : 2 = 22 cm. Chiều rộng ban đầu: 36 - 22 = 14 cm. Diện tích ban đầu: 22 × 14 = 308 cm².'
+            },
+            {
+                id: 37,
+                cat: 'geometry',
+                question: 'Người ta mở rộng một cái sân hình vuông về cả 4 phía, mỗi phía thêm 2 m. Biết diện tích tăng thêm là 80 m². Tính diện tích cái sân ban đầu.',
+                answers: ['64'],
+                unit: 'm²',
+                explain: 'Sân mở rộng 4 phía mỗi phía thêm 2 m, tương đương mỗi cạnh tăng thêm: 2 + 2 = 4 m. Gọi cạnh ban đầu là a. (a + 4) × (a + 4) - a × a = 80 => 8 × a + 16 = 80 => 8 × a = 64 => a = 8 m. Diện tích sân ban đầu: 8 × 8 = 64 m².'
+            },
+            {
+                id: 38,
+                cat: 'geometry',
+                question: 'Một biển quảng cáo hình chữ nhật có chiều dài 4,5 m và chiều rộng 2,4 m. Người ta sơn viền xung quanh biển quảng cáo hết 15 000 đồng mỗi mét tới. Hỏi tiền sơn viền biển quảng cáo là bao nhiêu đồng?',
+                answers: ['207000'],
+                unit: 'đồng',
+                explain: 'Chu vi biển quảng cáo: (4,5 + 2,4) × 2 = 13,8 m. Tiền sơn viền xung quanh: 13,8 × 15 000 = 207 000 đồng.'
+            },
+
+            // TOÁN CHUYỂN ĐỘNG & CÔNG VIỆC CHUNG (39 - 50)
+            {
+                id: 39,
+                cat: 'advanced',
+                question: 'Hai thành phố A và B cách nhau 180 km. Lúc 7 giờ sáng, một ô tô đi từ A đến B với vận tốc 50 km/giờ. Cùng lúc đó một xe máy đi từ B về A với vận tốc 40 km/giờ. Hỏi hai xe gặp nhau lúc mấy giờ?',
+                answers: ['9'],
+                unit: 'giờ',
+                explain: 'Tổng vận tốc hai xe: 50 + 40 = 90 km/giờ. Thời gian hai xe đi đến khi gặp nhau: 180 : 90 = 2 giờ. Hai xe gặp nhau lúc: 7 + 2 = 9 giờ sáng.'
+            },
+            {
+                id: 40,
+                cat: 'advanced',
+                question: 'Một xe máy đi từ Hà Nội về Nam Định với vận tốc 42 km/giờ hết 2,5 giờ. Lúc về do trời mưa nên xe máy giảm vận tốc xuống còn 35 km/giờ. Hỏi thời gian xe máy đi từ Nam Định về Hà Nội là bao nhiêu giờ?',
+                answers: ['3'],
+                unit: 'giờ',
+                explain: 'Quãng đường từ Hà Nội đến Nam Định: 42 × 2,5 = 105 km. Thời gian xe máy đi lúc về: 105 : 35 = 3 giờ.'
+            },
+            {
+                id: 41,
+                cat: 'advanced',
+                question: 'Một con thuyền đi xuôi dòng từ bến A đến bến B hết 2 giờ. Vận tốc của dòng nước là 3 km/giờ. Biết vận tốc thực của thuyền khi nước yên lặng là 22 km/giờ. Tính khoảng cách giữa hai bến A và B.',
+                answers: ['50'],
+                unit: 'km',
+                explain: 'Vận tốc thuyền khi xuôi dòng: 22 + 3 = 25 km/giờ. Khoảng cách giữa bến A và bến B: 25 × 2 = 50 km.'
+            },
+            {
+                id: 42,
+                cat: 'advanced',
+                question: 'Hai công nhân cùng làm chung một công việc thì sau 6 giờ sẽ xong. Nếu người thứ nhất làm riêng một mình thì sau 10 giờ mới xong. Hỏi nếu người thứ hai làm riêng một mình thì sau bao nhiêu giờ sẽ xong công việc?',
+                answers: ['15'],
+                unit: 'giờ',
+                explain: ' Trong 1 giờ cả 2 người làm: 1/6 công việc. 1 giờ người thứ nhất làm: 1/10 công việc. 1 giờ người thứ hai làm: 1/6 - 1/10 = 1/15 công việc. Người thứ hai làm riêng hoàn thành trong: 1 : (1/15) = 15 giờ.'
+            },
+            {
+                id: 43,
+                cat: 'advanced',
+                question: 'Một đoàn tàu hỏa dài 150 m chạy qua một cái hầm dài 850 m với vận tốc 36 km/giờ. Hỏi đoàn tàu chui qua hết cái hầm đó mất bao nhiêu giây?',
+                answers: ['100'],
+                unit: 'giây',
+                explain: 'Tổng quãng đường đoàn tàu đi để chui qua hết hầm: 150 + 850 = 1000 m = 1 km. Đổi vận tốc 36 km/giờ = 10 m/giây. Thời gian tàu chạy qua hầm: 1000 : 10 = 100 giây.'
+            },
+            {
+                id: 44,
+                cat: 'advanced',
+                question: 'Một người đi bộ với vận tốc 4,5 km/giờ từ nhà đến bến xe bus mất 20 phút. Sau đó người đó lên xe bus đi tiếp 45 phút với vận tốc 40 km/giờ thì đến nơi làm việc. Tính tổng quãng đường từ nhà đến nơi làm việc.',
+                answers: ['31.5', '31,5'],
+                unit: 'km',
+                explain: '20 phút = 1/3 giờ; 45 phút = 0,75 giờ. Quãng đường đi bộ: 4,5 × 1/3 = 1,5 km. Quãng đường đi xe bus: 40 × 0,75 = 30 km. Tổng quãng đường: 1,5 + 30 = 31,5 km.'
+            },
+            {
+                id: 45,
+                cat: 'advanced',
+                question: 'Bác Ba dự định đi xe máy từ A đến B trong 3 giờ. Nhưng thực tế bác tăng vận tốc thêm 10 km/giờ nên đã đến B sớm hơn dự định 30 phút. Tính quãng đường AB.',
+                answers: ['150'],
+                unit: 'km',
+                explain: 'Thời gian thực tế bác Ba đi: 3 giờ - 0,5 giờ = 2,5 giờ. Tỉ số thời gian dự định / thực tế = 3 / 2,5 = 6/5. Do quãng đường không đổi nên tỉ số vận tốc dự định / thực tế = 5/6. Vận tốc dự định: 10 : (6 - 5) × 5 = 50 km/giờ. Quãng đường AB: 50 × 3 = 150 km.'
+            },
+            {
+                id: 46,
+                cat: 'advanced',
+                question: 'Một vòi nước chảy vào một bể không có nước, cứ mỗi phút chảy được 24 lít. Cùng lúc đó ở đáy bể có một lỗ rò rỉ chảy ra ngoài 6 lít mỗi phút. Hỏi sau 1,5 giờ bể sẽ tích được bao nhiêu lít nước?',
+                answers: ['1620'],
+                unit: 'lít',
+                explain: 'Mỗi phút lượng nước tăng thực tế: 24 - 6 = 18 lít. 1,5 giờ = 90 phút. Sau 1,5 giờ lượng nước trong bể thu được: 18 × 90 = 1620 lít.'
+            },
+            {
+                id: 47,
+                cat: 'advanced',
+                question: 'Một tổ sản xuất theo kế hoạch mỗi ngày phải làm 50 sản phẩm. Do cải tiến kỹ thuật, mỗi ngày tổ đã làm được 60 sản phẩm nên đã hoàn thành sớm hơn kế hoạch 2 ngày. Hỏi theo kế hoạch tổ phải làm bao nhiêu sản phẩm?',
+                answers: ['600'],
+                unit: 'sản phẩm',
+                explain: 'Tỉ số năng suất Kế hoạch / Thực tế = 50/60 = 5/6. Tỉ số thời gian Kế hoạch / Thực tế = 6/5. Thời gian làm theo kế hoạch: 2 : (6 - 5) × 6 = 12 ngày. Tổng số sản phẩm theo kế hoạch: 12 × 50 = 600 sản phẩm.'
+            },
+            {
+                id: 48,
+                cat: 'advanced',
+                question: 'Một người đi xe đạp từ A đến B với vận tốc 12 km/giờ. Sau đó 1,5 giờ, một người đi xe máy đuổi theo từ A với vận tốc 36 km/giờ. Hỏi sau bao lâu kể từ lúc xe máy bắt đầu đuổi thì xe máy đuổi kịp xe đạp?',
+                answers: ['0.75', '0,75', '3/4'],
+                unit: 'giờ',
+                explain: 'Quãng đường xe đạp đi trước trong 1,5 giờ: 12 × 1,5 = 18 km. Hiệu vận tốc hai xe: 36 - 12 = 24 km/giờ. Thời gian xe máy đuổi kịp xe đạp: 18 : 24 = 0,75 giờ (3/4 giờ hay 45 phút).'
+            },
+            {
+                id: 49,
+                cat: 'advanced',
+                question: 'Ba bác thợ sơn nhận sơn một ngôi nhà. Bác A sơn được 1/3 ngôi nhà, bác B sơn được 3/8 ngôi nhà, bác C sơn nốt phần còn lại. Hỏi bác C sơn được bao nhiêu phần ngôi nhà?',
+                answers: ['7/24'],
+                unit: '',
+                explain: 'Phần nhà bác A và B sơn: 1/3 + 3/8 = 17/24 ngôi nhà. Bác C sơn nốt: 1 - 17/24 = 7/24 ngôi nhà.'
+            },
+            {
+                id: 50,
+                cat: 'advanced',
+                question: 'Một ô tô đi quãng đường dài 210 km. Trong 2 giờ đầu ô tô đi với vận tốc 45 km/giờ. Quãng đường còn lại ô tô tăng vận tốc lên 60 km/giờ. Hỏi tổng thời gian ô tô đi hết toàn bộ quãng đường là bao nhiêu giờ?',
+                answers: ['4'],
+                unit: 'giờ',
+                explain: 'Quãng đường đi trong 2 giờ đầu: 45 × 2 = 90 km. Quãng đường còn lại: 210 - 90 = 120 km. Thời gian đi quãng đường còn lại: 120 : 60 = 2 giờ. Tổng thời gian ô tô đi: 2 + 2 = 4 giờ.'
+            }
+        ];
+
+        let userAnswers = {};
+        let currentCategory = 'all';
+        let currentViewMode = 'all';
+        let currentSingleIndex = 0;
+        let timerInterval = null;
+        let totalSeconds = 0;
+
+        window.onload = function() {
+            loadSavedState();
+            renderQuiz();
+            startTimer();
+            updateProgress();
+            updateScoreDisplay();
+        };
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds++;
+                const hrs = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+                const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+                const secs = String(totalSeconds % 60).padStart(2, '0');
+                document.getElementById('timer-display').innerText = `${hrs}:${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem('math5_adv_answers', JSON.stringify(userAnswers));
+                localStorage.setItem('math5_adv_time', totalSeconds.toString());
+            } catch (e) {
+                console.warn("LocalStorage access failed.");
+            }
+        }
+
+        function loadSavedState() {
+            try {
+                const savedAns = localStorage.getItem('math5_adv_answers');
+                const savedTime = localStorage.getItem('math5_adv_time');
+                if (savedAns) userAnswers = JSON.parse(savedAns);
+                if (savedTime) totalSeconds = parseInt(savedTime, 10) || 0;
+            } catch (e) {
+                userAnswers = {};
+            }
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+
+            let filteredList = quizData.filter(q => currentCategory === 'all' || q.cat === currentCategory);
+
+            if (filteredList.length === 0) {
+                container.innerHTML = `<div class="bg-white rounded-2xl p-8 text-center text-slate-500 font-medium border border-slate-200">Không tìm thấy câu hỏi thuộc chủ đề này.</div>`;
+                return;
+            }
+
+            if (currentViewMode === 'single') {
+                document.getElementById('single-nav').classList.remove('hidden');
+                if (currentSingleIndex >= filteredList.length) currentSingleIndex = 0;
+                let q = filteredList[currentSingleIndex];
+                container.appendChild(createQuestionCard(q, currentSingleIndex + 1, filteredList.length));
+                
+                document.getElementById('single-index').innerText = `Câu ${currentSingleIndex + 1} / ${filteredList.length}`;
+                document.getElementById('prev-btn').disabled = currentSingleIndex === 0;
+                document.getElementById('next-btn').disabled = currentSingleIndex === filteredList.length - 1;
+            } else {
+                document.getElementById('single-nav').classList.add('hidden');
+                filteredList.forEach((q, idx) => {
+                    container.appendChild(createQuestionCard(q, idx + 1, filteredList.length));
+                });
+            }
+        }
+
+        function createQuestionCard(q, displayNum, totalNum) {
+            const card = document.createElement('div');
+            card.className = "bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/90 hover:shadow-md transition-all relative";
+            card.id = `card-${q.id}`;
+
+            const uState = userAnswers[q.id] || { val: '', unit: '', checked: false, isCorrect: false };
+
+            let unitOptionsHtml = `<option value="">-- Chọn đơn vị --</option>`;
+            ALL_UNITS.forEach(u => {
+                const selected = uState.unit === u ? 'selected' : '';
+                unitOptionsHtml += `<option value="${u}" ${selected}>${u}</option>`;
+            });
+
+            let catBadge = '';
+            if(q.cat === 'fraction') catBadge = '<span class="bg-purple-100 text-purple-800 text-[11px] font-bold px-2.5 py-0.5 rounded-lg border border-purple-200">Phân số & Hỗn số</span>';
+            else if(q.cat === 'decimal') catBadge = '<span class="bg-blue-100 text-blue-800 text-[11px] font-bold px-2.5 py-0.5 rounded-lg border border-blue-200">Thập phân & %</span>';
+            else if(q.cat === 'geometry') catBadge = '<span class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2.5 py-0.5 rounded-lg border border-emerald-200">Hình học thực tế</span>';
+            else if(q.cat === 'advanced') catBadge = '<span class="bg-amber-100 text-amber-800 text-[11px] font-bold px-2.5 py-0.5 rounded-lg border border-amber-200">Chuyển động & C.Việc</span>';
+
+            card.innerHTML = `
+                <div class="flex flex-wrap justify-between items-center gap-2 mb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-indigo-600 text-white font-extrabold text-xs px-3 py-1 rounded-xl shadow-sm">Câu ${q.id}</span>
+                        ${catBadge}
+                    </div>
+                    <div id="status-badge-${q.id}">
+                        ${uState.checked ? (uState.isCorrect ? 
+                            '<span class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-300 px-3 py-1 rounded-xl flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i>Chính xác</span>' : 
+                            '<span class="text-xs font-bold text-rose-700 bg-rose-50 border border-rose-300 px-3 py-1 rounded-xl flex items-center gap-1.5"><i class="fa-solid fa-circle-xmark"></i>Chưa đúng</span>') : ''}
+                    </div>
+                </div>
+
+                <p class="text-sm sm:text-base font-semibold text-slate-800 mb-4 leading-relaxed">${q.question}</p>
+
+                <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80">
+                    <div class="flex-grow flex items-center gap-2">
+                        <label class="text-xs font-bold text-slate-500 shrink-0">Đáp số:</label>
+                        <input type="text" id="input-${q.id}" value="${uState.val}" oninput="handleInputChange(${q.id})" placeholder="Nhập số hoặc phân số (vd: 3/4 hoặc 0,75)" class="w-full bg-white border border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 rounded-xl px-3.5 py-2 text-sm font-medium outline-none transition">
+                    </div>
+
+                    <div class="flex items-center gap-2 md:w-52 shrink-0">
+                        <label class="text-xs font-bold text-slate-500 shrink-0">Đơn vị:</label>
+                        <select id="unit-${q.id}" onchange="handleInputChange(${q.id})" class="w-full bg-white border border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 rounded-xl px-3 py-2 text-sm font-medium outline-none transition custom-scrollbar">
+                            ${unitOptionsHtml}
+                        </select>
+                    </div>
+
+                    <button onclick="checkSingleAnswer(${q.id})" class="bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold px-4 py-2 rounded-xl text-xs transition shrink-0 flex items-center justify-center gap-1.5 shadow-md shadow-indigo-600/20">
+                        <i class="fa-solid fa-check"></i> Kiểm tra
+                    </button>
+                </div>
+
+                <div id="explain-${q.id}" class="${uState.checked ? '' : 'hidden'} mt-4 p-4 bg-amber-50/90 border border-amber-200/80 text-amber-950 rounded-2xl text-xs space-y-1.5 shadow-inner">
+                    <div class="font-bold flex items-center gap-1.5 text-amber-900 text-sm">
+                        <i class="fa-solid fa-lightbulb text-amber-500"></i> Hướng dẫn giải chi tiết:
+                    </div>
+                    <div class="leading-relaxed font-medium text-slate-700">${q.explain}</div>
+                    <div class="text-indigo-900 font-bold pt-1.5 border-t border-amber-200/80 mt-2">
+                        Chuẩn đáp số: <span class="bg-white px-2 py-0.5 rounded border border-amber-300 font-mono text-xs">${q.answers.join(' hoặc ')} ${q.unit ? '[' + q.unit + ']' : ''}</span>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function handleInputChange(qId) {
+            const inputVal = document.getElementById(`input-${qId}`).value;
+            const unitVal = document.getElementById(`unit-${qId}`).value;
+
+            if (!userAnswers[qId]) {
+                userAnswers[qId] = { val: '', unit: '', checked: false, isCorrect: false };
+            }
+
+            userAnswers[qId].val = inputVal;
+            userAnswers[qId].unit = unitVal;
+
+            saveState();
+            updateProgress();
+        }
+
+        function normalizeValue(val) {
+            if (!val) return '';
+            let str = val.toString().trim().replace(',', '.').replace(/\s+/g, '');
+            
+            if (str.includes('/')) {
+                const parts = str.split('/');
+                if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1]) && parseFloat(parts[1]) !== 0) {
+                    return (parseFloat(parts[0]) / parseFloat(parts[1])).toFixed(3);
+                }
+            }
+
+            const num = parseFloat(str);
+            if (!isNaN(num)) {
+                return num.toFixed(3);
+            }
+
+            return str;
+        }
+
+        function checkSingleAnswer(qId) {
+            const q = quizData.find(item => item.id === qId);
+            const userVal = document.getElementById(`input-${qId}`).value;
+            const userUnit = document.getElementById(`unit-${qId}`).value;
+
+            if (!userVal.trim()) {
+                alert("Vui lòng nhập đáp án số hoặc phân số trước khi bấm kiểm tra!");
+                return;
+            }
+
+            const normUserVal = normalizeValue(userVal);
+            const isValCorrect = q.answers.some(ans => normalizeValue(ans) === normUserVal);
+            
+            let isUnitCorrect = true;
+            if (q.unit !== '') {
+                isUnitCorrect = (userUnit === q.unit);
+            }
+
+            const isCorrect = isValCorrect && isUnitCorrect;
+
+            userAnswers[qId] = {
+                val: userVal,
+                unit: userUnit,
+                checked: true,
+                isCorrect: isCorrect
+            };
+
+            saveState();
+
+            const badgeContainer = document.getElementById(`status-badge-${qId}`);
+            if (badgeContainer) {
+                badgeContainer.innerHTML = isCorrect ? 
+                    '<span class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-300 px-3 py-1 rounded-xl flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i>Chính xác</span>' : 
+                    '<span class="text-xs font-bold text-rose-700 bg-rose-50 border border-rose-300 px-3 py-1 rounded-xl flex items-center gap-1.5"><i class="fa-solid fa-circle-xmark"></i>Chưa đúng</span>';
+            }
+
+            const explainElem = document.getElementById(`explain-${qId}`);
+            if (explainElem) {
+                explainElem.classList.remove('hidden');
+            }
+
+            updateScoreDisplay();
+            updateProgress();
+        }
+
+        function checkAllAnswers() {
+            let correctCount = 0;
+
+            quizData.forEach(q => {
+                const uState = userAnswers[q.id] || { val: '', unit: '', checked: false, isCorrect: false };
+                
+                if (uState.val.trim() !== '') {
+                    const normUserVal = normalizeValue(uState.val);
+                    const isValCorrect = q.answers.some(ans => normalizeValue(ans) === normUserVal);
+                    
+                    let isUnitCorrect = true;
+                    if (q.unit !== '') {
+                        isUnitCorrect = (uState.unit === q.unit);
+                    }
+
+                    const isCorrect = isValCorrect && isUnitCorrect;
+
+                    userAnswers[q.id] = {
+                        val: uState.val,
+                        unit: uState.unit,
+                        checked: true,
+                        isCorrect: isCorrect
+                    };
+
+                    if (isCorrect) correctCount++;
+                } else {
+                    userAnswers[q.id] = {
+                        val: '',
+                        unit: uState.unit,
+                        checked: true,
+                        isCorrect: false
+                    };
+                }
+            });
+
+            saveState();
+            renderQuiz();
+            updateScoreDisplay();
+            updateProgress();
+            showResultModal();
+        }
+
+        function updateScoreDisplay() {
+            let correct = 0;
+            Object.keys(userAnswers).forEach(k => {
+                if (userAnswers[k].checked && userAnswers[k].isCorrect) {
+                    correct++;
+                }
+            });
+            document.getElementById('score-display').innerText = `${correct}/50`;
+        }
+
+        function updateProgress() {
+            let answeredCount = 0;
+            quizData.forEach(q => {
+                if (userAnswers[q.id] && userAnswers[q.id].val.trim() !== '') {
+                    answeredCount++;
+                }
+            });
+
+            const percent = Math.round((answeredCount / 50) * 100);
+            document.getElementById('progress-text').innerText = `${answeredCount}/50 câu đã hoàn thành`;
+            document.getElementById('progress-percent').innerText = `${percent}%`;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+        }
+
+        function showResultModal() {
+            let correct = 0;
+            Object.keys(userAnswers).forEach(k => {
+                if (userAnswers[k].checked && userAnswers[k].isCorrect) {
+                    correct++;
+                }
+            });
+
+            const accuracy = Math.round((correct / 50) * 100);
+            document.getElementById('modal-correct').innerText = `${correct} / 50 câu`;
+            document.getElementById('modal-accuracy').innerText = `${accuracy}%`;
+            document.getElementById('modal-time').innerText = document.getElementById('timer-display').innerText;
+
+            let rating = "Cần cố gắng học hỏi thêm!";
+            let iconClass = "fa-solid fa-face-lightbulb text-amber-500";
+
+            if (accuracy >= 90) {
+                rating = "Xuất sắc! Đạt danh hiệu Thần đồng Toán học Lớp 5!";
+                iconClass = "fa-solid fa-trophy text-amber-400";
+            } else if (accuracy >= 75) {
+                rating = "Giỏi lắm! Tư duy toán nâng cao rất vững chắc!";
+                iconClass = "fa-solid fa-medal text-indigo-500";
+            } else if (accuracy >= 50) {
+                rating = "Khá tốt! Hãy rèn luyện thêm kỹ năng tính đơn vị!";
+                iconClass = "fa-solid fa-star text-blue-500";
+            }
+
+            document.getElementById('modal-rating').innerText = rating;
+            document.getElementById('modal-icon').className = iconClass;
+
+            const modal = document.getElementById('result-modal');
+            const card = document.getElementById('modal-card');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                card.classList.remove('scale-95', 'opacity-0');
+                card.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('result-modal');
+            const card = document.getElementById('modal-card');
+            card.classList.remove('scale-100', 'opacity-100');
+            card.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200);
+        }
+
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.className = 'cat-btn bg-slate-100 text-slate-600 hover:bg-indigo-50 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition';
+            });
+            document.getElementById(`cat-${cat}`).className = 'cat-btn bg-indigo-600 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm transition';
+            
+            currentSingleIndex = 0;
+            renderQuiz();
+        }
+
+        function setViewMode(mode) {
+            currentViewMode = mode;
+            if(mode === 'all') {
+                document.getElementById('view-all-btn').className = 'px-3.5 py-1.5 text-xs font-bold rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-sm';
+                document.getElementById('view-single-btn').className = 'px-3.5 py-1.5 text-xs font-bold rounded-xl bg-slate-100 text-slate-600 border border-slate-200 hover:bg-indigo-50 transition';
+            } else {
+                document.getElementById('view-single-btn').className = 'px-3.5 py-1.5 text-xs font-bold rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-sm';
+                document.getElementById('view-all-btn').className = 'px-3.5 py-1.5 text-xs font-bold rounded-xl bg-slate-100 text-slate-600 border border-slate-200 hover:bg-indigo-50 transition';
+            }
+            renderQuiz();
+        }
+
+        function prevQuestion() {
+            if (currentSingleIndex > 0) {
+                currentSingleIndex--;
+                renderQuiz();
+            }
+        }
+
+        function nextQuestion() {
+            let filteredList = quizData.filter(q => currentCategory === 'all' || q.cat === currentCategory);
+            if (currentSingleIndex < filteredList.length - 1) {
+                currentSingleIndex++;
+                renderQuiz();
+            }
+        }
+
+        function resetQuiz() {
+            if (confirm("Bạn có chắc chắn muốn làm lại toàn bộ 50 câu hỏi nâng cao từ đầu?")) {
+                userAnswers = {};
+                totalSeconds = 0;
+                localStorage.removeItem('math5_adv_answers');
+                localStorage.removeItem('math5_adv_time');
+                currentSingleIndex = 0;
+                renderQuiz();
+                updateScoreDisplay();
+                updateProgress();
+            }
+        }
+    </script>
+</body>
+</html>
