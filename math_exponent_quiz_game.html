@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Quiz - Luyện Tập Lũy Thừa & Số Chính Phương</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-option {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.07);
+            border: 2px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(168, 85, 247, 0.5);
+            box-shadow: 0 10px 20px -5px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-option:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .correct-anim {
+            animation: bounceGreen 0.5s ease;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+            border-color: #34d399 !important;
+            color: white !important;
+        }
+
+        .wrong-anim {
+            animation: shakeRed 0.5s ease;
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%) !important;
+            border-color: #f87171 !important;
+            color: white !important;
+        }
+
+        @keyframes bounceGreen {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+
+        @keyframes shakeRed {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #c084fc 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-gold {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="flex flex-col justify-between min-h-screen selection:bg-purple-500 selection:text-white">
+
+    <header class="sticky top-0 z-40 glass-nav px-4 py-3 sm:px-8">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-gradient-to-tr from-purple-600 to-indigo-500 rounded-2xl shadow-lg shadow-purple-500/30">
+                    <i class="fa-solid fa-calculator text-2xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-tight gradient-text">Exponent Master</h1>
+                    <p class="text-xs text-slate-400 font-medium">Luyện tập Lũy Thừa & Số Chính Phương</p>
+                </div>
+            </div>
+
+            <!-- Global Quick Stats -->
+            <div class="flex items-center gap-3 sm:gap-6 bg-slate-900/60 p-1.5 px-3 rounded-2xl border border-white/10 text-xs sm:text-sm">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-trophy text-amber-400"></i>
+                    <span class="text-slate-400 hidden sm:inline">Tổng điểm:</span>
+                    <span id="total-score" class="font-bold text-amber-400">0</span>
+                </div>
+                <div class="h-4 w-[1px] bg-white/10"></div>
+                <button onclick="openRewardsModal()" class="flex items-center gap-2 text-purple-300 hover:text-purple-200 transition-colors">
+                    <i class="fa-solid fa-key text-purple-400"></i>
+                    <span class="font-bold">Mã Code</span>
+                    <span id="unlocked-count-badge" class="px-1.5 py-0.5 text-[10px] bg-purple-500/30 border border-purple-400/40 text-purple-300 rounded-full font-bold">0/3</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl w-full mx-auto px-4 py-6 sm:py-10 flex-grow flex flex-col justify-center">
+
+        <!-- Mode Navigation Tabs -->
+        <div class="grid grid-cols-3 gap-2 sm:gap-4 p-1.5 bg-slate-900/80 rounded-2xl border border-white/10 mb-6 sm:mb-8 shadow-inner">
+            <button onclick="switchMode(1)" id="tab-mode-1" class="mode-tab py-3 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2">
+                <i class="fa-solid fa-superscript text-base"></i>
+                <span class="text-center">Phần 1: Tính aⁿ</span>
+            </button>
+            <button onclick="switchMode(2)" id="tab-mode-2" class="mode-tab py-3 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2">
+                <i class="fa-solid fa-xmark text-base"></i>
+                <span class="text-center">Phần 2: Nhân/Chia</span>
+            </button>
+            <button onclick="switchMode(3)" id="tab-mode-3" class="mode-tab py-3 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2">
+                <i class="fa-solid fa-square-root-variable text-base"></i>
+                <span class="text-center">Phần 3: Chính Phương</span>
+            </button>
+        </div>
+
+        <!-- Quiz Container Box -->
+        <div class="glass-card rounded-3xl p-5 sm:p-8 relative overflow-hidden">
+            
+            <!-- Mode Info & Streaks Banner -->
+            <div class="flex flex-wrap justify-between items-center gap-4 pb-6 border-b border-white/10 mb-6">
+                <div>
+                    <span id="mode-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/20 border border-purple-400/30 text-purple-300">
+                        Phần 1
+                    </span>
+                    <h2 id="mode-title" class="text-lg sm:text-xl font-bold mt-2">Tính Giá Trị Lũy Thừa</h2>
+                </div>
+
+                <!-- Streaks Widget -->
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <div class="text-xs text-slate-400 font-medium">Chuỗi Đúng (Streak)</div>
+                        <div class="flex items-center justify-end gap-1.5">
+                            <i class="fa-solid fa-fire text-orange-500 text-lg animate-pulse"></i>
+                            <span id="current-streak" class="text-xl sm:text-2xl font-black text-orange-400">0</span>
+                            <span class="text-xs text-slate-500 font-bold">/30</span>
+                        </div>
+                    </div>
+                    <div class="h-8 w-[1px] bg-white/10"></div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-medium">Kỷ Lục</div>
+                        <div class="text-lg sm:text-xl font-bold text-slate-300" id="best-streak">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Streak Progress Bar -->
+            <div class="w-full bg-slate-900/60 h-2.5 rounded-full overflow-hidden mb-8 border border-white/5 relative">
+                <div id="streak-progress-bar" class="h-full bg-gradient-to-r from-orange-500 to-amber-400 transition-all duration-300" style="width: 0%"></div>
+            </div>
+
+            <!-- Question Box -->
+            <div class="text-center my-4 sm:my-8 min-h-[120px] flex flex-col justify-center items-center">
+                <p class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-slate-400 mb-2" id="question-subtitle">Hãy tính giá trị của phép tính sau:</p>
+                <div id="question-display" class="text-3xl sm:text-5xl font-extrabold tracking-wide py-2 text-white">
+                    2<sup>8</sup> = ?
+                </div>
+            </div>
+
+            <!-- Answer Options Grid -->
+            <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 my-6">
+                <!-- Buttons dynamically populated -->
+            </div>
+
+            <!-- Explanation & Feedback Box -->
+            <div id="feedback-box" class="hidden mt-6 p-4 rounded-2xl border transition-all duration-300">
+                <div class="flex items-start gap-3">
+                    <div id="feedback-icon" class="text-xl mt-0.5"></div>
+                    <div>
+                        <h4 id="feedback-title" class="font-bold text-sm sm:text-base"></h4>
+                        <p id="feedback-explanation" class="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed"></p>
+                    </div>
+                </div>
+                <button id="btn-next" onclick="generateQuestion()" class="mt-4 w-full py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-purple-600/30 transition-all flex items-center justify-center gap-2">
+                    <span>Câu tiếp theo</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center text-xs text-slate-500 border-t border-white/5">
+        <p>© Exponent Quiz Game - Đồ án Luyện Tập Toán Học Vô Tận</p>
+    </footer>
+
+    <!-- Code Unlock & Rewards Modal -->
+    <div id="rewards-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 p-4">
+        <div class="glass-card max-w-md w-full rounded-3xl p-6 sm:p-8 border border-white/20 transform scale-95 transition-transform duration-300 id-modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-award text-2xl text-amber-400"></i>
+                    <h3 class="text-lg font-bold">Kho Mã Code Đã Mở Khóa</h3>
+                </div>
+                <button onclick="closeRewardsModal()" class="text-slate-400 hover:text-white p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <p class="text-xs text-slate-400 mb-6">
+                Đạt chuỗi <span class="text-orange-400 font-bold">30 Streak</span> ở mỗi phần để mở khóa mã thưởng tương ứng!
+            </p>
+
+            <div class="space-y-3">
+                <!-- Part 1 Code -->
+                <div class="p-3.5 rounded-2xl border bg-slate-900/60 flex items-center justify-between" id="code-card-1">
+                    <div>
+                        <div class="text-xs font-semibold text-slate-400">Phần 1: Lũy thừa aⁿ</div>
+                        <div class="font-mono text-base font-bold text-slate-300 mt-0.5" id="code-val-1">🔒 Chưa mở khóa</div>
+                    </div>
+                    <button id="btn-copy-1" disabled onclick="copyCode('chucmung', 1)" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white/5 border border-white/10 text-slate-500 cursor-not-allowed transition-all">
+                        <i class="fa-regular fa-copy"></i> Copy
+                    </button>
+                </div>
+
+                <!-- Part 2 Code -->
+                <div class="p-3.5 rounded-2xl border bg-slate-900/60 flex items-center justify-between" id="code-card-2">
+                    <div>
+                        <div class="text-xs font-semibold text-slate-400">Phần 2: Phép Nhân/Chia</div>
+                        <div class="font-mono text-base font-bold text-slate-300 mt-0.5" id="code-val-2">🔒 Chưa mở khóa</div>
+                    </div>
+                    <button id="btn-copy-2" disabled onclick="copyCode('emKhang', 2)" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white/5 border border-white/10 text-slate-500 cursor-not-allowed transition-all">
+                        <i class="fa-regular fa-copy"></i> Copy
+                    </button>
+                </div>
+
+                <!-- Part 3 Code -->
+                <div class="p-3.5 rounded-2xl border bg-slate-900/60 flex items-center justify-between" id="code-card-3">
+                    <div>
+                        <div class="text-xs font-semibold text-slate-400">Phần 3: Số Chính Phương</div>
+                        <div class="font-mono text-base font-bold text-slate-300 mt-0.5" id="code-val-3">🔒 Chưa mở khóa</div>
+                    </div>
+                    <button id="btn-copy-3" disabled onclick="copyCode('dawin', 3)" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white/5 border border-white/10 text-slate-500 cursor-not-allowed transition-all">
+                        <i class="fa-regular fa-copy"></i> Copy
+                    </button>
+                </div>
+            </div>
+
+            <button onclick="closeRewardsModal()" class="w-full mt-6 py-3 bg-white/10 hover:bg-white/20 font-bold rounded-xl text-sm transition-colors">
+                Đóng
+            </button>
+        </div>
+    </div>
+
+    <script>
+        /* State Management */
+        let currentMode = 1;
+        let score = 0;
+        let streaks = { 1: 0, 2: 0, 3: 0 };
+        let bestStreaks = { 1: 0, 2: 0, 3: 0 };
+        let unlockedCodes = { 1: false, 2: false, 3: false };
+        const CODES = { 1: "chucmung", 2: "emKhang", 3: "dawin" };
+        
+        let currentQuestion = null;
+        let answered = false;
+
+        /* Audio Effects using Web Audio API */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+
+            if (type === 'correct') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.15); // E5
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } else if (type === 'wrong') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.exponentialRampToValueAtTime(110, now + 0.2);
+                gain.gain.setValueAtTime(0.25, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            } else if (type === 'celebrate') {
+                // Festive Chord
+                [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+                    const subOsc = audioCtx.createOscillator();
+                    const subGain = audioCtx.createGain();
+                    subOsc.connect(subGain);
+                    subGain.connect(audioCtx.destination);
+                    subOsc.type = 'triangle';
+                    subOsc.frequency.setValueAtTime(freq, now + i * 0.08);
+                    subGain.gain.setValueAtTime(0.2, now + i * 0.08);
+                    subGain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.5);
+                    subOsc.start(now + i * 0.08);
+                    subOsc.stop(now + i * 0.08 + 0.5);
+                });
+            }
+        }
+
+        /* Helper Functions */
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function generateMode1Question() {
+            // Valid bases and max exponents such that base^exp <= 1000
+            const validPairs = [];
+            for (let a = 1; a <= 31; a++) {
+                for (let x = 1; x <= 10; x++) {
+                    const val = Math.pow(a, x);
+                    if (val > 1 && val <= 1000) {
+                        validPairs.push({ a, x, val });
+                    }
+                }
+            }
+
+            const chosen = validPairs[Math.floor(Math.random() * validPairs.length)];
+            const correctVal = chosen.val;
+
+            // Generate 3 unique distractor choices
+            const options = new Set([correctVal]);
+            while (options.size < 4) {
+                let offset = getRandomInt(-15, 15);
+                if (offset === 0) offset = 1;
+                let fakeVal = correctVal + offset;
+                // Add close powers distractors
+                if (Math.random() > 0.5) {
+                    fakeVal = Math.pow(chosen.a, chosen.x + (Math.random() > 0.5 ? 1 : -1));
+                }
+                if (fakeVal > 0 && fakeVal <= 1200 && fakeVal !== correctVal) {
+                    options.add(fakeVal);
+                }
+            }
+
+            return {
+                displayText: `${chosen.a}<sup>${chosen.x}</sup> = ?`,
+                subtitle: 'Hãy tính giá trị của phép tính lũy thừa:',
+                correctAnswer: correctVal,
+                options: shuffleArray(Array.from(options)),
+                explanation: `Ta có ${chosen.a}<sup>${chosen.x}</sup> = ` + 
+                             Array(chosen.x).fill(chosen.a).join(' × ') + 
+                             ` = <strong>${correctVal}</strong>.`
+            };
+        }
+
+        function generateMode2Question() {
+            const isMultiply = Math.random() > 0.4; // 60% multiply, 40% divide
+            const sameBase = Math.random() > 0.3; // 70% same base for nice simplification
+
+            if (sameBase) {
+                const base = getRandomInt(2, 9);
+                let x = getRandomInt(1, 6);
+                let y = getRandomInt(1, 6);
+                
+                if (!isMultiply && x < y) {
+                    [x, y] = [y, x]; // ensure non-negative exponent for division
+                }
+
+                if (isMultiply) {
+                    const resExp = x + y;
+                    const val = Math.pow(base, resExp);
+                    const displayText = `${base}<sup>${x}</sup> × ${base}<sup>${y}</sup> = ?`;
+                    
+                    // Generate distractors as exponential expressions or values
+                    const options = new Set();
+                    options.add(`${base}<sup>${resExp}</sup> (${val})`);
+                    options.add(`${base}<sup>${x * y}</sup> (${Math.pow(base, Math.min(x * y, 10))})`);
+                    options.add(`${base}<sup>${resExp + 1}</sup> (${Math.pow(base, Math.min(resExp + 1, 10))})`);
+                    options.add(`${base * base}<sup>${resExp}</sup>`);
+
+                    return {
+                        displayText: displayText,
+                        subtitle: 'Rút gọn phép tính lũy thừa cùng cơ số:',
+                        correctAnswer: `${base}<sup>${resExp}</sup> (${val})`,
+                        options: shuffleArray(Array.from(options)),
+                        explanation: `Khi nhân hai lũy thừa cùng cơ số: aᵐ × aⁿ = aᵐ⁺ⁿ.<br>Ta có: ${base}<sup>${x}</sup> × ${base}<sup>${y}</sup> = ${base}<sup>${x}+${y}</sup> = <strong>${base}<sup>${resExp}</sup> = ${val}</strong>.`
+                    };
+                } else {
+                    const resExp = x - y;
+                    const val = Math.pow(base, resExp);
+                    const displayText = `${base}<sup>${x}</sup> : ${base}<sup>${y}</sup> = ?`;
+
+                    const options = new Set();
+                    options.add(`${base}<sup>${resExp}</sup> (${val})`);
+                    options.add(`${base}<sup>${x + y}</sup> (${Math.pow(base, Math.min(x + y, 10))})`);
+                    options.add(`${base}<sup>${Math.max(1, resExp + 1)}</sup> (${Math.pow(base, Math.max(1, resExp + 1))})`);
+                    options.add(`${base}<sup>${y}</sup> (${Math.pow(base, y)})`);
+
+                    return {
+                        displayText: displayText,
+                        subtitle: 'Rút gọn phép chia lũy thừa cùng cơ số:',
+                        correctAnswer: `${base}<sup>${resExp}</sup> (${val})`,
+                        options: shuffleArray(Array.from(options)),
+                        explanation: `Khi chia hai lũy thừa cùng cơ số: aᵐ : aⁿ = aᵐ⁻ⁿ.<br>Ta có: ${base}<sup>${x}</sup> : ${base}<sup>${y}</sup> = ${base}<sup>${x}-${y}</sup> = <strong>${base}<sup>${resExp}</sup> = ${val}</strong>.`
+                    };
+                }
+            } else {
+                // Simple arithmetic mental math (small values)
+                const a = getRandomInt(2, 5);
+                const x = getRandomInt(2, 3);
+                const b = getRandomInt(2, 4);
+                const y = getRandomInt(1, 3);
+
+                const valA = Math.pow(a, x);
+                const valB = Math.pow(b, y);
+
+                if (isMultiply) {
+                    const correctVal = valA * valB;
+                    const options = new Set([correctVal]);
+                    while (options.size < 4) {
+                        let fake = correctVal + getRandomInt(-10, 10) * 2;
+                        if (fake > 0 && fake !== correctVal) options.add(fake);
+                    }
+                    return {
+                        displayText: `${a}<sup>${x}</sup> × ${b}<sup>${y}</sup> = ?`,
+                        subtitle: 'Tính giá trị biểu thức:',
+                        correctAnswer: correctVal,
+                        options: shuffleArray(Array.from(options)),
+                        explanation: `Ta tính từng lũy thừa: ${a}<sup>${x}</sup> = ${valA}, ${b}<sup>${y}</sup> = ${valB}.<br>Vậy ${valA} × ${valB} = <strong>${correctVal}</strong>.`
+                    };
+                } else {
+                    // Division: ensure division is clean
+                    const mult = getRandomInt(1, 5);
+                    const numerator = valB * mult; // Ensures clean division
+                    
+                    const correctVal = mult;
+                    const options = new Set([correctVal]);
+                    while (options.size < 4) {
+                        let fake = correctVal + getRandomInt(-3, 5);
+                        if (fake >= 0 && fake !== correctVal) options.add(fake);
+                    }
+                    return {
+                        displayText: `${numerator} : ${b}<sup>${y}</sup> = ?`,
+                        subtitle: 'Tính giá trị biểu thức:',
+                        correctAnswer: correctVal,
+                        options: shuffleArray(Array.from(options)),
+                        explanation: `Ta có ${b}<sup>${y}</sup> = ${valB}.<br>Thực hiện phép chia: ${numerator} : ${valB} = <strong>${correctVal}</strong>.`
+                    };
+                }
+            }
+        }
+
+        function generateMode3Question() {
+            const isPerfectSquare = Math.random() > 0.45; // 55% perfect squares, 45% non-perfect
+            let X;
+            let n = 0;
+
+            if (isPerfectSquare) {
+                n = getRandomInt(1, 22); // Squares up to 484
+                X = n * n;
+            } else {
+                // Choose non-square up to 500
+                do {
+                    X = getRandomInt(2, 500);
+                } while (Math.sqrt(X) % 1 === 0);
+            }
+
+            let correctAnswer;
+            const options = new Set();
+
+            if (isPerfectSquare) {
+                correctAnswer = `Là số chính phương của ${n} (${n}²)`;
+                options.add(correctAnswer);
+                options.add(`Không phải số chính phương`);
+                
+                // Distractors for base n
+                options.add(`Là số chính phương của ${n + 1} (${(n + 1)}²)`);
+                let fakeN = Math.max(1, n - 1);
+                if (fakeN === n) fakeN = n + 2;
+                options.add(`Là số chính phương của ${fakeN} (${fakeN}²)`);
+            } else {
+                correctAnswer = `Không phải số chính phương`;
+                options.add(correctAnswer);
+
+                // Distractors with closest roots
+                const approx = Math.round(Math.sqrt(X));
+                options.add(`Là số chính phương của ${approx} (${approx}²)`);
+                options.add(`Là số chính phương của ${approx + 1} (${(approx + 1)}²)`);
+                options.add(`Là số chính phương của ${Math.max(1, approx - 1)} (${Math.max(1, approx - 1)}²)`);
+            }
+
+            return {
+                displayText: `Số X = ${X}`,
+                subtitle: `X có phải là số chính phương không?`,
+                correctAnswer: correctAnswer,
+                options: shuffleArray(Array.from(options)),
+                explanation: isPerfectSquare 
+                    ? `Đúng! Vì <strong>${n}² = ${X}</strong> nên ${X} là số chính phương của ${n}.`
+                    : `Chính xác! Không có số nguyên n nào thỏa mãn n² = ${X} (vì √${X} ≈ ${Math.sqrt(X).toFixed(2)}).`
+            };
+        }
+
+        function switchMode(mode) {
+            currentMode = mode;
+            
+            // Update Active Tab UI
+            document.querySelectorAll('.mode-tab').forEach((tab, index) => {
+                if (index + 1 === mode) {
+                    tab.className = "mode-tab py-3 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-500/20";
+                } else {
+                    tab.className = "mode-tab py-3 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-slate-400 hover:text-white hover:bg-white/5";
+                }
+            });
+
+            // Update Titles
+            const modeBadge = document.getElementById('mode-badge');
+            const modeTitle = document.getElementById('mode-title');
+
+            if (mode === 1) {
+                modeBadge.innerText = 'Phần 1';
+                modeTitle.innerText = 'Giá Trị Lũy Thừa (aⁿ ≤ 1000)';
+            } else if (mode === 2) {
+                modeBadge.innerText = 'Phần 2';
+                modeTitle.innerText = 'Phép Nhân & Chia Lũy Thừa';
+            } else if (mode === 3) {
+                modeBadge.innerText = 'Phần 3';
+                modeTitle.innerText = 'Kiểm Tra Số Chính Phương';
+            }
+
+            updateStreakDisplay();
+            generateQuestion();
+        }
+
+        function generateQuestion() {
+            answered = false;
+            document.getElementById('feedback-box').classList.add('hidden');
+
+            if (currentMode === 1) {
+                currentQuestion = generateMode1Question();
+            } else if (currentMode === 2) {
+                currentQuestion = generateMode2Question();
+            } else {
+                currentQuestion = generateMode3Question();
+            }
+
+            // Render Question Text
+            document.getElementById('question-subtitle').innerText = currentQuestion.subtitle;
+            document.getElementById('question-display').innerHTML = currentQuestion.displayText;
+
+            // Render Options
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            currentQuestion.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'btn-option py-3.5 px-4 rounded-2xl font-bold text-sm sm:text-base text-left flex items-center justify-between text-slate-200';
+                btn.innerHTML = `
+                    <span class="flex items-center gap-3">
+                        <span class="w-7 h-7 rounded-xl bg-white/10 flex items-center justify-center text-xs font-black text-slate-400 border border-white/10">${String.fromCharCode(65 + idx)}</span>
+                        <span>${opt}</span>
+                    </span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-0 transition-opacity"></i>
+                `;
+                btn.onclick = () => checkAnswer(opt, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedOpt, selectedBtn) {
+            if (answered) return;
+            answered = true;
+
+            const isCorrect = String(selectedOpt) === String(currentQuestion.correctAnswer);
+            const feedbackBox = document.getElementById('feedback-box');
+            const feedbackIcon = document.getElementById('feedback-icon');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackExp = document.getElementById('feedback-explanation');
+
+            // Disable all option buttons
+            const allBtns = document.querySelectorAll('.btn-option');
+            allBtns.forEach(btn => btn.disabled = true);
+
+            if (isCorrect) {
+                selectedBtn.classList.add('correct-anim');
+                playSound('correct');
+                
+                score += 10;
+                streaks[currentMode]++;
+                if (streaks[currentMode] > bestStreaks[currentMode]) {
+                    bestStreaks[currentMode] = streaks[currentMode];
+                }
+
+                feedbackBox.className = "mt-6 p-4 rounded-2xl border transition-all duration-300 bg-emerald-950/40 border-emerald-500/40 text-emerald-200";
+                feedbackIcon.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i>`;
+                feedbackTitle.innerText = "Chính xác! "+ (streaks[currentMode] > 1 ? `🔥 ${streaks[currentMode]} Streak!` : '');
+                
+                // Check 30 Streak Milestone Reward
+                if (streaks[currentMode] === 30 && !unlockedCodes[currentMode]) {
+                    unlockedCodes[currentMode] = true;
+                    setTimeout(() => {
+                        triggerCelebration(currentMode);
+                    }, 600);
+                }
+
+            } else {
+                selectedBtn.classList.add('wrong-anim');
+                playSound('wrong');
+
+                // Highlight correct button
+                allBtns.forEach(btn => {
+                    if (btn.innerText.includes(currentQuestion.correctAnswer)) {
+                        btn.classList.add('correct-anim');
+                    }
+                });
+
+                streaks[currentMode] = 0; // Reset streak on mistake
+
+                feedbackBox.className = "mt-6 p-4 rounded-2xl border transition-all duration-300 bg-rose-950/40 border-rose-500/40 text-rose-200";
+                feedbackIcon.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-400"></i>`;
+                feedbackTitle.innerText = "Chưa chính xác!";
+            }
+
+            feedbackExp.innerHTML = currentQuestion.explanation;
+            feedbackBox.classList.remove('hidden');
+
+            updateScoreDisplay();
+            updateStreakDisplay();
+        }
+
+        function updateScoreDisplay() {
+            document.getElementById('total-score').innerText = score;
+        }
+
+        function updateStreakDisplay() {
+            const current = streaks[currentMode];
+            const best = bestStreaks[currentMode];
+
+            document.getElementById('current-streak').innerText = current;
+            document.getElementById('best-streak').innerText = best;
+
+            // Update Progress bar (0 to 30)
+            const pct = Math.min(100, Math.round((current / 30) * 100));
+            document.getElementById('streak-progress-bar').style.width = `${pct}%`;
+        }
+
+        function triggerCelebration(mode) {
+            playSound('celebrate');
+            
+            // Launch Confetti fireworks
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+
+            updateRewardsModalUI();
+            openRewardsModal();
+        }
+
+        function updateRewardsModalUI() {
+            let count = 0;
+            for (let m = 1; m <= 3; m++) {
+                const codeVal = document.getElementById(`code-val-${m}`);
+                const btnCopy = document.getElementById(`btn-copy-${m}`);
+                const card = document.getElementById(`code-card-${m}`);
+
+                if (unlockedCodes[m]) {
+                    count++;
+                    codeVal.innerText = CODES[m];
+                    codeVal.className = "font-mono text-base font-bold text-amber-400 mt-0.5 gradient-gold";
+                    btnCopy.disabled = false;
+                    btnCopy.className = "px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500/20 border border-amber-400/40 text-amber-300 hover:bg-amber-500/30 transition-all cursor-pointer";
+                    card.className = "p-3.5 rounded-2xl border border-amber-500/30 bg-amber-500/10 flex items-center justify-between";
+                }
+            }
+
+            document.getElementById('unlocked-count-badge').innerText = `${count}/3`;
+        }
+
+        function copyCode(code, partNum) {
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.getElementById(`btn-copy-${partNum}`);
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<i class="fa-solid fa-check"></i> Đã Copy`;
+                btn.classList.add('bg-emerald-500/30', 'text-emerald-300');
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('bg-emerald-500/30', 'text-emerald-300');
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older execCommand
+                const el = document.createElement('textarea');
+                el.value = code;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+            });
+        }
+
+        function openRewardsModal() {
+            updateRewardsModalUI();
+            const modal = document.getElementById('rewards-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.querySelector('.id-modal-content').classList.remove('scale-95');
+            modal.querySelector('.id-modal-content').classList.add('scale-100');
+        }
+
+        function closeRewardsModal() {
+            const modal = document.getElementById('rewards-modal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.querySelector('.id-modal-content').classList.remove('scale-100');
+            modal.querySelector('.id-modal-content').classList.add('scale-95');
+        }
+
+        /* Initial Start */
+        window.onload = function() {
+            switchMode(1);
+        };
+    </script>
+</body>
+</html>
