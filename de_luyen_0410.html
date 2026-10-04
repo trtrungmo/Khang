@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Trắc Nghiệm & Tự Luận Toán Lớp 5</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- MathJax for rendering equations correctly -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            vertical-align: middle;
+            text-align: center;
+            padding: 0 4px;
+        }
+        .fraction .top {
+            border-bottom: 1.5px solid currentColor;
+            padding-bottom: 1px;
+        }
+        .fraction .bottom {
+            padding-top: 1px;
+        }
+        .badge-m1 { background-color: #dbeafe; color: #1e40af; }
+        .badge-m2 { background-color: #fef3c7; color: #92400e; }
+        .badge-m3 { background-color: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body class="min-h-screen pb-12">
+
+    <!-- Navigation / Header -->
+    <header class="bg-indigo-700 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-white/10 p-2.5 rounded-xl backdrop-blur-sm">
+                    <i class="fa-solid fa-graduation-cap text-2xl text-yellow-300"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight">ĐỀ THI GIỮA KỲ II - MÔN TOÁN LỚP 5</h1>
+                    <p class="text-xs text-indigo-200">Hệ thống thi trực tuyến & Tự động chấm điểm</p>
+                </div>
+            </div>
+
+            <!-- Score display & timer/actions -->
+            <div class="flex items-center gap-4 bg-indigo-800/60 px-4 py-2 rounded-xl backdrop-blur-md border border-indigo-500/30">
+                <div class="text-right">
+                    <div class="text-xs text-indigo-200">Thời gian làm bài</div>
+                    <div id="timer" class="text-lg font-mono font-bold text-yellow-300">40:00</div>
+                </div>
+                <div class="h-8 w-px bg-indigo-500/40"></div>
+                <div>
+                    <div class="text-xs text-indigo-200">Thang điểm</div>
+                    <div class="text-lg font-bold text-white">10.0</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto px-4 mt-6">
+
+        <!-- Instructions Box -->
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 mb-6">
+            <div class="flex items-start gap-3">
+                <i class="fa-solid fa-circle-info text-indigo-600 text-xl mt-0.5"></i>
+                <div class="text-sm text-gray-600 leading-relaxed">
+                    <p class="font-semibold text-gray-800 mb-1">Hướng dẫn làm bài:</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Bài thi gồm <strong>10 câu hỏi</strong> kết hợp Trắc nghiệm, Đúng/Sai và Tự luận.</li>
+                        <li>Điền đầy đủ đáp án vào các ô trống đối với các câu điền số. Có thể nhập số thập phân dạng <code class="bg-gray-100 px-1 py-0.5 rounded text-indigo-700">1,4</code> hoặc <code class="bg-gray-100 px-1 py-0.5 rounded text-indigo-700">1.4</code>.</li>
+                        <li>Sau khi hoàn thành, nhấn nút <strong>"Nộp bài & Chấm điểm"</strong> ở cuối trang để xem kết quả và lời giải chi tiết.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exam Form -->
+        <form id="examForm" onsubmit="event.preventDefault(); submitExam();" class="space-y-6">
+
+            <!-- Câu 1 -->
+            <div class="question-card bg-white rounded-2xl p-6 shadow-sm border border-gray-200 transition-all hover:border-indigo-200" id="q1-box">
+                <div class="flex justify-between items-start gap-2 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg text-sm">Câu 1</span>
+                        <span class="badge-m1 px-2.5 py-0.5 rounded-full text-xs font-semibold">1 điểm (M1)</span>
+                    </div>
+                    <div id="q1-status" class="hidden text-sm font-semibold"></div>
+                </div>
+                <p class="text-base font-medium text-gray-800 mb-4">Kết quả phép tính: <span class="font-bold text-indigo-900">1,67 × 10 = ?</span></p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <label class="flex items-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors" border-gray-200">
+                        <input type="radio" name="q1" value="A" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-3 text-sm text-gray-700"><strong>A.</strong> 16,7</span>
+                    </label>
+                    <label class="flex items-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors" border-gray-200">
+                        <input type="radio" name="q1" value="B" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-3 text-sm text-gray-700"><strong>B.</strong> 0,167</span>
+                    </label>
+                    <label class="flex items-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors" border-gray-200">
+                        <input type="radio" name="q1" value="C" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-3 text-sm text-gray-700"><strong>C.</strong> 167</span>
+                    </label>
+                    <label class="flex items-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors" border-gray-200">
+                        <input type="radio" name="q1" value="D" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-3 text-sm text-gray-700"><strong>D.</strong> 1670</span>
+                    </label>
+                </div>
+                <div id="q1-explanation" class="hidden mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-900">
+                    <strong>Lời giải:</strong> Khi nhân một số thập phân với 10, ta chỉ cần dịch chuyển dấu phẩy của số đó sang bên phải một chữ số. <br>
+                    Do đó: $1,67 \times 10 = 16,7$.
+                </div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="question-card bg-white rounded-2xl p-6 shadow-sm border border-gray-200 transition-all hover:border-indigo-200" id="q2-box">
+                <div class="flex justify-between items-start gap-2 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg text-sm">Câu 2</span>
+                        <span class="badge-m1 px-2.5 py-0.5 rounded-full text-xs font-semibold">1 điểm (M1)</span>
+                    </div>
+                    <div id="q2-status" class="hidden text-sm font-semibold"></div>
+                </div>
+                <p class="text-base font-medium text-gray-800 mb-4">Công thức tính diện tích hình tam giác (với $a$ là độ dài đáy, $h$ là chiều cao) là:</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <label class="flex items-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="q2" value="A" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-3 text-sm text-gray-700"><strong>A.</strong> $S = a : h : 2$</span>
+                    </label>
+                    <label class="flex items-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="q2" value="B" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-3 text-sm text-gray-700"><strong>B.</strong> $S = a \times h : 2$</span>
+                    </label>
+                    <label class="flex items-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="q2" value="C" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-3 text-sm text-gray-700"><strong>C.</strong> $S = a : h \times 2$</span>
+                    </label>
+                    <label class="flex items-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="q2" value="D" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-3 text-sm text-gray-700"><strong>D.</strong> $S = a : 2 \times h$</span>
+                    </label>
+                </div>
+                <div id="q2-explanation" class="hidden mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-900">
+                    <strong>Lời giải:</strong> Muốn tính diện tích hình tam giác ta lấy độ dài đáy nhân với chiều cao (cùng một đơn vị đo) rồi chia cho 2. Công thức: $S = a \times h : 2$.
+                </div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="question-card bg-white rounded-2xl p-6 shadow-sm border border-gray-200 transition-all hover:border-indigo-200" id="q3-box">
+                <div class="flex justify-between items-start gap-2 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg text-sm">Câu 3</span>
+                        <span class="badge-m1 px-2.5 py-0.5 rounded-full text-xs font-semibold">1 điểm (M1)</span>
+                    </div>
+                    <div id="q3-status" class="hidden text-sm font-semibold"></div>
+                </div>
+                <p class="text-base font-medium text-gray-800 mb-4">Nam tham gia một trò chơi ném phi tiêu. Trong 50 lần ném, Nam ném trúng đích 17 lần. Tỉ số giữa số lần ném trúng đích và tổng số lần ném là:</p>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <label class="flex items-center justify-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="q3" value="A" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-2 text-sm text-gray-700"><strong>A.</strong> <span class="fraction"><span class="top">12</span><span class="bottom">50</span></span></span>
+                    </label>
+                    <label class="flex items-center justify-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="q3" value="B" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-2 text-sm text-gray-700"><strong>B.</strong> <span class="fraction"><span class="top">17</span><span class="bottom">50</span></span></span>
+                    </label>
+                    <label class="flex items-center justify-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="q3" value="C" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-2 text-sm text-gray-700"><strong>C.</strong> <span class="fraction"><span class="top">50</span><span class="bottom">17</span></span></span>
+                    </label>
+                    <label class="flex items-center justify-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="q3" value="D" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-2 text-sm text-gray-700"><strong>D.</strong> <span class="fraction"><span class="top">12</span><span class="bottom">17</span></span></span>
+                    </label>
+                </div>
+                <div id="q3-explanation" class="hidden mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-900">
+                    <strong>Lời giải:</strong> Tỉ số giữa số lần ném trúng đích (17 lần) và tổng số lần ném (50 lần) là $\frac{17}{50}$.
+                </div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="question-card bg-white rounded-2xl p-6 shadow-sm border border-gray-200 transition-all hover:border-indigo-200" id="q4-box">
+                <div class="flex justify-between items-start gap-2 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg text-sm">Câu 4</span>
+                        <span class="badge-m2 px-2.5 py-0.5 rounded-full text-xs font-semibold">1 điểm (M2)</span>
+                    </div>
+                    <div id="q4-status" class="hidden text-sm font-semibold"></div>
+                </div>
+
+                <p class="text-base font-medium text-gray-800 mb-4">Đúng ghi <strong>Đ</strong>, sai ghi <strong>S</strong> dựa vào hình vẽ dưới đây:</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    <!-- SVG Geometric Illustration -->
+                    <div class="lg:col-span-5 flex justify-center bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <svg width="320" height="200" viewBox="0 0 320 200" class="max-w-full">
+                            <!-- Grid background -->
+                            <defs>
+                                <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                                </pattern>
+                            </defs>
+                            <rect width="320" height="200" fill="url(#grid)" rx="8" />
+
+                            <!-- Triangle ABC -->
+                            <!-- Points: B=(30, 160), H=(190, 160), C=(270, 160), A=(190, 40) -->
+                            <!-- Base BC line -->
+                            <line x1="20" y1="160" x2="290" y2="160" stroke="#64748b" stroke-width="1.5"/>
+
+                            <!-- Main Triangle Lines -->
+                            <polygon points="190,40 30,160 270,160" fill="rgba(99, 102, 241, 0.08)" stroke="#4f46e5" stroke-width="2.5" />
+
+                            <!-- Height AH -->
+                            <line x1="190" y1="40" x2="190" y2="160" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3"/>
+
+                            <!-- Right angle marker at H -->
+                            <path d="M 190,150 L 180,150 L 180,160" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+
+                            <!-- Labels -->
+                            <text x="188" y="32" font-weight="bold" font-size="15" fill="#1e293b">A</text>
+                            <text x="12" y="165" font-weight="bold" font-size="15" fill="#1e293b">B</text>
+                            <text x="190" y="180" font-weight="bold" font-size="15" fill="#1e293b">H</text>
+                            <text x="280" y="165" font-weight="bold" font-size="15" fill="#1e293b">C</text>
+
+                            <!-- Measurements -->
+                            <!-- AH label -->
+                            <text x="200" y="100" font-size="12" font-weight="bold" fill="#dc2626">5 dm</text>
+                            <!-- BH label -->
+                            <text x="100" y="175" font-size="12" font-weight="bold" fill="#4f46e5">7 dm</text>
+                            <!-- HC label -->
+                            <text x="220" y="175" font-size="12" font-weight="bold" fill="#4f46e5">3,5 dm</text>
+                        </svg>
+                    </div>
+
+                    <!-- Sub-questions -->
+                    <div class="lg:col-span-7 space-y-4">
+                        <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200 flex items-center justify-between gap-4">
+                            <span class="text-sm text-gray-800">a. Hình tam giác AHB có diện tích là $35\text{ dm}^2$.</span>
+                            <select id="q4a" class="bg-white border border-gray-300 rounded-lg px-3 py-1.5 text-sm font-semibold focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                <option value="">-- Chọn --</option>
+                                <option value="Đ">Đúng (Đ)</option>
+                                <option value="S">Sai (S)</option>
+                            </select>
+                        </div>
+
+                        <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200 flex items-center justify-between gap-4">
+                            <span class="text-sm text-gray-800">b. Hình tam giác ABC có diện tích bằng tổng diện tích của hình tam giác AHB và AHC.</span>
+                            <select id="q4b" class="bg-white border border-gray-300 rounded-lg px-3 py-1.5 text-sm font-semibold focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                <option value="">-- Chọn --</option>
+                                <option value="Đ">Đúng (Đ)</option>
+                                <option value="S">Sai (S)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="q4-explanation" class="hidden mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-900 space-y-1">
+                    <p><strong>Lời giải chi tiết:</strong></p>
+                    <p>• <strong>Phần a:</strong> Diện tích tam giác AHB là: $(7 \times 5) : 2 = 17,5\text{ dm}^2$. Phát biểu cho rằng $35\text{ dm}^2$ là <strong>SAI (S)</strong> (do quên chia cho 2).</p>
+                    <p>• <strong>Phần b:</strong> Hình tam giác lớn ABC được ghép bởi hai hình tam giác vuông nhỏ AHB và AHC (đường cao AH nằm trong tam giác). Do đó diện tích tam giác ABC bằng tổng diện tích tam giác AHB và AHC là <strong>ĐÚNG (Đ)</strong>.</p>
+                </div>
+            </div>
+
+            <!-- Câu 5 -->
+            <div class="question-card bg-white rounded-2xl p-6 shadow-sm border border-gray-200 transition-all hover:border-indigo-200" id="q5-box">
+                <div class="flex justify-between items-start gap-2 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg text-sm">Câu 5</span>
+                        <span class="badge-m2 px-2.5 py-0.5 rounded-full text-xs font-semibold">1 điểm (M2)</span>
+                    </div>
+                    <div id="q5-status" class="hidden text-sm font-semibold"></div>
+                </div>
+                <p class="text-base font-medium text-gray-800 mb-4">Một lớp học có 40 học sinh, trong đó có 24 học sinh nữ. Tỉ số phần trăm của số học sinh nữ và số học sinh cả lớp là:</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <label class="flex items-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="q5" value="A" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-3 text-sm text-gray-700"><strong>A.</strong> 40%</span>
+                    </label>
+                    <label class="flex items-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="q5" value="B" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-3 text-sm text-gray-700"><strong>B.</strong> 60%</span>
+                    </label>
+                    <label class="flex items-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="q5" value="C" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-3 text-sm text-gray-700"><strong>C.</strong> 24%</span>
+                    </label>
+                    <label class="flex items-center p-3.5 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                        <input type="radio" name="q5" value="D" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-3 text-sm text-gray-700"><strong>D.</strong> 16%</span>
+                    </label>
+                </div>
+                <div id="q5-explanation" class="hidden mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-900">
+                    <strong>Lời giải:</strong> Tỉ số phần trăm của số học sinh nữ và số học sinh cả lớp là: <br>
+                    $24 : 40 = 0,6 = 60\%$. Chọn <strong>B</strong>.
+                </div>
+            </div>
+
+            <!-- Câu 6 -->
+            <div class="question-card bg-white rounded-2xl p-6 shadow-sm border border-gray-200 transition-all hover:border-indigo-200" id="q6-box">
+                <div class="flex justify-between items-start gap-2 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg text-sm">Câu 6</span>
+                        <span class="badge-m2 px-2.5 py-0.5 rounded-full text-xs font-semibold">1 điểm (M2)</span>
+                    </div>
+                    <div id="q6-status" class="hidden text-sm font-semibold"></div>
+                </div>
+                <p class="text-base font-medium text-gray-800 mb-4">Đặt tính rồi tính: <span class="font-bold text-indigo-900">15 : 0,25</span></p>
+
+                <div class="flex items-center gap-3 max-w-xs">
+                    <span class="text-sm font-semibold text-gray-700">Kết quả:</span>
+                    <input type="text" id="q6-input" placeholder="Nhập kết quả..." class="w-full px-3.5 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+
+                <div id="q6-explanation" class="hidden mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-900">
+                    <strong>Lời giải:</strong> <br>
+                    $15 : 0,25 = 1500 : 25 = 60$. <br>
+                    <em>(Mẹo: Chia một số cho $0,25$ tương đương với nhân số đó với $4$: $15 \times 4 = 60$).</em>
+                </div>
+            </div>
+
+            <!-- Câu 7 -->
+            <div class="question-card bg-white rounded-2xl p-6 shadow-sm border border-gray-200 transition-all hover:border-indigo-200" id="q7-box">
+                <div class="flex justify-between items-start gap-2 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg text-sm">Câu 7</span>
+                        <span class="badge-m2 px-2.5 py-0.5 rounded-full text-xs font-semibold">1 điểm (M2)</span>
+                    </div>
+                    <div id="q7-status" class="hidden text-sm font-semibold"></div>
+                </div>
+                <p class="text-base font-medium text-gray-800 mb-4">Đặt tính rồi tính các phép tính sau:</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">a) $246,8 + 357,9$</label>
+                        <input type="text" id="q7a-input" placeholder="Nhập kết quả..." class="w-full px-3.5 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white">
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">b) $45,6 - 7,89$</label>
+                        <input type="text" id="q7b-input" placeholder="Nhập kết quả..." class="w-full px-3.5 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white">
+                    </div>
+                </div>
+
+                <div id="q7-explanation" class="hidden mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-900">
+                    <strong>Lời giải:</strong> <br>
+                    a) $246,8 + 357,9 = 604,7$ <br>
+                    b) $45,6 - 7,89 = 37,71$
+                </div>
+            </div>
+
+            <!-- Câu 8 -->
+            <div class="question-card bg-white rounded-2xl p-6 shadow-sm border border-gray-200 transition-all hover:border-indigo-200" id="q8-box">
+                <div class="flex justify-between items-start gap-2 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg text-sm">Câu 8</span>
+                        <span class="badge-m2 px-2.5 py-0.5 rounded-full text-xs font-semibold">1 điểm (M2)</span>
+                    </div>
+                    <div id="q8-status" class="hidden text-sm font-semibold"></div>
+                </div>
+                <p class="text-base font-medium text-gray-800 mb-4">Điền số thích hợp vào chỗ chấm:</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center justify-between p-3.5 bg-gray-50 rounded-xl border border-gray-200">
+                        <span class="text-sm font-medium text-gray-700">14 tạ = </span>
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="q8a" placeholder="..." class="w-24 text-center px-3 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <span class="text-sm font-semibold text-gray-600">tấn</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3.5 bg-gray-50 rounded-xl border border-gray-200">
+                        <span class="text-sm font-medium text-gray-700">342 dm² = </span>
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="q8b" placeholder="..." class="w-24 text-center px-3 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <span class="text-sm font-semibold text-gray-600">m²</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3.5 bg-gray-50 rounded-xl border border-gray-200">
+                        <span class="text-sm font-medium text-gray-700">8 dm 4 cm = </span>
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="q8c" placeholder="..." class="w-24 text-center px-3 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <span class="text-sm font-semibold text-gray-600">dm</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3.5 bg-gray-50 rounded-xl border border-gray-200">
+                        <span class="text-sm font-medium text-gray-700">80 m² 26 dm² = </span>
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="q8d" placeholder="..." class="w-24 text-center px-3 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <span class="text-sm font-semibold text-gray-600">m²</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="q8-explanation" class="hidden mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-900 space-y-1">
+                    <p><strong>Lời giải:</strong></p>
+                    <p>• 14 tạ = $14 : 10 = 1,4$ tấn</p>
+                    <p>• $342\text{ dm}^2 = 342 : 100 = 3,42\text{ m}^2$</p>
+                    <p>• $8\text{ dm } 4\text{ cm} = 8,4\text{ dm}$</p>
+                    <p>• $80\text{ m}^2\text{ } 26\text{ dm}^2 = 80,26\text{ m}^2$</p>
+                </div>
+            </div>
+
+            <!-- Câu 9 -->
+            <div class="question-card bg-white rounded-2xl p-6 shadow-sm border border-gray-200 transition-all hover:border-indigo-200" id="q9-box">
+                <div class="flex justify-between items-start gap-2 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg text-sm">Câu 9</span>
+                        <span class="badge-m3 px-2.5 py-0.5 rounded-full text-xs font-semibold">1 điểm (M3)</span>
+                    </div>
+                    <div id="q9-status" class="hidden text-sm font-semibold"></div>
+                </div>
+                <p class="text-base font-medium text-gray-800 mb-4">Một khu vườn hình chữ nhật có chiều dài $30\text{ m}$, chiều rộng $20\text{ m}$. Người ta xây một lối đi rộng $2\text{ m}$ xung quanh <strong>BÊN TRONG</strong> khu vườn để trồng hoa phần còn lại. Tính diện tích phần đất trồng hoa còn lại ở giữa.</p>
+
+                <div class="flex items-center gap-3 max-w-md">
+                    <span class="text-sm font-semibold text-gray-700">Diện tích phần đất trồng hoa:</span>
+                    <input type="text" id="q9-input" placeholder="Nhập đáp án..." class="w-32 px-3.5 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    <span class="text-sm font-semibold text-gray-600">m²</span>
+                </div>
+
+                <div id="q9-explanation" class="hidden mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-900 space-y-1">
+                    <p><strong>Lời giải chi tiết:</strong></p>
+                    <p>Vì lối đi rộng $2\text{ m}$ xung quanh cả 2 phía bên trong khu vườn, nên:</p>
+                    <p>• Chiều dài phần đất trồng hoa còn lại là: $30 - (2 \times 2) = 26\text{ (m)}$</p>
+                    <p>• Chiều rộng phần đất trồng hoa còn lại là: $20 - (2 \times 2) = 16\text{ (m)}$</p>
+                    <p>• Diện tích phần đất trồng hoa là: $26 \times 16 = 416\text{ (m}^2\text{)}$</p>
+                    <p><strong>Đáp số:</strong> $416\text{ m}^2$</p>
+                </div>
+            </div>
+
+            <!-- Câu 10 -->
+            <div class="question-card bg-white rounded-2xl p-6 shadow-sm border border-gray-200 transition-all hover:border-indigo-200" id="q10-box">
+                <div class="flex justify-between items-start gap-2 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg text-sm">Câu 10</span>
+                        <span class="badge-m3 px-2.5 py-0.5 rounded-full text-xs font-semibold">1 điểm (M3)</span>
+                    </div>
+                    <div id="q10-status" class="hidden text-sm font-semibold"></div>
+                </div>
+                <p class="text-base font-medium text-gray-800 mb-4">Tính bằng cách thuận tiện nhất: <span class="font-bold text-indigo-900">$51,6 \times 0,81 + 48,4 \times 0,81$</span></p>
+
+                <div class="flex items-center gap-3 max-w-xs">
+                    <span class="text-sm font-semibold text-gray-700">Kết quả:</span>
+                    <input type="text" id="q10-input" placeholder="Nhập kết quả..." class="w-full px-3.5 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+
+                <div id="q10-explanation" class="hidden mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-900">
+                    <strong>Lời giải:</strong> <br>
+                    $51,6 \times 0,81 + 48,4 \times 0,81$ <br>
+                    $= (51,6 + 48,4) \times 0,81$ <br>
+                    $= 100 \times 0,81$ <br>
+                    $= 81$
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 py-6">
+                <button type="button" onclick="submitExam()" class="w-full sm:w-auto px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-base rounded-xl shadow-lg hover:shadow-indigo-200 transition-all transform active:scale-95 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    Nộp Bài & Chấm Điểm
+                </button>
+                <button type="button" onclick="resetExam()" class="w-full sm:w-auto px-6 py-3.5 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold text-base rounded-xl transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    Làm Lại Bài
+                </button>
+            </div>
+
+        </form>
+
+        <!-- Score Modal / Alert Banner -->
+        <div id="resultModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl text-center transform transition-all">
+                <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+                    <i class="fa-solid fa-award text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-1">Kết Quả Bài Thi</h3>
+                <p class="text-sm text-gray-500 mb-4">Hệ thống đã tự động chấm điểm bài làm của bạn</p>
+
+                <div class="bg-indigo-50 rounded-xl p-4 mb-6">
+                    <div class="text-4xl font-extrabold text-indigo-600 mb-1" id="scoreDisplay">0 / 10</div>
+                    <div class="text-xs font-semibold text-indigo-800" id="scoreFeedback">Cố gắng hơn nhé!</div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button onclick="closeModal()" class="flex-1 py-3 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition-colors">
+                        Xem Lời Giải Chi Tiết
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Timer Logic
+        let totalSeconds = 2400; // 40 minutes
+        const timerElement = document.getElementById('timer');
+        const timerInterval = setInterval(() => {
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                timerElement.innerText = "Hết giờ!";
+            } else {
+                totalSeconds--;
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                timerElement.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }, 1000);
+
+        // Helper function to normalize numbers (handling commas/dots)
+        function parseNum(val) {
+            if (!val) return null;
+            return parseFloat(val.toString().trim().replace(',', '.'));
+        }
+
+        // Exam Evaluation Function
+        function submitExam() {
+            let score = 0;
+
+            // Q1
+            const q1Val = document.querySelector('input[name="q1"]:checked')?.value;
+            const q1Box = document.getElementById('q1-box');
+            const q1Status = document.getElementById('q1-status');
+            if (q1Val === 'A') {
+                score += 1;
+                setBoxStatus(q1Box, q1Status, true, "Đúng (+1.0 điểm)");
+            } else {
+                setBoxStatus(q1Box, q1Status, false, "Sai (Đáp án: A)");
+            }
+            document.getElementById('q1-explanation').classList.remove('hidden');
+
+            // Q2
+            const q2Val = document.querySelector('input[name="q2"]:checked')?.value;
+            const q2Box = document.getElementById('q2-box');
+            const q2Status = document.getElementById('q2-status');
+            if (q2Val === 'B') {
+                score += 1;
+                setBoxStatus(q2Box, q2Status, true, "Đúng (+1.0 điểm)");
+            } else {
+                setBoxStatus(q2Box, q2Status, false, "Sai (Đáp án: B)");
+            }
+            document.getElementById('q2-explanation').classList.remove('hidden');
+
+            // Q3
+            const q3Val = document.querySelector('input[name="q3"]:checked')?.value;
+            const q3Box = document.getElementById('q3-box');
+            const q3Status = document.getElementById('q3-status');
+            if (q3Val === 'B') {
+                score += 1;
+                setBoxStatus(q3Box, q3Status, true, "Đúng (+1.0 điểm)");
+            } else {
+                setBoxStatus(q3Box, q3Status, false, "Sai (Đáp án: B)");
+            }
+            document.getElementById('q3-explanation').classList.remove('hidden');
+
+            // Q4
+            const q4aVal = document.getElementById('q4a').value;
+            const q4bVal = document.getElementById('q4b').value;
+            const q4Box = document.getElementById('q4-box');
+            const q4Status = document.getElementById('q4-status');
+            let q4Score = 0;
+            if (q4aVal === 'S') q4Score += 0.5;
+            if (q4bVal === 'Đ') q4Score += 0.5;
+            score += q4Score;
+            if (q4Score === 1) {
+                setBoxStatus(q4Box, q4Status, true, "Đúng (+1.0 điểm)");
+            } else if (q4Score === 0.5) {
+                setBoxStatus(q4Box, q4Status, false, "Đúng 1 phần (+0.5 điểm)");
+            } else {
+                setBoxStatus(q4Box, q4Status, false, "Sai (Đáp án: a-S, b-Đ)");
+            }
+            document.getElementById('q4-explanation').classList.remove('hidden');
+
+            // Q5
+            const q5Val = document.querySelector('input[name="q5"]:checked')?.value;
+            const q5Box = document.getElementById('q5-box');
+            const q5Status = document.getElementById('q5-status');
+            if (q5Val === 'B') {
+                score += 1;
+                setBoxStatus(q5Box, q5Status, true, "Đúng (+1.0 điểm)");
+            } else {
+                setBoxStatus(q5Box, q5Status, false, "Sai (Đáp án: B)");
+            }
+            document.getElementById('q5-explanation').classList.remove('hidden');
+
+            // Q6
+            const q6Val = parseNum(document.getElementById('q6-input').value);
+            const q6Box = document.getElementById('q6-box');
+            const q6Status = document.getElementById('q6-status');
+            if (q6Val === 60) {
+                score += 1;
+                setBoxStatus(q6Box, q6Status, true, "Đúng (+1.0 điểm)");
+            } else {
+                setBoxStatus(q6Box, q6Status, false, "Sai (Đáp án: 60)");
+            }
+            document.getElementById('q6-explanation').classList.remove('hidden');
+
+            // Q7
+            const q7aVal = parseNum(document.getElementById('q7a-input').value);
+            const q7bVal = parseNum(document.getElementById('q7b-input').value);
+            const q7Box = document.getElementById('q7-box');
+            const q7Status = document.getElementById('q7-status');
+            let q7Score = 0;
+            if (Math.abs(q7aVal - 604.7) < 0.01) q7Score += 0.5;
+            if (Math.abs(q7bVal - 37.71) < 0.01) q7Score += 0.5;
+            score += q7Score;
+            if (q7Score === 1) {
+                setBoxStatus(q7Box, q7Status, true, "Đúng (+1.0 điểm)");
+            } else if (q7Score === 0.5) {
+                setBoxStatus(q7Box, q7Status, false, "Đúng 1 câu (+0.5 điểm)");
+            } else {
+                setBoxStatus(q7Box, q7Status, false, "Sai (Đáp án: a-604.7, b-37.71)");
+            }
+            document.getElementById('q7-explanation').classList.remove('hidden');
+
+            // Q8
+            const q8a = parseNum(document.getElementById('q8a').value);
+            const q8b = parseNum(document.getElementById('q8b').value);
+            const q8c = parseNum(document.getElementById('q8c').value);
+            const q8d = parseNum(document.getElementById('q8d').value);
+            const q8Box = document.getElementById('q8-box');
+            const q8Status = document.getElementById('q8-status');
+            let q8Score = 0;
+            if (Math.abs(q8a - 1.4) < 0.01) q8Score += 0.25;
+            if (Math.abs(q8b - 3.42) < 0.01) q8Score += 0.25;
+            if (Math.abs(q8c - 8.4) < 0.01) q8Score += 0.25;
+            if (Math.abs(q8d - 80.26) < 0.01) q8Score += 0.25;
+            score += q8Score;
+            if (q8Score === 1) {
+                setBoxStatus(q8Box, q8Status, true, "Đúng (+1.0 điểm)");
+            } else if (q8Score > 0) {
+                setBoxStatus(q8Box, q8Status, false, `Đúng một phần (+${q8Score} điểm)`);
+            } else {
+                setBoxStatus(q8Box, q8Status, false, "Sai toàn bộ");
+            }
+            document.getElementById('q8-explanation').classList.remove('hidden');
+
+            // Q9
+            const q9Val = parseNum(document.getElementById('q9-input').value);
+            const q9Box = document.getElementById('q9-box');
+            const q9Status = document.getElementById('q9-status');
+            if (q9Val === 416) {
+                score += 1;
+                setBoxStatus(q9Box, q9Status, true, "Đúng (+1.0 điểm)");
+            } else {
+                setBoxStatus(q9Box, q9Status, false, "Sai (Đáp án: 416 m²)");
+            }
+            document.getElementById('q9-explanation').classList.remove('hidden');
+
+            // Q10
+            const q10Val = parseNum(document.getElementById('q10-input').value);
+            const q10Box = document.getElementById('q10-box');
+            const q10Status = document.getElementById('q10-status');
+            if (q10Val === 81) {
+                score += 1;
+                setBoxStatus(q10Box, q10Status, true, "Đúng (+1.0 điểm)");
+            } else {
+                setBoxStatus(q10Box, q10Status, false, "Sai (Đáp án: 81)");
+            }
+            document.getElementById('q10-explanation').classList.remove('hidden');
+
+            // Show Score Modal
+            document.getElementById('scoreDisplay').innerText = `${score.toFixed(1)} / 10`;
+            let feedback = "Rất tốt! Bạn nắm vững kiến thức!";
+            if (score < 5) feedback = "Cần ôn tập lại kiến thức nhé!";
+            else if (score < 8) feedback = "Khá lắm! Hãy phát huy ở các bài thi tới!";
+            document.getElementById('scoreFeedback').innerText = feedback;
+            document.getElementById('resultModal').classList.remove('hidden');
+        }
+
+        function setBoxStatus(boxElement, statusElement, isCorrect, text) {
+            statusElement.classList.remove('hidden');
+            statusElement.innerText = text;
+            if (isCorrect) {
+                statusElement.className = "text-sm font-semibold text-emerald-600";
+                boxElement.classList.remove('border-red-300', 'border-gray-200');
+                boxElement.classList.add('border-emerald-300', 'bg-emerald-50/20');
+            } else {
+                statusElement.className = "text-sm font-semibold text-rose-600";
+                boxElement.classList.remove('border-emerald-300', 'border-gray-200');
+                boxElement.classList.add('border-rose-300', 'bg-rose-50/20');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('resultModal').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetExam() {
+            document.getElementById('examForm').reset();
+            const boxes = document.querySelectorAll('.question-card');
+            boxes.forEach(box => {
+                box.classList.remove('border-emerald-300', 'border-rose-300', 'bg-emerald-50/20', 'bg-rose-50/20');
+                box.classList.add('border-gray-200');
+            });
+            for (let i = 1; i <= 10; i++) {
+                const status = document.getElementById(`q${i}-status`);
+                if (status) status.classList.add('hidden');
+                const expl = document.getElementById(`q${i}-explanation`);
+                if (expl) expl.classList.add('hidden');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
