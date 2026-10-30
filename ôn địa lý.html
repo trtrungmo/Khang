@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Tập Giữa Kì 1 - Địa Lí 6 (2026-2027)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .option-btn {
+            transition: all 0.2s;
+        }
+        .option-btn:hover:not(:disabled) {
+            background-color: #e5e7eb;
+            transform: translateX(5px);
+        }
+        .correct {
+            background-color: #d1fae5 !important;
+            border-color: #10b981 !important;
+            color: #065f46 !important;
+        }
+        .incorrect {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
+        }
+        .explanation {
+            display: none;
+        }
+        .explanation.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen pb-12">
+
+    <div class="max-w-4xl mx-auto pt-8 px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-blue-700 mb-2">Ôn Tập Giữa Kì I - Địa Lí 6</h1>
+            <p class="text-gray-600 font-medium">Trường THCS Hoàng Quế - Năm học 2026-2027</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="bg-white rounded-t-xl shadow-sm overflow-hidden flex border-b border-gray-200">
+            <button class="tab-btn flex-1 py-4 px-2 text-center font-semibold text-blue-600 border-b-2 border-blue-600 focus:outline-none" data-tab="tab1">
+                Phần 1: Trắc Nghiệm
+            </button>
+            <button class="tab-btn flex-1 py-4 px-2 text-center font-semibold text-gray-500 hover:text-blue-500 focus:outline-none transition-colors" data-tab="tab2">
+                Phần 2: Đúng / Sai
+            </button>
+            <button class="tab-btn flex-1 py-4 px-2 text-center font-semibold text-gray-500 hover:text-blue-500 focus:outline-none transition-colors" data-tab="tab3">
+                Phần 3: Trả Lời Ngắn
+            </button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div class="bg-white rounded-b-xl shadow-sm p-6 md:p-8">
+            
+            <!-- Phần 1: Trắc Nghiệm -->
+            <div id="tab1" class="tab-content active">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 border-l-4 border-blue-500 pl-3">Phần 1: Trắc nghiệm khách quan</h2>
+                <div id="part1-container" class="space-y-8">
+                    <!-- Nội dung sẽ được sinh bằng JS -->
+                </div>
+            </div>
+
+            <!-- Phần 2: Đúng/Sai -->
+            <div id="tab2" class="tab-content">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 border-l-4 border-blue-500 pl-3">Phần 2: Trắc nghiệm chọn Đúng / Sai</h2>
+                <p class="text-sm text-gray-500 mb-4">Trong mỗi ý a, b, c, d ở mỗi câu, hãy chọn Đúng hoặc Sai.</p>
+                <div id="part2-container" class="space-y-8">
+                    <!-- Nội dung sẽ được sinh bằng JS -->
+                </div>
+                <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+                    <button id="check-part2-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-colors transform hover:scale-105">
+                        Kiểm Tra Kết Quả
+                    </button>
+                </div>
+            </div>
+
+            <!-- Phần 3: Trả lời ngắn -->
+            <div id="tab3" class="tab-content">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 border-l-4 border-blue-500 pl-3">Phần 3: Trắc nghiệm trả lời ngắn</h2>
+                <div id="part3-container" class="space-y-8">
+                    <!-- Nội dung sẽ được sinh bằng JS -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // --- Dữ liệu ôn tập ---
+
+        const part1Data = [
+            { q: "Câu 1. Trên quả Địa Cầu, đường kinh tuyến được chọn làm kinh tuyến gốc là đường nào sau đây?", opts: ["A. Kinh tuyến có số ghi là 0°", "B. Kinh tuyến có số ghi là 90°", "C. Kinh tuyến có số ghi là 180°", "D. Kinh tuyến có số ghi là 360°"], ans: 0, exp: "Kinh tuyến gốc là đường kinh tuyến đi qua đài thiên văn Greenwich, được ghi là 0°." },
+            { q: "Câu 2. Trên quả Địa Cầu, đường Xích đạo chia Trái Đất thành hai bán cầu nào sau đây?", opts: ["A. Bán cầu Đông và bán cầu Tây", "B. Bán cầu Bắc và bán cầu Nam", "C. Bán cầu trên và bán cầu dưới", "D. Bán cầu trái và bán cầu phải"], ans: 1, exp: "Đường Xích đạo (vĩ tuyến 0°) chia Trái Đất thành nửa cầu Bắc và nửa cầu Nam." },
+            { q: "Câu 3. Trái Đất tự quay quanh trục tưởng tượng của mình theo hướng nào?", opts: ["A. Từ Đông sang Tây", "B. Từ Bắc xuống Nam", "C. Từ Tây sang Đông", "D. Từ Nam lên Bắc"], ans: 2, exp: "Trái Đất luôn tự quay quanh trục từ Tây sang Đông." },
+            { q: "Câu 4. Theo hiểu biết khoa học hiện nay, Trái Đất có hình dạng như thế nào?", opts: ["A. Trái Đất có dạng một mặt phẳng", "B. Trái Đất có dạng một hình vuông", "C. Trái Đất có dạng một hình tròn", "D. Trái Đất có dạng một hình cầu"], ans: 3, exp: "Trái Đất có dạng hình cầu, hơi dẹt ở hai cực và phình ra ở xích đạo." },
+            { q: "Câu 5. Khái niệm bản đồ được định nghĩa chính xác là:", opts: ["A. Ảnh chụp bề mặt Trái Đất từ vệ tinh ngoài không gian trên một mặt phẳng phẳng.", "B. Hình vẽ thu nhỏ một phần hay toàn bộ bề mặt Trái Đất lên mặt phẳng trên cơ sở toán học.", "C. Mô hình không gian ba chiều mô phỏng hình dạng và kích thước thực của Trái Đất.", "D. Bức tranh phác họa phong cảnh địa hình một khu vực theo trí tưởng tượng của con người."], ans: 1, exp: "Bản đồ là hình vẽ thu nhỏ lên mặt phẳng, dựa trên cơ sở toán học để thể hiện các đối tượng địa lí." },
+            { q: "Câu 6. Khi quan sát lưới kinh, vĩ tuyến của bản đồ thế giới theo phép chiếu hình nón, ta nhận thấy đặc điểm:", opts: ["A. Kinh tuyến và vĩ tuyến đều là những đường thẳng song song và vuông góc nhau.", "B. Kinh tuyến là những đường tròn đồng tâm, vĩ tuyến là các đường thẳng đồng quy.", "C. Kinh tuyến là những đoạn thẳng đồng quy ở cực, vĩ tuyến là những cung tròn đồng tâm ở cực.", "D. Các đường kinh tuyến và vĩ tuyến đều bị uốn cong lượn sóng không theo quy luật."], ans: 2, exp: "Trong phép chiếu hình nón, các kinh tuyến hội tụ tại cực (đồng quy), các vĩ tuyến là những cung tròn đồng tâm." },
+            { q: "Câu 7. Theo quy ước xác định phương hướng trên bản đồ có hệ thống kinh, vĩ tuyến thì:", opts: ["A. Đầu trên kinh tuyến chỉ hướng Bắc, đầu dưới chỉ hướng Nam.", "B. Đầu trên kinh tuyến chỉ hướng Nam, đầu dưới chỉ hướng Bắc.", "C. Đầu bên phải vĩ tuyến chỉ hướng Tây, đầu bên trái chỉ hướng Đông.", "D. Đầu trên kinh tuyến chỉ hướng Đông, đầu dưới chỉ hướng Tây."], ans: 0, exp: "Theo quy ước: trên Bắc, dưới Nam, phải Đông, trái Tây." },
+            { q: "Câu 8. Tỉ lệ bản đồ có ý nghĩa cho chúng ta biết:", opts: ["A. Số lượng các đối tượng địa lí tự nhiên và kinh tế được thể hiện trên bản đồ.", "B. Độ cao chính xác của đỉnh núi và độ sâu đáy biển so với mực nước biển.", "C. Mức độ thu nhỏ độ dài giữa các đối tượng trên bản đồ so với thực tế là bao nhiêu.", "D. Hướng di chuyển của các dòng biển và các cơn bão nhiệt đới trong năm."], ans: 2, exp: "Tỉ lệ bản đồ chỉ rõ khoảng cách trên bản đồ đã được thu nhỏ bao nhiêu lần so với thực tế." },
+            { q: "Câu 9. Kinh tuyến là:", opts: ["A. Kinh độ và vĩ độ của một điểm.", "B. Vòng tròn bao quanh quả Địa Cầu.", "C. Nửa đường tròn nối hai cực Bắc và Nam trên bề mặt quả Địa Cầu.", "D. Khoảng cách tính bằng độ từ kinh tuyến gốc đến kinh tuyến đi qua điểm đó."], ans: 2, exp: "Kinh tuyến là nửa đường tròn nối từ cực Bắc đến cực Nam." },
+            { q: "Câu 10. Vĩ tuyến gốc là:", opts: ["A. Vĩ tuyến 23o27’", "B. Đường Xích đạo chia quả Địa Cầu thành 2 bán cầu: bán cầu Bắc và bán cầu Nam.", "C. Vòng tròn bao quanh quả Địa Cầu và vuông góc với các kinh tuyến.", "D. Khoảng cách tính bằng độ từ vĩ tuyến gốc đến vĩ tuyến đi qua điểm đó."], ans: 1, exp: "Vĩ tuyến gốc là vĩ tuyến 0 độ, hay còn gọi là đường Xích đạo." },
+            { q: "Câu 11. Bán cầu Bắc được xác định từ:", opts: ["A. Xích đạo về cực Bắc.", "B. Xích đạo về cực Nam.", "C. Xích đạo về chí tuyến Bắc.", "D. Xích đạo về chí tuyến Nam."], ans: 0, exp: "Phần từ xích đạo hất lên cực Bắc gọi là bán cầu Bắc." },
+            { q: "Câu 12. Bản đồ là:", opts: ["A. Hình vẽ thu nhỏ một phần hay toàn bộ bề mặt trái đất lên mặt phẳng trên cơ sở toán học.", "B. Hình vẽ thu nhỏ một phần hay toàn bộ bề mặt trái đất lên mặt cong của quả địa cầu.", "C. Hình chụp toàn bộ trái đất từ vệ tinh nhân tạo.", "D. Bức tranh phong cảnh miêu tả các dạng địa hình tự nhiên của trái đất."], ans: 0, exp: "Giống câu 5, đây là định nghĩa chuẩn của bản đồ." },
+            { q: "Câu 13. Để thể hiện các đối tượng địa lí trên bản đồ, người ta thường sử dụng mấy loại kí hiệu bản đồ?", opts: ["A. Hai loại kí hiệu", "B. Ba loại kí hiệu", "C. Bốn loại kí hiệu", "D. Năm loại kí hiệu"], ans: 1, exp: "Có 3 loại kí hiệu chính: kí hiệu điểm, kí hiệu đường và kí hiệu diện tích." },
+            { q: "Câu 14. Trái Đất nằm ở vị trí thứ mấy trong số 8 hành tinh theo thứ tự xa dần Mặt Trời?", opts: ["A. Thứ 2.", "B. Thứ 3.", "C. Thứ 4.", "D. Thứ 5."], ans: 1, exp: "Trái Đất là hành tinh thứ 3 tính từ Mặt Trời (sau Thủy tinh, Kim tinh)." }
+        ];
+
+        const part2Data = [
+            {
+                q: "Câu 1. Khi tìm hiểu về bản đồ địa lí và cách xác định phương hướng:",
+                subs: [
+                    { id: "1a", text: "a. Trên bản đồ có lưới kinh vĩ tuyến, đầu phía trên của kinh tuyến chỉ hướng Bắc, đầu bên phải của vĩ tuyến chỉ hướng Đông.", ans: "D", exp: "Đúng theo quy ước chung." },
+                    { id: "1b", text: "b. Trên bản đồ có lưới kinh vĩ tuyến, đầu phía dưới của kinh tuyến chỉ hướng Bắc, đầu bên phải của vĩ tuyến chỉ hướng Tây.", ans: "S", exp: "Sai. Đầu phía dưới chỉ hướng Nam, đầu bên phải chỉ hướng Đông." },
+                    { id: "1c", text: "c. Tọa độ địa lí của điểm C được ghi là C (20°B, 105°Đ) có nghĩa là điểm C nằm ở vĩ tuyến 20° phía bắc Xích đạo và kinh tuyến 105° phía đông kinh tuyến gốc.", ans: "D", exp: "Đúng với cách đọc tọa độ địa lí." },
+                    { id: "1d", text: "d. Đối với những bản đồ không vẽ hệ thống kinh vĩ tuyến, ta bắt buộc phải dựa vào mũi tên hướng Nam hoặc mũi tên chỉ hướng Bắc để xác định các phương hướng còn lại.", ans: "D", exp: "Đúng, các mũi tên này giúp định hướng cơ bản." }
+                ]
+            },
+            {
+                q: "Câu 2. Đọc thông tin về tỉ lệ bản đồ và giải quyết các bài toán đo đạc:",
+                subs: [
+                    { id: "2a", text: "a) Tỉ lệ bản đồ chỉ gồm một loại duy nhất là tỉ lệ thước được biểu diễn dưới dạng thanh đo.", ans: "S", exp: "Sai. Tỉ lệ bản đồ có thể là tỉ lệ số (ví dụ 1:100.000) hoặc tỉ lệ thước." },
+                    { id: "2b", text: "b) Tỉ lệ bản đồ cho biết mức độ thu nhỏ độ dài giữa các đối tượng trên bản đồ so với độ dài thực tế ngoài đời thực.", ans: "D", exp: "Đúng. Đây là ý nghĩa của tỉ lệ bản đồ." },
+                    { id: "2c", text: "c) Nếu khoảng cách giữa hai điểm trên bản đồ có tỉ lệ 1:200.000 là 5 cm thì khoảng cách thực tế ngoài thực địa là 10 km.", ans: "D", exp: "Đúng. 5 cm x 200.000 = 1.000.000 cm = 10 km." },
+                    { id: "2d", text: "d) Khi mẫu số của tỉ lệ số càng lớn thì bản đồ thể hiện các đối tượng địa lí càng chi tiết và rõ nét hơn.", ans: "S", exp: "Sai. Mẫu số càng lớn, tỉ lệ càng nhỏ, mức độ chi tiết càng thấp." }
+                ]
+            },
+            {
+                q: "Câu 3. Quả địa cầu là mô hình thu nhỏ của trái đất...",
+                subs: [
+                    { id: "3a", text: "a) Các kinh tuyến có độ dài ngắn khác nhau.", ans: "S", exp: "Sai. Các kinh tuyến đều là những nửa đường tròn bằng nhau." },
+                    { id: "3b", text: "b) Độ dài của các vĩ tuyến giảm dần từ xích đạo về hai cực của trái đất.", ans: "D", exp: "Đúng. Vĩ tuyến càng gần cực càng ngắn." },
+                    { id: "3c", text: "c) Vĩ tuyến dài nhất là đường xích đạo.", ans: "D", exp: "Đúng." },
+                    { id: "3d", text: "d) Kinh tuyến gốc là kinh tuyến 180°.", ans: "S", exp: "Sai. Kinh tuyến gốc là kinh tuyến 0°." }
+                ]
+            }
+        ];
+
+        const part3Data = [
+            { q: "Câu 1. Trên bản đồ có tỉ lệ 1 : 2 000 000, khoảng cách giữa hai địa điểm A và B đo được là 3 cm. Hỏi khoảng cách thực tế giữa hai địa điểm đó là bao nhiêu ki-lô-mét?", accepted: ["60", "60km", "60 km"], exp: "3 x 2.000.000 = 6.000.000 (cm). Đổi 6.000.000 cm = 60 km." },
+            { q: "Câu 2. Khoảng cách thực tế giữa hai địa điểm C và D là 45 km. Trên bản đồ có tỉ lệ 1 : 1 500 000. Tính khoảng cách giữa hai địa điểm đó trên bản đồ là bao nhiêu xăng-ti-mét?", accepted: ["3", "3cm", "3 cm"], exp: "Đổi 45 km = 45.000.000 cm. Khoảng cách trên bản đồ: 45.000.000 / 1.500.000 = 3 cm." },
+            { q: "Câu 3. Độ dài bán kính của Trái Đất tại Xích đạo là bao nhiêu ki-lô-mét (km)?", accepted: ["6378", "6378km", "6 378", "6 378 km", "6378 km"], exp: "Bán kính Trái Đất tại xích đạo dài 6 378 km." },
+            { q: "Câu 4. Một con tàu đang neo đậu tại vị trí có tọa độ địa lí A {15°N - 40°Đ}. Cho biết con tàu này đang nằm ở kinh độ bao nhiêu?", accepted: ["40", "40°đ", "40 độ đông", "40đ"], exp: "Kinh độ là vế sau của tọa độ: 40°Đ (40 độ Đông)." },
+            { q: "Câu 5. Với tọa độ A {15°N - 40°Đ}. Cho biết con tàu này đang nằm ở vĩ độ bao nhiêu?", accepted: ["15", "15°n", "15 độ nam", "15n"], exp: "Vĩ độ là vế trước của tọa độ: 15°N (15 độ Nam)." }
+        ];
+
+        // --- Logic Hiển thị và Xử lí ---
+
+        // Khởi tạo Tabs
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Reset tab buttons
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
+                    btn.classList.add('text-gray-500');
+                });
+                // Set active tab button
+                button.classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
+                button.classList.remove('text-gray-500');
+
+                // Hide all contents
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                // Show selected content
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Render Phần 1
+        const part1Container = document.getElementById('part1-container');
+        part1Data.forEach((item, index) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = "bg-gray-50 p-5 rounded-lg border border-gray-200";
+            
+            let optsHTML = item.opts.map((opt, oIndex) => `
+                <button class="option-btn w-full text-left p-3 border border-gray-300 rounded-md bg-white hover:bg-gray-100" 
+                        onclick="checkPart1(${index}, ${oIndex}, this)">
+                    ${opt}
+                </button>
+            `).join('');
+
+            qDiv.innerHTML = `
+                <h3 class="font-semibold text-lg mb-4 text-gray-800">${item.q}</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="opts-${index}">
+                    ${optsHTML}
+                </div>
+                <div id="exp-${index}" class="explanation mt-4 p-3 bg-blue-50 border border-blue-200 text-blue-800 rounded-md text-sm">
+                    <strong>Giải thích: </strong> ${item.exp}
+                </div>
+            `;
+            part1Container.appendChild(qDiv);
+        });
+
+        // Hàm kiểm tra Phần 1
+        window.checkPart1 = function(qIndex, selectedOptIndex, btnElement) {
+            const container = document.getElementById(`opts-${qIndex}`);
+            const buttons = container.querySelectorAll('button');
+            const correctIndex = part1Data[qIndex].ans;
+
+            // Disable all buttons in this question
+            buttons.forEach(btn => btn.disabled = true);
+
+            // Highlight
+            if (selectedOptIndex === correctIndex) {
+                btnElement.classList.add('correct');
+            } else {
+                btnElement.classList.add('incorrect');
+                // Highlight the correct one too
+                buttons[correctIndex].classList.add('correct');
+            }
+
+            // Show explanation
+            document.getElementById(`exp-${qIndex}`).classList.add('show');
+        }
+
+        // Render Phần 2
+        const part2Container = document.getElementById('part2-container');
+        part2Data.forEach((item, qIndex) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = "bg-gray-50 p-5 rounded-lg border border-gray-200";
+            
+            let subsHTML = item.subs.map((sub, sIndex) => `
+                <div class="flex flex-col md:flex-row md:items-center justify-between py-3 border-b border-gray-200 last:border-0" id="row-${sub.id}">
+                    <span class="text-gray-700 md:w-3/4 mb-2 md:mb-0 pr-4">${sub.text}</span>
+                    <div class="flex space-x-4 md:w-1/4 justify-start md:justify-end">
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="radio" name="r_${sub.id}" value="D" class="form-radio text-blue-600 h-5 w-5">
+                            <span class="ml-2">Đúng</span>
+                        </label>
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="radio" name="r_${sub.id}" value="S" class="form-radio text-red-600 h-5 w-5">
+                            <span class="ml-2">Sai</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="exp-${sub.id}" class="explanation p-2 bg-blue-50 text-blue-800 text-sm mb-2 rounded border border-blue-100">
+                    <strong>Giải thích:</strong> ${sub.exp}
+                </div>
+            `).join('');
+
+            qDiv.innerHTML = `
+                <h3 class="font-semibold text-lg mb-3 text-gray-800">${item.q}</h3>
+                <div class="bg-white p-4 rounded-md border border-gray-300 shadow-sm">
+                    ${subsHTML}
+                </div>
+            `;
+            part2Container.appendChild(qDiv);
+        });
+
+        // Xử lý nộp bài Phần 2
+        document.getElementById('check-part2-btn').addEventListener('click', () => {
+            part2Data.forEach(item => {
+                item.subs.forEach(sub => {
+                    const radios = document.getElementsByName(`r_${sub.id}`);
+                    let selectedVal = null;
+                    radios.forEach(r => { if(r.checked) selectedVal = r.value; });
+                    
+                    const row = document.getElementById(`row-${sub.id}`);
+                    const expDiv = document.getElementById(`exp-${sub.id}`);
+                    
+                    // Reset classes
+                    row.classList.remove('bg-green-100', 'bg-red-100');
+
+                    if (selectedVal) {
+                        if (selectedVal === sub.ans) {
+                            row.classList.add('bg-green-100', 'rounded', 'px-2');
+                        } else {
+                            row.classList.add('bg-red-100', 'rounded', 'px-2');
+                        }
+                    } else {
+                        // Nếu chưa chọn
+                        row.classList.add('bg-yellow-100', 'rounded', 'px-2');
+                    }
+                    
+                    // Hiện giải thích
+                    expDiv.classList.add('show');
+                    // Disable inputs after check
+                    radios.forEach(r => r.disabled = true);
+                });
+            });
+            document.getElementById('check-part2-btn').disabled = true;
+            document.getElementById('check-part2-btn').classList.add('opacity-50', 'cursor-not-allowed');
+            document.getElementById('check-part2-btn').innerText = "Đã Kiểm Tra";
+        });
+
+        // Render Phần 3
+        const part3Container = document.getElementById('part3-container');
+        part3Data.forEach((item, index) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = "bg-gray-50 p-5 rounded-lg border border-gray-200";
+            
+            qDiv.innerHTML = `
+                <h3 class="font-semibold text-lg mb-3 text-gray-800">${item.q}</h3>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="input3-${index}" placeholder="Nhập câu trả lời..." 
+                           class="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button onclick="checkPart3(${index})" id="btn3-${index}"
+                            class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition-colors">
+                        Nộp Bài
+                    </button>
+                </div>
+                <div id="rs3-${index}" class="mt-3 font-medium hidden"></div>
+                <div id="exp3-${index}" class="explanation mt-3 p-3 bg-blue-50 border border-blue-200 text-blue-800 rounded-md text-sm">
+                    <strong>Giải thích: </strong> ${item.exp}
+                </div>
+            `;
+            part3Container.appendChild(qDiv);
+        });
+
+        // Hàm kiểm tra Phần 3
+        window.checkPart3 = function(index) {
+            const inputEl = document.getElementById(`input3-${index}`);
+            const userVal = inputEl.value.trim().toLowerCase();
+            const btn = document.getElementById(`btn3-${index}`);
+            const rsDiv = document.getElementById(`rs3-${index}`);
+            const expDiv = document.getElementById(`exp3-${index}`);
+            
+            if (userVal === "") return;
+
+            const acceptedArr = part3Data[index].accepted.map(a => a.toLowerCase());
+            const isCorrect = acceptedArr.includes(userVal);
+
+            rsDiv.classList.remove('hidden');
+            if (isCorrect) {
+                rsDiv.innerHTML = '✅ Chính xác!';
+                rsDiv.className = "mt-3 font-medium text-green-600";
+                inputEl.classList.add('border-green-500', 'bg-green-50');
+            } else {
+                rsDiv.innerHTML = '❌ Chưa chính xác! Đáp án đúng: ' + part3Data[index].accepted[0];
+                rsDiv.className = "mt-3 font-medium text-red-600";
+                inputEl.classList.add('border-red-500', 'bg-red-50');
+            }
+
+            expDiv.classList.add('show');
+            inputEl.disabled = true;
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+    </script>
+</body>
+</html>
