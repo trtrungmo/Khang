@@ -26,3 +26,333 @@
         .btn:hover { background: #27ae60; }
         .btn-submit { background: #e74c3c; font-size: 18px; padding: 12px 30px; display: block; margin: 30px auto; }
         .btn-submit:hover { background: #c0392b; }
+        
+        .hidden-ans { display: none; color: #d35400; font-weight: bold; margin-left: 15px; }
+        .explanation { display: none; margin-top: 12px; padding: 12px; background: #fdf2e9; border-left: 4px solid #e67e22; border-radius: 4px; font-size: 15px; }
+        .correct { color: #27ae60; font-weight: bold; }
+        .incorrect { color: #e74c3c; font-weight: bold; }
+        
+        #resultTab3 { display: none; text-align: center; background: #d4efdf; padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 2px solid #27ae60; }
+        .success-code { font-size: 24px; color: #c0392b; font-weight: bold; margin-top: 10px; }
+        .theory-box { background: #fdf8e4; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #faebcc; }
+        .theory-box h3 { margin-top: 0; color: #8a6d3b; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Lớp Học Tiếng Anh 6 - Kỹ Năng Đọc Hiểu</h1>
+    
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab(event, 'tab1')">Trang 1: Lý Thuyết</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab2')">Trang 2: Bài Tập Mẫu</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab3')">Trang 3: Luyện Tập (Lấy Code)</button>
+    </div>
+
+    <!-- TRANG 1: LÝ THUYẾT -->
+    <div id="tab1" class="tab-content active">
+        <h2>Lý thuyết trọng tâm dạng bài Đọc Hiểu</h2>
+        <div class="theory-box">
+            <h3>Dạng 1: Điền từ vào đoạn văn (Gap-filling)</h3>
+            <ul>
+                <li><strong>Bước 1:</strong> Đọc lướt toàn bộ đoạn văn để hiểu ngữ cảnh chung.</li>
+                <li><strong>Bước 2:</strong> Nhìn vào chỗ trống và các từ xung quanh để xác định loại từ cần điền (danh từ, động từ, giới từ, tính từ...).</li>
+                <li><strong>Bước 3:</strong> Chú ý đến ngữ pháp cơ bản: thì của động từ, danh từ số nhiều/số ít.</li>
+            </ul>
+        </div>
+        <div class="theory-box">
+            <h3>Dạng 2: Đọc hiểu chọn đáp án đúng (Multiple Choice)</h3>
+            <ul>
+                <li><strong>Skimming:</strong> Đọc lướt để tìm ý chính của toàn đoạn (trả lời câu <em>"What is the passage mainly about?"</em>).</li>
+                <li><strong>Scanning:</strong> Đọc quét tìm thông tin chi tiết. Gạch chân từ khóa (keywords) trong câu hỏi để tìm trong đoạn.</li>
+                <li><strong>Đoán nghĩa từ vựng / Đại từ:</strong> Đọc câu chứa từ đó hoặc câu ngay trước nó để tìm manh mối.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TRANG 2: BÀI TẬP MẪU -->
+    <div id="tab2" class="tab-content">
+        <h2>ĐỀ 1. BÀI TẬP MẪU (CÓ ĐÁP ÁN)</h2>
+        <p><em>Hướng dẫn: Bấm nút "Xem đáp án" ở từng câu để kiểm tra.</em></p>
+
+        <!-- Exercise 1 -->
+        <h3>Exercise 1. Mark the correct word to fill in the blank.</h3>
+        <div class="passage">
+            Susan is my best friend. She is tall and has long black (1)________. She lives in an apartment. Her apartment has a pool but she rarely (2)________ to the swimming pool. Her favorite subject (3)________ IT because she really likes using computers. She goes to the IT club at 5.30 p.m. every Friday. She is very (4)________. She always helps people when they need help. Susan and I have a festival (5)________ school next week. It starts at 10 a.m. and ends at 9 p.m.
+        </div>
+        <div class="question">
+            <p><strong>1.</strong> A. eye &nbsp;&nbsp; B. arm &nbsp;&nbsp; C. nose &nbsp;&nbsp; D. hair</p>
+            <button class="btn" onclick="toggleAns('ans_1_1')">Xem/Ẩn đáp án</button> <span id="ans_1_1" class="hidden-ans">Đáp án: D</span>
+        </div>
+        <div class="question">
+            <p><strong>2.</strong> A. goes &nbsp;&nbsp; B. go &nbsp;&nbsp; C. has &nbsp;&nbsp; D. have</p>
+            <button class="btn" onclick="toggleAns('ans_1_2')">Xem/Ẩn đáp án</button> <span id="ans_1_2" class="hidden-ans">Đáp án: A</span>
+        </div>
+        <div class="question">
+            <p><strong>3.</strong> A. is &nbsp;&nbsp; B. am &nbsp;&nbsp; C. are &nbsp;&nbsp; D. was</p>
+            <button class="btn" onclick="toggleAns('ans_1_3')">Xem/Ẩn đáp án</button> <span id="ans_1_3" class="hidden-ans">Đáp án: A</span>
+        </div>
+        <div class="question">
+            <p><strong>4.</strong> A. helpful &nbsp;&nbsp; B. selfish &nbsp;&nbsp; C. active &nbsp;&nbsp; D. funny</p>
+            <button class="btn" onclick="toggleAns('ans_1_4')">Xem/Ẩn đáp án</button> <span id="ans_1_4" class="hidden-ans">Đáp án: A</span>
+        </div>
+        <div class="question">
+            <p><strong>5.</strong> A. in &nbsp;&nbsp; B. at &nbsp;&nbsp; C. on &nbsp;&nbsp; D. by</p>
+            <button class="btn" onclick="toggleAns('ans_1_5')">Xem/Ẩn đáp án</button> <span id="ans_1_5" class="hidden-ans">Đáp án: B</span>
+        </div>
+
+        <!-- Exercise 2 -->
+        <h3>Exercise 2. Circle the correct word to fill in the blank.</h3>
+        <div class="passage">
+            My dream house is (1)________ the countryside. It has a lot of rooms and windows. There is a big bookshelf in the living room. Everyone in my family can read their favourite (2)________ in this room. There is a kitchen in my dream house. There my mum and I can (3)________ together. There is a fridge and it has drinks and snacks. There (4)________ extra bedrooms, so my friends can sleep over. My dream house also (5)________ a big garden.
+        </div>
+        <div class="question">
+            <p><strong>1.</strong> A. on &nbsp;&nbsp; B. in &nbsp;&nbsp; C. at &nbsp;&nbsp; D. for</p>
+            <button class="btn" onclick="toggleAns('ans_2_1')">Xem/Ẩn đáp án</button> <span id="ans_2_1" class="hidden-ans">Đáp án: B</span>
+        </div>
+        <div class="question">
+            <p><strong>2.</strong> A. toys &nbsp;&nbsp; B. pens &nbsp;&nbsp; C. notebooks &nbsp;&nbsp; D. books</p>
+            <button class="btn" onclick="toggleAns('ans_2_2')">Xem/Ẩn đáp án</button> <span id="ans_2_2" class="hidden-ans">Đáp án: D</span>
+        </div>
+        <div class="question">
+            <p><strong>3.</strong> A. do &nbsp;&nbsp; B. make &nbsp;&nbsp; C. cook &nbsp;&nbsp; D. have</p>
+            <button class="btn" onclick="toggleAns('ans_2_3')">Xem/Ẩn đáp án</button> <span id="ans_2_3" class="hidden-ans">Đáp án: C</span>
+        </div>
+        <div class="question">
+            <p><strong>4.</strong> A. is &nbsp;&nbsp; B. are &nbsp;&nbsp; C. give &nbsp;&nbsp; D. be</p>
+            <button class="btn" onclick="toggleAns('ans_2_4')">Xem/Ẩn đáp án</button> <span id="ans_2_4" class="hidden-ans">Đáp án: B</span>
+        </div>
+        <div class="question">
+            <p><strong>5.</strong> A. has &nbsp;&nbsp; B. is &nbsp;&nbsp; C. gets &nbsp;&nbsp; D. needs</p>
+            <button class="btn" onclick="toggleAns('ans_2_5')">Xem/Ẩn đáp án</button> <span id="ans_2_5" class="hidden-ans">Đáp án: A</span>
+        </div>
+
+        <!-- Exercise 3 -->
+        <h3>Exercise 3. Read the passage and choose the correct answer.</h3>
+        <div class="passage">
+            My name is Nam, and I am a student in class 6B at Sunshine Secondary School. I live with my parents and my younger sister in a small house near a park. I usually ride my bike to school because it is about two kilometres from my house. My favourite subject is English, and I have English lessons three times a week. After school, I often play badminton with my classmates in the school playground.<br><br>
+            My younger sister is Hoa. She is eleven years old and loves animals. She has a small white cat named Snowy. Every afternoon, Hoa feeds the cat and plays with it in the garden. Today, she is sitting on the sofa and reading a book about wild animals, while I am doing my English homework at the table.
+        </div>
+        <div class="question">
+            <p><strong>1. What is the passage mainly about?</strong><br>
+            A. Nam's school subjects and teachers.<br>B. Nam's family and daily activities.<br>C. Hoa's favorite books and school.<br>D. Nam's favorite sports and animals.</p>
+            <button class="btn" onclick="toggleAns('ans_3_1')">Xem/Ẩn đáp án</button> <span id="ans_3_1" class="hidden-ans">Đáp án: B</span>
+        </div>
+        <div class="question">
+            <p><strong>2. How does Nam usually go to school?</strong><br>
+            A. By bus. &nbsp;&nbsp; B. On foot. &nbsp;&nbsp; C. By bike. &nbsp;&nbsp; D. By car.</p>
+            <button class="btn" onclick="toggleAns('ans_3_2')">Xem/Ẩn đáp án</button> <span id="ans_3_2" class="hidden-ans">Đáp án: C</span>
+        </div>
+        <div class="question">
+            <p><strong>3. The word "younger" in paragraph 2 is closest in meaning to ________.</strong><br>
+            A. not as old as someone else.<br>B. taller than someone else.<br>C. more beautiful than someone else.<br>D. more intelligent than someone else.</p>
+            <button class="btn" onclick="toggleAns('ans_3_3')">Xem/Ẩn đáp án</button> <span id="ans_3_3" class="hidden-ans">Đáp án: A</span>
+        </div>
+        <div class="question">
+            <p><strong>4. According to the passage, which of the following is NOT TRUE?</strong><br>
+            A. Nam lives with his parents and his younger sister.<br>B. Nam has English lessons three times a week.<br>C. Hoa has a small black cat named Snowy.<br>D. Hoa loves animals.</p>
+            <button class="btn" onclick="toggleAns('ans_3_4')">Xem/Ẩn đáp án</button> <span id="ans_3_4" class="hidden-ans">Đáp án: C</span>
+        </div>
+        <div class="question">
+            <p><strong>5. The word "it" in paragraph 2 refers to ________.</strong><br>
+            A. the garden. &nbsp;&nbsp; B. the book. &nbsp;&nbsp; C. the sofa. &nbsp;&nbsp; D. the cat.</p>
+            <button class="btn" onclick="toggleAns('ans_3_5')">Xem/Ẩn đáp án</button> <span id="ans_3_5" class="hidden-ans">Đáp án: D</span>
+        </div>
+    </div>
+
+    <!-- TRANG 3: BÀI TẬP THÊM (CHẤM ĐIỂM) -->
+    <div id="tab3" class="tab-content">
+        <h2>ĐỀ 2. LÀM BÀI TẬP LẤY MÃ CODE THƯỞNG</h2>
+        <p><em>Lưu ý: Chọn đáp án cho tất cả 15 câu, sau đó bấm <strong>"Nộp bài & Chấm điểm"</strong>. Đạt 8/10 điểm sẽ nhận được Code!</em></p>
+        
+        <div id="resultTab3"></div>
+
+        <form id="testForm" onsubmit="event.preventDefault(); submitTest();">
+            <!-- Exercise 1 -->
+            <h3>Exercise 1. Read the passage and choose the correct word.</h3>
+            <div class="passage">
+                Mai is my new classmate. She is short and has curly brown (1)________. She lives near our school, so she usually (2)________ to school. Her favourite subject (3)________ Art because she likes drawing pictures. She is very (4)________. She often makes us laugh with her stories. On Saturdays, we meet (5)________ the library and read books together.
+            </div>
+
+            <div class="question"><p><strong>1.</strong></p><div class="options">
+                <label><input type="radio" name="q1_1" value="A"> A. hair</label> <label><input type="radio" name="q1_1" value="B"> B. eyes</label>
+                <label><input type="radio" name="q1_1" value="C"> C. arms</label> <label><input type="radio" name="q1_1" value="D"> D. legs</label>
+            </div><div id="exp_q1_1" class="explanation"></div></div>
+
+            <div class="question"><p><strong>2.</strong></p><div class="options">
+                <label><input type="radio" name="q1_2" value="A"> A. walk</label> <label><input type="radio" name="q1_2" value="B"> B. walks</label>
+                <label><input type="radio" name="q1_2" value="C"> C. walking</label> <label><input type="radio" name="q1_2" value="D"> D. to walk</label>
+            </div><div id="exp_q1_2" class="explanation"></div></div>
+
+            <div class="question"><p><strong>3.</strong></p><div class="options">
+                <label><input type="radio" name="q1_3" value="A"> A. am</label> <label><input type="radio" name="q1_3" value="B"> B. are</label>
+                <label><input type="radio" name="q1_3" value="C"> C. is</label> <label><input type="radio" name="q1_3" value="D"> D. be</label>
+            </div><div id="exp_q1_3" class="explanation"></div></div>
+
+            <div class="question"><p><strong>4.</strong></p><div class="options">
+                <label><input type="radio" name="q1_4" value="A"> A. quiet</label> <label><input type="radio" name="q1_4" value="B"> B. shy</label>
+                <label><input type="radio" name="q1_4" value="C"> C. lazy</label> <label><input type="radio" name="q1_4" value="D"> D. funny</label>
+            </div><div id="exp_q1_4" class="explanation"></div></div>
+
+            <div class="question"><p><strong>5.</strong></p><div class="options">
+                <label><input type="radio" name="q1_5" value="A"> A. on</label> <label><input type="radio" name="q1_5" value="B"> B. at</label>
+                <label><input type="radio" name="q1_5" value="C"> C. under</label> <label><input type="radio" name="q1_5" value="D"> D. between</label>
+            </div><div id="exp_q1_5" class="explanation"></div></div>
+
+            <!-- Exercise 2 -->
+            <h3>Exercise 2. Read the passage and choose the correct word.</h3>
+            <div class="passage">
+                My favourite room is my bedroom. It is (1)________ the second floor of my house. There is a bed near the window and a desk next to it. I do my (2)________ at the desk every evening. There are some pictures (3)________ the wall. I also have a bookshelf with many interesting books. There (4)________ two small plants on the shelf. My room (5)________ a large window, so it is bright in the daytime. I love spending time there.
+            </div>
+
+            <div class="question"><p><strong>1.</strong></p><div class="options">
+                <label><input type="radio" name="q2_1" value="A"> A. on</label> <label><input type="radio" name="q2_1" value="B"> B. in</label>
+                <label><input type="radio" name="q2_1" value="C"> C. between</label> <label><input type="radio" name="q2_1" value="D"> D. under</label>
+            </div><div id="exp_q2_1" class="explanation"></div></div>
+
+            <div class="question"><p><strong>2.</strong></p><div class="options">
+                <label><input type="radio" name="q2_2" value="A"> A. breakfast</label> <label><input type="radio" name="q2_2" value="B"> B. lunch</label>
+                <label><input type="radio" name="q2_2" value="C"> C. homework</label> <label><input type="radio" name="q2_2" value="D"> D. dinner</label>
+            </div><div id="exp_q2_2" class="explanation"></div></div>
+
+            <div class="question"><p><strong>3.</strong></p><div class="options">
+                <label><input type="radio" name="q2_3" value="A"> A. in</label> <label><input type="radio" name="q2_3" value="B"> B. on</label>
+                <label><input type="radio" name="q2_3" value="C"> C. between</label> <label><input type="radio" name="q2_3" value="D"> D. under</label>
+            </div><div id="exp_q2_3" class="explanation"></div></div>
+
+            <div class="question"><p><strong>4.</strong></p><div class="options">
+                <label><input type="radio" name="q2_4" value="A"> A. is</label> <label><input type="radio" name="q2_4" value="B"> B. am</label>
+                <label><input type="radio" name="q2_4" value="C"> C. be</label> <label><input type="radio" name="q2_4" value="D"> D. are</label>
+            </div><div id="exp_q2_4" class="explanation"></div></div>
+
+            <div class="question"><p><strong>5.</strong></p><div class="options">
+                <label><input type="radio" name="q2_5" value="A"> A. have</label> <label><input type="radio" name="q2_5" value="B"> B. has</label>
+                <label><input type="radio" name="q2_5" value="C"> C. are</label> <label><input type="radio" name="q2_5" value="D"> D. do</label>
+            </div><div id="exp_q2_5" class="explanation"></div></div>
+
+            <!-- Exercise 3 -->
+            <h3>Exercise 3. Read the passage and choose the correct answer.</h3>
+            <div class="passage">
+                My name is Linh. I am a student in class 6A at Green Secondary School. I live with my parents and my older brother in a house near a lake. My school is close to my house, so I usually walk there with my brother. My favourite subject is Science. I have Science lessons on Mondays and Thursdays. After school, I often play volleyball with my friends.<br><br>
+                My brother is Minh. He is fifteen years old and is very kind. He often helps me with my homework. Minh loves gardening, too. There is a small garden behind our house, and he waters the flowers every afternoon. Today, he is planting a tree in the garden. Our dog, Lucky, is sitting next to him. I am taking a photo of it from the window.
+            </div>
+
+            <div class="question"><p><strong>1. What is the passage mainly about?</strong></p><div class="options">
+                <label><input type="radio" name="q3_1" value="A"> A. Linh's teachers and classroom.</label> <label><input type="radio" name="q3_1" value="B"> B. Linh's favourite animals.</label>
+                <label><input type="radio" name="q3_1" value="C"> C. Linh's family and activities.</label> <label><input type="radio" name="q3_1" value="D"> D. Minh's school and friends.</label>
+            </div><div id="exp_q3_1" class="explanation"></div></div>
+
+            <div class="question"><p><strong>2. How does Linh usually go to school?</strong></p><div class="options">
+                <label><input type="radio" name="q3_2" value="A"> A. On foot.</label> <label><input type="radio" name="q3_2" value="B"> B. By bus.</label>
+                <label><input type="radio" name="q3_2" value="C"> C. By bike.</label> <label><input type="radio" name="q3_2" value="D"> D. By car.</label>
+            </div><div id="exp_q3_2" class="explanation"></div></div>
+
+            <div class="question"><p><strong>3. The word "kind" in paragraph 2 is closest in meaning to ________.</strong></p><div class="options">
+                <label><input type="radio" name="q3_3" value="A"> A. noisy.</label> <label><input type="radio" name="q3_3" value="B"> B. caring.</label>
+                <label><input type="radio" name="q3_3" value="C"> C. lazy.</label> <label><input type="radio" name="q3_3" value="D"> D. shy.</label>
+            </div><div id="exp_q3_3" class="explanation"></div></div>
+
+            <div class="question"><p><strong>4. According to the passage, which of the following is NOT TRUE?</strong></p><div class="options">
+                <label><input type="radio" name="q3_4" value="A"> A. Linh lives near a lake.</label> <label><input type="radio" name="q3_4" value="B"> B. Linh has Science lessons twice a week.</label>
+                <label><input type="radio" name="q3_4" value="C"> C. Minh waters the flowers every afternoon.</label> <label><input type="radio" name="q3_4" value="D"> D. Minh is reading a book in the garden today.</label>
+            </div><div id="exp_q3_4" class="explanation"></div></div>
+
+            <div class="question"><p><strong>5. The word "it" in paragraph 2 refers to ________.</strong></p><div class="options">
+                <label><input type="radio" name="q3_5" value="A"> A. the window.</label> <label><input type="radio" name="q3_5" value="B"> B. the tree.</label>
+                <label><input type="radio" name="q3_5" value="C"> C. the dog.</label> <label><input type="radio" name="q3_5" value="D"> D. the garden.</label>
+            </div><div id="exp_q3_5" class="explanation"></div></div>
+
+            <button type="submit" class="btn btn-submit">Nộp bài & Chấm điểm</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // 1. Chuyển đổi qua lại giữa các Tab an toàn
+    function openTab(evt, tabName) {
+        var tabcontents = document.querySelectorAll(".tab-content");
+        tabcontents.forEach(function(tab) { tab.classList.remove("active"); });
+
+        var tablinks = document.querySelectorAll(".tab-btn");
+        tablinks.forEach(function(btn) { btn.classList.remove("active"); });
+
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    // 2. Ẩn/Hiện đáp án an toàn ở Tab 2
+    function toggleAns(id) {
+        var element = document.getElementById(id);
+        var currentState = window.getComputedStyle(element).display;
+        if (currentState === "none") {
+            element.style.display = "inline-block";
+        } else {
+            element.style.display = "none";
+        }
+    }
+
+    // 3. Hệ thống chấm điểm tự động ở Tab 3
+    var explanations = {
+        'q1_1': 'Tóc (hair) là danh từ không đếm được. Dịch: mái tóc nâu xoăn.',
+        'q1_2': 'Chủ ngữ "she" ngôi 3 số ít nên động từ walk thêm "s" thành "walks".',
+        'q1_3': 'Chủ ngữ "Her favourite subject" số ít nên to-be là "is".',
+        'q1_4': 'Câu sau có "makes us laugh" (làm chúng tôi cười) -> Mai rất vui tính (funny).',
+        'q1_5': 'Đi với địa điểm cụ thể "the library" ta dùng giới từ "at".',
+        'q2_1': 'Dùng giới từ "on" để chỉ vị trí trên tầng nhà (on the second floor).',
+        'q2_2': 'Cụm từ "do homework" nghĩa là làm bài tập về nhà.',
+        'q2_3': 'Giới từ "on the wall" nghĩa là treo trên tường.',
+        'q2_4': 'Chủ ngữ "two small plants" số nhiều nên dùng "are".',
+        'q2_5': 'Chủ ngữ "My room" số ít nên dùng động từ "has".',
+        'q3_1': 'Toàn bộ đoạn văn nói về gia đình, trường học và hoạt động của Linh.',
+        'q3_2': 'Dựa vào câu "I usually walk there" -> Linh đi bộ đến trường (On foot).',
+        'q3_3': 'Từ "kind" (tốt bụng) đồng nghĩa với "caring" (biết quan tâm).',
+        'q3_4': 'Câu D sai vì thực tế "he is planting a tree" chứ không phải đang đọc sách.',
+        'q3_5': 'Từ "it" thay thế cho "our dog, Lucky" được nhắc đến ngay trước đó.'
+    };
+
+    function submitTest() {
+        var answers = {
+            'q1_1': 'A', 'q1_2': 'B', 'q1_3': 'C', 'q1_4': 'D', 'q1_5': 'B',
+            'q2_1': 'A', 'q2_2': 'C', 'q2_3': 'B', 'q2_4': 'D', 'q2_5': 'B',
+            'q3_1': 'C', 'q3_2': 'A', 'q3_3': 'B', 'q3_4': 'D', 'q3_5': 'C'
+        };
+        
+        var correctCount = 0;
+        var total = 15;
+
+        for (var key in answers) {
+            var selectedInput = document.querySelector('input[name="' + key + '"]:checked');
+            var expBox = document.getElementById('exp_' + key);
+            
+            if (selectedInput) {
+                if (selectedInput.value === answers[key]) {
+                    correctCount++;
+                    expBox.innerHTML = '<span class="correct">Đúng! Đáp án ' + answers[key] + '.</span> ' + explanations[key];
+                } else {
+                    expBox.innerHTML = '<span class="incorrect">Sai. Đáp án đúng là ' + answers[key] + '.</span> ' + explanations[key];
+                }
+            } else {
+                expBox.innerHTML = '<span class="incorrect">Em chưa làm câu này. Đáp án đúng: ' + answers[key] + '.</span> ' + explanations[key];
+            }
+            expBox.style.display = 'block';
+        }
+
+        var point = (correctCount / total) * 10;
+        var resultDiv = document.getElementById('resultTab3');
+        var htmlResult = '<h3>Kết quả của em: ' + correctCount + '/' + total + ' câu đúng</h3>' +
+                         '<p style="font-size: 18px;">Điểm số: <strong>' + point.toFixed(1) + ' / 10</strong></p>';
+
+        if (point >= 8) {
+            htmlResult += '<div class="success-code">Tuyệt vời! Mã Code thưởng của em là: <span style="background: yellow; padding: 5px 10px; border-radius: 5px; color: red;">Eng_1</span></div>';
+        } else {
+            htmlResult += '<p style="color: #e74c3c; font-weight: bold;">Em cần đạt ít nhất 8/10 điểm (đúng 12/15 câu) để nhận mã. Hãy xem lại phần giải thích bên dưới nhé!</p>';
+        }
+
+        resultDiv.innerHTML = htmlResult;
+        resultDiv.style.display = 'block';
+        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+</script>
+
+</body>
+</html>
