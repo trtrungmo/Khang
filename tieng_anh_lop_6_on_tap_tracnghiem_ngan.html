@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn tập Tiếng Anh 6 - Vocabulary & Grammar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0fdfa; /* Light teal background */
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Custom radio button styles */
+        .radio-custom {
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            display: inline-block;
+            vertical-align: middle;
+            position: relative;
+            cursor: pointer;
+        }
+        .radio-custom:checked {
+            border-color: #3b82f6;
+            background-color: #3b82f6;
+        }
+        .radio-custom:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: white;
+            border-radius: 50%;
+        }
+        .opt-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+        .opt-label:hover {
+            background-color: #f1f5f9;
+        }
+    </style>
+</head>
+<body class="text-gray-800 min-h-screen">
+
+    <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+        <!-- Header -->
+        <header class="text-center mb-8 bg-white p-6 rounded-2xl shadow-sm border-t-4 border-teal-500">
+            <h1 class="text-3xl font-extrabold text-teal-600 mb-2">🌟 Lớp 6 - Ôn Tập Tiếng Anh 🌟</h1>
+            <p class="text-gray-500 font-semibold text-lg">Vocabulary and Grammar</p>
+        </header>
+
+        <!-- Tab Navigation -->
+        <div class="flex flex-wrap bg-white rounded-xl shadow-sm p-1 mb-6">
+            <button onclick="openTab('tab1')" id="btn-tab1" class="tab-btn flex-1 py-3 px-4 text-center rounded-lg font-bold text-teal-700 bg-teal-100 transition-colors">
+                📚 Lý thuyết
+            </button>
+            <button onclick="openTab('tab2')" id="btn-tab2" class="tab-btn flex-1 py-3 px-4 text-center rounded-lg font-bold text-gray-500 hover:bg-gray-100 transition-colors">
+                📝 Bài tập mẫu
+            </button>
+            <button onclick="openTab('tab3')" id="btn-tab3" class="tab-btn flex-1 py-3 px-4 text-center rounded-lg font-bold text-gray-500 hover:bg-gray-100 transition-colors">
+                🚀 Bài luyện thêm
+            </button>
+        </div>
+
+        <!-- TAB 1: Lý Thuyết -->
+        <div id="tab1" class="tab-content active">
+            <div class="space-y-6">
+                <!-- Present Simple -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-blue-500">
+                    <h2 class="text-2xl font-bold text-blue-600 mb-4 flex items-center">
+                        <span class="text-3xl mr-2">⏰</span> Hiện Tại Đơn (Present Simple)
+                    </h2>
+                    <p class="mb-2"><strong>Dấu hiệu:</strong> usually, always, often, sometimes, every day, every week...</p>
+                    <p class="mb-2"><strong>Cách dùng:</strong> Diễn tả thói quen, hành động lặp đi lặp lại hoặc sự thật hiển nhiên.</p>
+                    <div class="bg-blue-50 p-4 rounded-xl mt-3">
+                        <p class="font-semibold text-blue-800">Ví dụ:</p>
+                        <ul class="list-disc ml-5 text-blue-700">
+                            <li>I <strong>play</strong> football every weekend.</li>
+                            <li>My father <strong>has</strong> breakfast at home every morning.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Present Continuous -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-green-500">
+                    <h2 class="text-2xl font-bold text-green-600 mb-4 flex items-center">
+                        <span class="text-3xl mr-2">👀</span> Hiện Tại Tiếp Diễn (Present Continuous)
+                    </h2>
+                    <p class="mb-2"><strong>Dấu hiệu:</strong> now, at the moment, right now, Look!, Listen!, Be quiet!...</p>
+                    <p class="mb-2"><strong>Cách dùng:</strong> Diễn tả hành động đang xảy ra ngay lúc nói.</p>
+                    <p class="mb-2"><strong>Công thức:</strong> S + am/is/are + V-ing</p>
+                    <div class="bg-green-50 p-4 rounded-xl mt-3">
+                        <p class="font-semibold text-green-800">Ví dụ:</p>
+                        <ul class="list-disc ml-5 text-green-700">
+                            <li>James <strong>is doing</strong> judo in the playground right now.</li>
+                            <li>Be quiet! The baby <strong>is sleeping</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Prepositions of Time -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-yellow-500">
+                    <h2 class="text-2xl font-bold text-yellow-600 mb-4 flex items-center">
+                        <span class="text-3xl mr-2">📅</span> Giới từ chỉ thời gian
+                    </h2>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-yellow-50 p-4 rounded-xl">
+                            <h3 class="font-bold text-lg text-yellow-700">IN</h3>
+                            <p class="text-sm text-yellow-800">Tháng, Năm, Mùa, Buổi trong ngày</p>
+                            <p class="text-xs italic mt-1">(in May, in 2023, in the morning)</p>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-xl">
+                            <h3 class="font-bold text-lg text-yellow-700">ON</h3>
+                            <p class="text-sm text-yellow-800">Thứ, Ngày tháng, Ngày lễ</p>
+                            <p class="text-xs italic mt-1">(on Monday, on May 2nd)</p>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-xl">
+                            <h3 class="font-bold text-lg text-yellow-700">AT</h3>
+                            <p class="text-sm text-yellow-800">Giờ chính xác, Dịp đặc biệt ngắn</p>
+                            <p class="text-xs italic mt-1">(at 6 o'clock, at break time, at noon)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prepositions of Place -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-purple-500">
+                    <h2 class="text-2xl font-bold text-purple-600 mb-4 flex items-center">
+                        <span class="text-3xl mr-2">📍</span> Giới từ chỉ nơi chốn
+                    </h2>
+                    <div class="flex flex-wrap gap-2 text-sm">
+                        <span class="px-3 py-2 bg-purple-100 text-purple-800 rounded-lg font-semibold">in (ở trong)</span>
+                        <span class="px-3 py-2 bg-purple-100 text-purple-800 rounded-lg font-semibold">on (ở trên)</span>
+                        <span class="px-3 py-2 bg-purple-100 text-purple-800 rounded-lg font-semibold">under (ở dưới)</span>
+                        <span class="px-3 py-2 bg-purple-100 text-purple-800 rounded-lg font-semibold">behind (đằng sau)</span>
+                        <span class="px-3 py-2 bg-purple-100 text-purple-800 rounded-lg font-semibold">between (ở giữa 2 vật)</span>
+                        <span class="px-3 py-2 bg-purple-100 text-purple-800 rounded-lg font-semibold">next to (bên cạnh)</span>
+                        <span class="px-3 py-2 bg-purple-100 text-purple-800 rounded-lg font-semibold">in front of (đằng trước)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: Bài Tập Mẫu -->
+        <div id="tab2" class="tab-content">
+            <div class="bg-white p-6 rounded-2xl shadow-sm">
+                <div class="mb-6 border-b pb-4">
+                    <h2 class="text-2xl font-bold text-teal-600">Bài tập mẫu (Trắc nghiệm nhanh)</h2>
+                    <p class="text-gray-500">Click vào đáp án em cho là đúng. Kết quả sẽ hiện ra ngay lập tức!</p>
+                </div>
+
+                <div class="space-y-8" id="tab2-questions">
+                    <!-- Q1 -->
+                    <div class="q-container" data-correct="C">
+                        <p class="font-semibold text-lg mb-3">1. What do you usually do ______ break time?</p>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="A">A. on</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="B">B. in</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="C">C. at</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="D">D. about</button>
+                        </div>
+                        <div class="feedback hidden mt-3 p-3 rounded-lg bg-teal-50 text-teal-800 font-semibold flex items-center">
+                            <span class="mr-2">💡</span> Đáp án đúng: C (at break time: vào giờ ra chơi)
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="q-container" data-correct="D">
+                        <p class="font-semibold text-lg mb-3">2. I live_____ my parents and my younger sister in a town house _____ Ha Noi.</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="A">A. with - at</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="B">B. at - at</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="C">C. of - in</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="D">D. with - in</button>
+                        </div>
+                        <div class="feedback hidden mt-3 p-3 rounded-lg bg-teal-50 text-teal-800 font-semibold flex items-center">
+                            <span class="mr-2">💡</span> Đáp án đúng: D (live with: sống với, in Ha Noi: ở Hà Nội)
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="q-container" data-correct="D">
+                        <p class="font-semibold text-lg mb-3">3. I have a new______, but I don't wear it every day.</p>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="A">A. pencil case</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="B">B. notebook</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="C">C. bicycle</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="D">D. uniform</button>
+                        </div>
+                        <div class="feedback hidden mt-3 p-3 rounded-lg bg-teal-50 text-teal-800 font-semibold flex items-center">
+                            <span class="mr-2">💡</span> Đáp án đúng: D (uniform: đồng phục - đi với động từ 'wear')
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="q-container" data-correct="C">
+                        <p class="font-semibold text-lg mb-3">4. I ______ football every weekend.</p>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="A">A. study</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="B">B. have</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="C">C. play</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="D">D. do</button>
+                        </div>
+                        <div class="feedback hidden mt-3 p-3 rounded-lg bg-teal-50 text-teal-800 font-semibold flex items-center">
+                            <span class="mr-2">💡</span> Đáp án đúng: C (play football: chơi bóng đá)
+                        </div>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="q-container" data-correct="B">
+                        <p class="font-semibold text-lg mb-3">5. James is ______ judo in the playground with his friends.</p>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="A">A. studying</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="B">B. doing</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="C">C. playing</button>
+                            <button class="opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-teal-400 font-medium" data-val="D">D. have</button>
+                        </div>
+                        <div class="feedback hidden mt-3 p-3 rounded-lg bg-teal-50 text-teal-800 font-semibold flex items-center">
+                            <span class="mr-2">💡</span> Đáp án đúng: B (do judo: tập judo)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Bài Luyện Thêm -->
+        <div id="tab3" class="tab-content">
+            <div class="bg-white p-6 rounded-2xl shadow-sm relative">
+                <div class="mb-6 border-b pb-4">
+                    <h2 class="text-2xl font-bold text-teal-600">Bài luyện thêm</h2>
+                    <p class="text-gray-500">Làm bài thật cẩn thận. Đạt 8/10 điểm trở lên để nhận mã bí mật nhé!</p>
+                </div>
+
+                <!-- Result Modal / Banner (Hidden initially) -->
+                <div id="result-banner" class="hidden mb-6 p-6 rounded-2xl text-center shadow-inner">
+                    <h3 id="result-score" class="text-3xl font-extrabold mb-2"></h3>
+                    <p id="result-message" class="text-lg font-medium"></p>
+                    <div id="secret-code-box" class="hidden mt-4 inline-block bg-white text-teal-600 px-6 py-2 rounded-full font-bold text-2xl border-4 border-dashed border-teal-300 shadow">
+                        Eng_1
+                    </div>
+                </div>
+
+                <form id="quiz-form">
+                    <div class="space-y-6">
+                        <!-- C1 -->
+                        <div class="q3-container bg-gray-50 p-4 rounded-xl border border-gray-200" data-correct="B">
+                            <p class="font-semibold text-lg mb-3">Câu 1: We have English ______ Monday and Thursday.</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="opt-label"><input type="radio" name="q1" value="A" class="radio-custom"> A. at</label>
+                                <label class="opt-label"><input type="radio" name="q1" value="B" class="radio-custom"> B. on</label>
+                                <label class="opt-label"><input type="radio" name="q1" value="C" class="radio-custom"> C. in</label>
+                                <label class="opt-label"><input type="radio" name="q1" value="D" class="radio-custom"> D. from</label>
+                            </div>
+                            <div class="explanation hidden mt-3 text-sm font-medium p-3 rounded bg-blue-100 text-blue-800">Giải thích: Dùng 'on' trước các thứ trong tuần.</div>
+                        </div>
+
+                        <!-- C2 -->
+                        <div class="q3-container bg-gray-50 p-4 rounded-xl border border-gray-200" data-correct="A">
+                            <p class="font-semibold text-lg mb-3">Câu 2: My family lives ______ an apartment ______ Da Nang.</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="opt-label"><input type="radio" name="q2" value="A" class="radio-custom"> A. in - in</label>
+                                <label class="opt-label"><input type="radio" name="q2" value="B" class="radio-custom"> B. at - on</label>
+                                <label class="opt-label"><input type="radio" name="q2" value="C" class="radio-custom"> C. on - at</label>
+                                <label class="opt-label"><input type="radio" name="q2" value="D" class="radio-custom"> D. with - in</label>
+                            </div>
+                            <div class="explanation hidden mt-3 text-sm font-medium p-3 rounded bg-blue-100 text-blue-800">Giải thích: in an apartment (trong căn hộ), in Da Nang (ở Đà Nẵng).</div>
+                        </div>
+
+                        <!-- C3 -->
+                        <div class="q3-container bg-gray-50 p-4 rounded-xl border border-gray-200" data-correct="C">
+                            <p class="font-semibold text-lg mb-3">Câu 3: I keep my pens and pencils in my ______.</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="opt-label"><input type="radio" name="q3" value="A" class="radio-custom"> A. calculator</label>
+                                <label class="opt-label"><input type="radio" name="q3" value="B" class="radio-custom"> B. dictionary</label>
+                                <label class="opt-label"><input type="radio" name="q3" value="C" class="radio-custom"> C. pencil case</label>
+                                <label class="opt-label"><input type="radio" name="q3" value="D" class="radio-custom"> D. uniform</label>
+                            </div>
+                            <div class="explanation hidden mt-3 text-sm font-medium p-3 rounded bg-blue-100 text-blue-800">Giải thích: pencil case là hộp bút.</div>
+                        </div>
+
+                        <!-- C4 -->
+                        <div class="q3-container bg-gray-50 p-4 rounded-xl border border-gray-200" data-correct="D">
+                            <p class="font-semibold text-lg mb-3">Câu 4: My brother usually ______ badminton after school.</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="opt-label"><input type="radio" name="q4" value="A" class="radio-custom"> A. studies</label>
+                                <label class="opt-label"><input type="radio" name="q4" value="B" class="radio-custom"> B. has</label>
+                                <label class="opt-label"><input type="radio" name="q4" value="C" class="radio-custom"> C. does</label>
+                                <label class="opt-label"><input type="radio" name="q4" value="D" class="radio-custom"> D. plays</label>
+                            </div>
+                            <div class="explanation hidden mt-3 text-sm font-medium p-3 rounded bg-blue-100 text-blue-800">Giải thích: play badminton (chơi cầu lông).</div>
+                        </div>
+
+                        <!-- C5 -->
+                        <div class="q3-container bg-gray-50 p-4 rounded-xl border border-gray-200" data-correct="B">
+                            <p class="font-semibold text-lg mb-3">Câu 5: Look! The children ______ exercises in the playground.</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="opt-label"><input type="radio" name="q5" value="A" class="radio-custom"> A. does</label>
+                                <label class="opt-label"><input type="radio" name="q5" value="B" class="radio-custom"> B. are doing</label>
+                                <label class="opt-label"><input type="radio" name="q5" value="C" class="radio-custom"> C. do</label>
+                                <label class="opt-label"><input type="radio" name="q5" value="D" class="radio-custom"> D. is doing</label>
+                            </div>
+                            <div class="explanation hidden mt-3 text-sm font-medium p-3 rounded bg-blue-100 text-blue-800">Giải thích: Dấu hiệu 'Look!' dùng Hiện tại tiếp diễn (The children là số nhiều -> are doing).</div>
+                        </div>
+
+                        <!-- C6 -->
+                        <div class="q3-container bg-gray-50 p-4 rounded-xl border border-gray-200" data-correct="A">
+                            <p class="font-semibold text-lg mb-3">Câu 6: ______ do you have your music lesson? – On Wednesday afternoon.</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="opt-label"><input type="radio" name="q6" value="A" class="radio-custom"> A. When</label>
+                                <label class="opt-label"><input type="radio" name="q6" value="B" class="radio-custom"> B. Where</label>
+                                <label class="opt-label"><input type="radio" name="q6" value="C" class="radio-custom"> C. Who</label>
+                                <label class="opt-label"><input type="radio" name="q6" value="D" class="radio-custom"> D. What</label>
+                            </div>
+                            <div class="explanation hidden mt-3 text-sm font-medium p-3 rounded bg-blue-100 text-blue-800">Giải thích: Trả lời về thời gian (On Wednesday afternoon) nên từ để hỏi là When.</div>
+                        </div>
+
+                        <!-- C7 -->
+                        <div class="q3-container bg-gray-50 p-4 rounded-xl border border-gray-200" data-correct="C">
+                            <p class="font-semibold text-lg mb-3">Câu 7: Lan: 'What does your sister look like?' - Mai: '______'</p>
+                            <div class="grid grid-cols-1 gap-2">
+                                <label class="opt-label"><input type="radio" name="q7" value="A" class="radio-custom"> A. She is very kind.</label>
+                                <label class="opt-label"><input type="radio" name="q7" value="B" class="radio-custom"> B. She likes reading.</label>
+                                <label class="opt-label"><input type="radio" name="q7" value="C" class="radio-custom"> C. She has long curly hair.</label>
+                                <label class="opt-label"><input type="radio" name="q7" value="D" class="radio-custom"> D. She often plays chess.</label>
+                            </div>
+                            <div class="explanation hidden mt-3 text-sm font-medium p-3 rounded bg-blue-100 text-blue-800">Giải thích: Câu hỏi 'What does... look like?' hỏi về ngoại hình.</div>
+                        </div>
+
+                        <!-- C8 -->
+                        <div class="q3-container bg-gray-50 p-4 rounded-xl border border-gray-200" data-correct="D">
+                            <p class="font-semibold text-lg mb-3">Câu 8: My father ______ breakfast at home every morning.</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="opt-label"><input type="radio" name="q8" value="A" class="radio-custom"> A. have</label>
+                                <label class="opt-label"><input type="radio" name="q8" value="B" class="radio-custom"> B. having</label>
+                                <label class="opt-label"><input type="radio" name="q8" value="C" class="radio-custom"> C. to have</label>
+                                <label class="opt-label"><input type="radio" name="q8" value="D" class="radio-custom"> D. has</label>
+                            </div>
+                            <div class="explanation hidden mt-3 text-sm font-medium p-3 rounded bg-blue-100 text-blue-800">Giải thích: Dấu hiệu 'every morning' dùng Hiện tại đơn. Chủ ngữ 'My father' (số ít) -> has.</div>
+                        </div>
+
+                        <!-- C9 -->
+                        <div class="q3-container bg-gray-50 p-4 rounded-xl border border-gray-200" data-correct="A">
+                            <p class="font-semibold text-lg mb-3">Câu 9: Be quiet! The baby ______.</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="opt-label"><input type="radio" name="q9" value="A" class="radio-custom"> A. is sleeping</label>
+                                <label class="opt-label"><input type="radio" name="q9" value="B" class="radio-custom"> B. sleep</label>
+                                <label class="opt-label"><input type="radio" name="q9" value="C" class="radio-custom"> C. sleeps</label>
+                                <label class="opt-label"><input type="radio" name="q9" value="D" class="radio-custom"> D. are sleeping</label>
+                            </div>
+                            <div class="explanation hidden mt-3 text-sm font-medium p-3 rounded bg-blue-100 text-blue-800">Giải thích: Dấu hiệu 'Be quiet!' dùng Hiện tại tiếp diễn (The baby số ít -> is sleeping).</div>
+                        </div>
+
+                        <!-- C10 -->
+                        <div class="q3-container bg-gray-50 p-4 rounded-xl border border-gray-200" data-correct="B">
+                            <p class="font-semibold text-lg mb-3">Câu 10: Hoa is very ______. She often helps her classmates with their homework.</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="opt-label"><input type="radio" name="q10" value="A" class="radio-custom"> A. shy</label>
+                                <label class="opt-label"><input type="radio" name="q10" value="B" class="radio-custom"> B. helpful</label>
+                                <label class="opt-label"><input type="radio" name="q10" value="C" class="radio-custom"> C. quiet</label>
+                                <label class="opt-label"><input type="radio" name="q10" value="D" class="radio-custom"> D. serious</label>
+                            </div>
+                            <div class="explanation hidden mt-3 text-sm font-medium p-3 rounded bg-blue-100 text-blue-800">Giải thích: helpful = hay giúp đỡ (Phù hợp với nghĩa vế sau 'often helps her classmates').</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 text-center">
+                        <button type="button" id="submit-btn" class="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white font-bold text-xl py-4 px-12 rounded-full shadow-lg transform transition hover:scale-105">
+                            Nộp bài ngay 📝
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Tab switching logic
+        function openTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            // Reset all buttons style
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('text-teal-700', 'bg-teal-100');
+                btn.classList.add('text-gray-500', 'hover:bg-gray-100');
+            });
+
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            // Style selected button
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.remove('text-gray-500', 'hover:bg-gray-100');
+            activeBtn.classList.add('text-teal-700', 'bg-teal-100');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Tab 2 Logic: Immediate Check
+        document.querySelectorAll('#tab2-questions .opt-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const container = this.closest('.q-container');
+                // Prevent multiple answers
+                if(container.dataset.answered === "true") return;
+                
+                container.dataset.answered = "true";
+                const correctAns = container.dataset.correct;
+                const chosenAns = this.dataset.val;
+
+                // Disable all buttons in this question
+                container.querySelectorAll('.opt-btn').forEach(b => {
+                    b.classList.add('cursor-not-allowed', 'opacity-70');
+                    b.classList.remove('hover:border-teal-400');
+                });
+
+                if (chosenAns === correctAns) {
+                    this.classList.add('bg-green-500', 'text-white', 'border-green-500');
+                } else {
+                    this.classList.add('bg-red-500', 'text-white', 'border-red-500');
+                    // highlight correct answer slightly
+                    container.querySelector(`.opt-btn[data-val="${correctAns}"]`).classList.add('bg-green-100', 'border-green-400');
+                }
+
+                // Show feedback
+                container.querySelector('.feedback').classList.remove('hidden');
+            });
+        });
+
+        // Tab 3 Logic: Submit Quiz
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            let score = 0;
+            const totalQuestions = 10;
+            const containers = document.querySelectorAll('.q3-container');
+            
+            // Validate if all questions answered (optional, but good UX)
+            let allAnswered = true;
+            containers.forEach(container => {
+                const name = container.querySelector('input[type="radio"]').name;
+                const checked = document.querySelector(`input[name="${name}"]:checked`);
+                if(!checked) allAnswered = false;
+            });
+
+            if(!allAnswered) {
+                // We use a custom styled message instead of alert
+                const msgBox = document.createElement('div');
+                msgBox.innerHTML = '<div class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg shadow-xl z-50 transition-opacity" id="alert-msg">Vui lòng trả lời hết tất cả các câu hỏi trước khi nộp bài em nhé!</div>';
+                document.body.appendChild(msgBox);
+                setTimeout(() => {
+                    document.getElementById('alert-msg').remove();
+                }, 3000);
+                return;
+            }
+
+            // Grade the quiz
+            containers.forEach(container => {
+                const correctAns = container.dataset.correct;
+                const name = container.querySelector('input[type="radio"]').name;
+                const checkedEl = document.querySelector(`input[name="${name}"]:checked`);
+                const chosenAns = checkedEl ? checkedEl.value : null;
+
+                // Lock the radios
+                container.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+                
+                // Show explanations
+                container.querySelector('.explanation').classList.remove('hidden');
+
+                // Color styling
+                if (chosenAns === correctAns) {
+                    score++;
+                    container.classList.remove('bg-gray-50', 'border-gray-200');
+                    container.classList.add('bg-green-50', 'border-green-400');
+                } else {
+                    container.classList.remove('bg-gray-50', 'border-gray-200');
+                    container.classList.add('bg-red-50', 'border-red-300');
+                    
+                    // Highlight correct label
+                    const correctLabel = container.querySelector(`input[value="${correctAns}"]`).closest('label');
+                    correctLabel.classList.add('bg-green-100', 'font-bold', 'text-green-800');
+                }
+            });
+
+            // Hide submit button
+            this.style.display = 'none';
+
+            // Show results
+            const banner = document.getElementById('result-banner');
+            const scoreDisplay = document.getElementById('result-score');
+            const messageDisplay = document.getElementById('result-message');
+            const secretBox = document.getElementById('secret-code-box');
+
+            banner.classList.remove('hidden');
+            scoreDisplay.innerText = `Điểm của em: ${score}/${totalQuestions}`;
+
+            if (score >= 8) {
+                banner.classList.add('bg-green-100', 'text-green-800');
+                messageDisplay.innerText = "Tuyệt vời! Em đã hoàn thành xuất sắc bài tập. Đây là phần thưởng dành cho em:";
+                secretBox.classList.remove('hidden');
+            } else {
+                banner.classList.add('bg-yellow-100', 'text-yellow-800');
+                messageDisplay.innerText = "Em làm tốt lắm! Hãy xem lại các câu sai ở dưới để rút kinh nghiệm nhé. Cố lên lần sau để nhận mã bí mật!";
+            }
+            
+            // Scroll to result
+            banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+    </script>
+</body>
+</html>
