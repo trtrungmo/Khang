@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập Ngữ Âm Tiếng Anh Lớp 6</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #eef2f3;
+            color: #333;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 25px;
+        }
+        .theory-box {
+            background-color: #fff9e6;
+            border-left: 5px solid #f1c40f;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .theory-box h3 {
+            margin-top: 0;
+            color: #d35400;
+        }
+        .theory-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: white;
+        }
+        .theory-table th, .theory-table td {
+            border: 1px solid #f39c12;
+            padding: 10px;
+            text-align: left;
+        }
+        .theory-table th {
+            background-color: #f39c12;
+            color: white;
+        }
+        .instruction-box {
+            background-color: #f8f9fa;
+            border-left: 5px solid #3498db;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+        .instruction-box h3 {
+            margin-top: 0;
+            color: #2980b9;
+        }
+        .question {
+            background-color: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+        }
+        .question p {
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 0;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .options label {
+            background: #fff;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .options label:hover {
+            background: #f1f8ff;
+            border-color: #3498db;
+        }
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button:hover {
+            background-color: #219150;
+            transform: translateY(-2px);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            display: none;
+        }
+        .correct { color: #27ae60; font-weight: bold; }
+        .incorrect { color: #e74c3c; font-weight: bold; }
+        
+        /* Chuyển trang */
+        #quiz-section {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- MÀN HÌNH 1: LÝ THUYẾT & HƯỚNG DẪN -->
+    <div id="instruction-section">
+        <h1>Lý Thuyết & Hướng Dẫn Làm Bài Tập Ngữ Âm</h1>
+        
+        <div class="theory-box">
+            <h3>1. Quy Tắc Phát Âm Đuôi -S / -ES (Rất Quan Trọng)</h3>
+            <p>Khi thêm "s" hoặc "es" vào sau danh từ số nhiều hoặc động từ chia ở ngôi thứ 3 số ít, ta có 3 cách phát âm:</p>
+            <table class="theory-table">
+                <tr>
+                    <th>Cách phát âm</th>
+                    <th>Khi từ kết thúc bằng các âm (chữ cái)</th>
+                    <th>Mẹo ghi nhớ</th>
+                    <th>Ví dụ</th>
+                </tr>
+                <tr>
+                    <td><strong>/s/</strong></td>
+                    <td>/p/, /t/, /k/, /f/, /θ/ <br><em>(p, t, k, f, th, gh, ph)</em></td>
+                    <td><strong>Thời phong kiến phương tây</strong></td>
+                    <td>book<strong>s</strong>, lamp<strong>s</strong>, hat<strong>s</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>/ɪz/</strong> (đọc là "iz")</td>
+                    <td>/s/, /z/, /ʃ/, /tʃ/, /ʒ/, /dʒ/ <br><em>(s, ss, ch, sh, x, z, ge, ce)</em></td>
+                    <td><strong>Sóng gió chẳng sợ zì</strong></td>
+                    <td>class<strong>es</strong>, watch<strong>es</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>/z/</strong></td>
+                    <td>Các âm hữu thanh và nguyên âm còn lại.</td>
+                    <td>(Những từ còn lại)</td>
+                    <td>ruler<strong>s</strong>, ear<strong>s</strong>, pen<strong>s</strong></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="theory-box">
+            <h3>2. Quy Tắc Trọng Âm Cơ Bản (Word Stress)</h3>
+            <ul style="margin-top: 5px;">
+                <li><strong>Danh từ và Tính từ (2 âm tiết):</strong> Trọng âm thường rơi vào <strong>âm tiết thứ 1</strong>.<br><em>Ví dụ: 'ruler, 'rubber, 'happy, 'active.</em></li>
+                <li><strong>Động từ (2 âm tiết):</strong> Trọng âm thường rơi vào <strong>âm tiết thứ 2</strong>.<br><em>Ví dụ: be'gin, re'lax.</em></li>
+                <li><strong>Lưu ý:</strong> Các tiền tố (tiếng thêm vào đầu từ) như <em>be-, re-, un-, in-...</em> thường <strong>không</strong> nhận trọng âm. Trọng âm sẽ rơi vào âm tiết đứng sau nó.<br><em>Ví dụ: be'hind, be'tween, re'liable.</em></li>
+            </ul>
+        </div>
+
+        <div class="instruction-box">
+            <h3>📝 Hướng dẫn cách làm bài:</h3>
+            <ul>
+                <li><strong>Bài 1 (Phát âm):</strong> Đọc to từ, chú ý vào phần gạch chân. Nếu là đuôi "s/es", hãy áp dụng ngay bảng mẹo ghi nhớ bên trên.</li>
+                <li><strong>Bài 2 (Trọng âm):</strong> Đọc từ lên và xem mình lên giọng/nhấn mạnh ở âm đầu hay âm sau. Dùng quy tắc "Danh/Tính âm 1 - Tiền tố không nhận trọng âm" để loại trừ.</li>
+            </ul>
+        </div>
+
+        <div class="btn-container">
+            <button type="button" onclick="startQuiz()">Em Đã Nhớ Lý Thuyết - Bắt Đầu Làm Bài!</button>
+        </div>
+    </div>
+
+    <!-- MÀN HÌNH 2: BÀI TRẮC NGHIỆM -->
+    <div id="quiz-section">
+        <h1>Bài Tập Thực Hành</h1>
+        
+        <form id="quizForm">
+            <h2>I. Choose the word whose underlined part pronounced differently from the other.</h2>
+            
+            <div class="question">
+                <p>1. A. m<u>a</u>ny &nbsp;&nbsp; B. fl<u>a</u>t &nbsp;&nbsp; C. h<u>a</u>t &nbsp;&nbsp; D. g<u>a</u>s</p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="A"> A. many</label>
+                    <label><input type="radio" name="q1" value="B"> B. flat</label>
+                    <label><input type="radio" name="q1" value="C"> C. hat</label>
+                    <label><input type="radio" name="q1" value="D"> D. gas</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>2. A. c<u>o</u>py &nbsp;&nbsp; B. p<u>e</u>t &nbsp;&nbsp; C. pr<u>i</u>ze &nbsp;&nbsp; D. b<u>o</u>y</p>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="A"> A. copy</label>
+                    <label><input type="radio" name="q2" value="B"> B. pet</label>
+                    <label><input type="radio" name="q2" value="C"> C. prize</label>
+                    <label><input type="radio" name="q2" value="D"> D. boy</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>3. A. ruler<u>s</u> &nbsp;&nbsp; B. book<u>s</u> &nbsp;&nbsp; C. flat<u>s</u> &nbsp;&nbsp; D. lamp<u>s</u></p>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="A"> A. rulers</label>
+                    <label><input type="radio" name="q3" value="B"> B. books</label>
+                    <label><input type="radio" name="q3" value="C"> C. flats</label>
+                    <label><input type="radio" name="q3" value="D"> D. lamps</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>4. A. eye<u>s</u> &nbsp;&nbsp; B. hand<u>s</u> &nbsp;&nbsp; C. ear<u>s</u> &nbsp;&nbsp; D. cheek<u>s</u></p>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="A"> A. eyes</label>
+                    <label><input type="radio" name="q4" value="B"> B. hands</label>
+                    <label><input type="radio" name="q4" value="C"> C. ears</label>
+                    <label><input type="radio" name="q4" value="D"> D. cheeks</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>5. A. f<u>u</u>nny &nbsp;&nbsp; B. l<u>u</u>nch &nbsp;&nbsp; C. s<u>u</u>n &nbsp;&nbsp; D. comp<u>u</u>ter</p>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="A"> A. funny</label>
+                    <label><input type="radio" name="q5" value="B"> B. lunch</label>
+                    <label><input type="radio" name="q5" value="C"> C. sun</label>
+                    <label><input type="radio" name="q5" value="D"> D. computer</label>
+                </div>
+            </div>
+
+            <h2>II. Choose the word whose main stressed syllable is placed differently from that of the other in each group.</h2>
+
+            <div class="question">
+                <p>6. A. eraser &nbsp;&nbsp; B. ruler &nbsp;&nbsp; C. rubber &nbsp;&nbsp; D. notebook</p>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="A"> A. eraser</label>
+                    <label><input type="radio" name="q6" value="B"> B. ruler</label>
+                    <label><input type="radio" name="q6" value="C"> C. rubber</label>
+                    <label><input type="radio" name="q6" value="D"> D. notebook</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>7. A. behind &nbsp;&nbsp; B. happy &nbsp;&nbsp; C. sofa &nbsp;&nbsp; D. dinner</p>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="A"> A. behind</label>
+                    <label><input type="radio" name="q7" value="B"> B. happy</label>
+                    <label><input type="radio" name="q7" value="C"> C. sofa</label>
+                    <label><input type="radio" name="q7" value="D"> D. dinner</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>8. A. kitchen &nbsp;&nbsp; B. bathroom &nbsp;&nbsp; C. bedroom &nbsp;&nbsp; D. canteen</p>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="A"> A. kitchen</label>
+                    <label><input type="radio" name="q8" value="B"> B. bathroom</label>
+                    <label><input type="radio" name="q8" value="C"> C. bedroom</label>
+                    <label><input type="radio" name="q8" value="D"> D. canteen</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>9. A. cupboard &nbsp;&nbsp; B. sofa &nbsp;&nbsp; C. window &nbsp;&nbsp; D. between</p>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="A"> A. cupboard</label>
+                    <label><input type="radio" name="q9" value="B"> B. sofa</label>
+                    <label><input type="radio" name="q9" value="C"> C. window</label>
+                    <label><input type="radio" name="q9" value="D"> D. between</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>10. A. reliable &nbsp;&nbsp; B. helpful &nbsp;&nbsp; C. active &nbsp;&nbsp; D. friendly</p>
+                <div class="options">
+                    <label><input type="radio" name="q10" value="A"> A. reliable</label>
+                    <label><input type="radio" name="q10" value="B"> B. helpful</label>
+                    <label><input type="radio" name="q10" value="C"> C. active</label>
+                    <label><input type="radio" name="q10" value="D"> D. friendly</label>
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button type="button" onclick="checkAnswers()">Nộp Bài & Kiểm Tra Đáp Án</button>
+            </div>
+        </form>
+
+        <div id="results" class="result"></div>
+    </div>
+</div>
+
+<script>
+    // Hàm chuyển trang
+    function startQuiz() {
+        document.getElementById('instruction-section').style.display = 'none';
+        document.getElementById('quiz-section').style.display = 'block';
+        window.scrollTo(0, 0);
+    }
+
+    // Hàm chấm điểm
+    function checkAnswers() {
+        const answers = {
+            q1: 'A', // many /e/, còn lại /æ/
+            q2: 'C', // Giả sử đề hỏi nguyên âm: prize /aɪ/, còn lại âm đơn ngắn.
+            q3: 'A', // rulers /z/ (quy tắc từ còn lại), books, flats, lamps /s/ (thời phong kiến phương tây)
+            q4: 'D', // cheeks /s/ (phong kiến), eyes, hands, ears /z/ (còn lại)
+            q5: 'D', // computer /ju:/, funny, lunch, sun /ʌ/
+            q6: 'A', // eraser (âm 2), ruler, rubber, notebook (âm 1)
+            q7: 'A', // behind (tiền tố be- âm 2), happy, sofa, dinner (âm 1)
+            q8: 'D', // canteen (âm 2), kitchen, bathroom, bedroom (âm 1)
+            q9: 'D', // between (tiền tố be- âm 2), cupboard, sofa, window (âm 1)
+            q10: 'A' // reliable (tiền tố re- âm 2), helpful, active, friendly (âm 1)
+        };
+
+        const explanations = {
+            q1: "Chữ 'a' trong many đọc là /e/, còn lại đọc là /æ/.",
+            q2: "Đề gốc gạch chân có chút lỗi in, nhưng 'prize' có nguyên âm đôi /aɪ/ khác biệt nhất.",
+            q3: "Tận cùng là k, t, p (Thời phong kiến phương tây) phát âm là /s/. Ruler tận cùng là nguyên âm phát âm /z/.",
+            q4: "Cheeks tận cùng bằng k (phong kiến) phát âm /s/. Còn lại phát âm /z/.",
+            q5: "Chữ 'u' trong computer đọc là /ju:/, còn lại đọc là /ʌ/.",
+            q6: "Eraser nhấn âm 2. Còn lại là danh từ nhấn âm 1.",
+            q7: "Behind có tiền tố be- không nhận trọng âm (nhấn âm 2). Còn lại nhấn âm 1.",
+            q8: "Canteen nhấn âm 2. Còn lại là danh từ nhấn âm 1.",
+            q9: "Between có tiền tố be- nhấn âm 2. Còn lại nhấn âm 1.",
+            q10: "Reliable có tiền tố re- nhấn âm 2. Còn lại là tính từ nhấn âm 1."
+        };
+
+        let score = 0;
+        let resultHTML = "<h2 style='color:#2c3e50; text-align:center;'>Kết Quả Của Em</h2><ul style='list-style:none; padding:0;'>";
+
+        for (let q in answers) {
+            const selected = document.querySelector(`input[name="${q}"]:checked`);
+            let qNum = q.substring(1);
+            
+            if (selected) {
+                if (selected.value === answers[q]) {
+                    score++;
+                    resultHTML += `<li class="correct">✓ Câu ${qNum}: Đúng! (Đáp án ${answers[q]}) <br><span style="font-size: 14px; font-weight: normal; color: #555;">=> Giải thích: ${explanations[q]}</span></li><br>`;
+                } else {
+                    resultHTML += `<li class="incorrect">✗ Câu ${qNum}: Sai. (Đáp án đúng là ${answers[q]}) <br><span style="font-size: 14px; font-weight: normal; color: #555;">=> Giải thích: ${explanations[q]}</span></li><br>`;
+                }
+            } else {
+                resultHTML += `<li class="incorrect">⚠ Câu ${qNum}: Em chưa chọn đáp án. (Đáp án đúng là ${answers[q]}) <br><span style="font-size: 14px; font-weight: normal; color: #555;">=> Giải thích: ${explanations[q]}</span></li><br>`;
+            }
+        }
+        
+        resultHTML += `</ul><h3 style='text-align:center; color:#e67e22;'>Tổng điểm: ${score} / 10</h3>`;
+        
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = resultHTML;
+        resultsDiv.style.display = 'block';
+        resultsDiv.style.backgroundColor = '#fdf2e9';
+        resultsDiv.style.border = '2px dashed #e67e22';
+    }
+</script>
+
+</body>
+</html>
